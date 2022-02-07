@@ -1,0 +1,9 @@
+{
+  "block.advtech.crusher": "Crusher",
+  "advtech.iomode.both": "Push to and pull from adjacent inventories",
+  "advtech.iomode.input": "Pull from adjacent inventories",
+  "advtech.iomode.output": "Push to adjacent inventories",
+  "advtech.iomode.none": "Automatic push/pull disabled",
+  "advtech.gui.openupgrades": "Show upgrades and stats",
+  "advtech.gui.upgrades": "Upgrades"
+}

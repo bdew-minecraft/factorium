@@ -1,0 +1,36 @@
+modLoader = "kotori_scala"
+loaderVersion = "[2.13.8,2.14.0)"
+issueTrackerURL = "https://github.com/bdew-minecraft/advtech/issues"
+license = "MIT"
+
+[[mods]]
+modId = "advtech"
+version = "${file.jarVersion}"
+displayName = "Advanced Tech"
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/advanced-tech"
+authors = "bdew"
+description = '''
+fixme
+'''
+
+[[dependencies.advtech]]
+modId = "forge"
+mandatory = true
+versionRange = "[39,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.advtech]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.18.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.advtech]]
+modId = "bdlib"
+mandatory = true
+versionRange = "[1.18.0,)"
+ordering = "NONE"
+side = "BOTH"
+

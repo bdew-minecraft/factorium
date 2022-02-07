@@ -1,0 +1,19 @@
+{
+  "type": "advtech:crusher",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "forge:ores/iron"
+      }
+    }
+  ],
+  "input": {
+    "tag": "forge:ores/iron"
+  },
+  "output": {
+    "item": "advtech:crushed_iron",
+    "count": 2
+  }
+}
