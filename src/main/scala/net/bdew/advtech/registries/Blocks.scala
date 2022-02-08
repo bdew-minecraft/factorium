@@ -13,6 +13,11 @@ object Blocks extends BlockManager(Items) {
     .requiresCorrectToolForDrops()
     .strength(3, 3)
 
+  def storageProps = props(Material.METAL)
+    .requiresCorrectToolForDrops()
+    .strength(5, 6)
+    .sound(SoundType.METAL)
+
   def machineProps: Properties = props(Material.STONE)
     .sound(SoundType.STONE)
     .strength(2, 8)
@@ -26,7 +31,11 @@ object Blocks extends BlockManager(Items) {
   val ores: Map[MetalEntry, Blocks.DefBI[OreBlock, BlockItem]] =
     Metals.all.filter(_.registerOre)
       .map(metal => metal ->
-        define(s"ore_${metal.name}", () => new OreBlock(oreProps))
+        define(s"mat_${metal.name}_ore", () => new OreBlock(oreProps))
           .withDefaultItem.register
       ).toMap
+
+  for (metal <- Metals.all) {
+    if (metal.registerBlock) simple(s"mat_${metal.name}_block", storageProps)
+  }
 }

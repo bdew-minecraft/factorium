@@ -12,13 +12,14 @@ object Items extends ItemManager(CreativeTab) {
   def resourceProps: Item.Properties = props
 
   for (metal <- Metals.all) {
-    if (metal.registerIngot) simple(s"ingot_${metal.name}", resourceProps)
-    if (metal.registerGear) simple(s"gear_${metal.name}", resourceProps)
-    if (metal.registerPlate) simple(s"plate_${metal.name}", resourceProps)
+    if (metal.registerIngot) simple(s"mat_${metal.name}_ingot", resourceProps)
+    if (metal.registerGear) simple(s"mat_${metal.name}_gear", resourceProps)
+    if (metal.registerPlate) simple(s"mat_${metal.name}_plate", resourceProps)
+    if (metal.registerNugget) simple(s"mat_${metal.name}_nugget", resourceProps)
     if (metal.registerProcessing) {
-      simple(s"dust_${metal.name}", resourceProps)
-      simple(s"crushed_${metal.name}", resourceProps)
-      simple(s"pulverized_${metal.name}", resourceProps)
+      simple(s"mat_${metal.name}_dust", resourceProps)
+      simple(s"mat_${metal.name}_chunks", resourceProps)
+      simple(s"mat_${metal.name}_powder", resourceProps)
     }
   }
 

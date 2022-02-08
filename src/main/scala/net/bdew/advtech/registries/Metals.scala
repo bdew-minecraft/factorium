@@ -5,6 +5,8 @@ case class MetalEntry(name: String,
                       registerIngot: Boolean = true,
                       registerGear: Boolean = true,
                       registerPlate: Boolean = true,
+                      registerNugget: Boolean = true,
+                      registerBlock: Boolean = true,
                       registerProcessing: Boolean = true,
                      )
 
@@ -17,6 +19,8 @@ object MetalEntry {
     MetalEntry(name,
       registerOre = false,
       registerIngot = false,
+      registerNugget = false,
+      registerBlock = false,
       registerGear = registerGear,
       registerPlate = registerPlate,
       registerProcessing = registerProcessing
@@ -29,6 +33,8 @@ object MetalEntry {
       registerOre = false,
       registerIngot = false,
       registerProcessing = false,
+      registerNugget = true,
+      registerBlock = true,
       registerGear = registerGear,
       registerPlate = registerPlate,
     )
@@ -38,7 +44,7 @@ object Metals {
   val all = List(
     MetalEntry.Vanilla("iron"),
     MetalEntry.Vanilla("gold"),
-    MetalEntry("copper"),
+    MetalEntry.Vanilla("copper"),
     MetalEntry("tin"),
     MetalEntry.Alloy("bronze"),
   )
