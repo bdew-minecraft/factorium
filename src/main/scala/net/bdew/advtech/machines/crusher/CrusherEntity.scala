@@ -4,7 +4,7 @@ import net.bdew.advtech.Config
 import net.bdew.advtech.machines.{BaseMachineEntity, MachineRecipes}
 import net.bdew.advtech.misc.AutoIOMode
 import net.bdew.advtech.registries.Blocks
-import net.bdew.advtech.upgrades.{DataSlotUpgradesInventory, UpgradeableMachine}
+import net.bdew.advtech.upgrades.{DataSlotUpgrades, UpgradeableMachine}
 import net.bdew.lib.Text
 import net.bdew.lib.capabilities.Capabilities
 import net.bdew.lib.capabilities.handlers.{PowerEnergyHandler, SidedInventoryItemHandler}
@@ -37,7 +37,7 @@ class CrusherEntity(teType: BlockEntityType[_], pos: BlockPos, state: BlockState
   def config: CrusherConfig = Config.Crusher
 
   val inventory: DataSlotInventory = DataSlotInventory("inv", this, 18)
-  val upgradesInventory: DataSlotInventory = new DataSlotUpgradesInventory(this)
+  val upgradesInventory: DataSlotInventory = new DataSlotUpgrades(this)
   val power: DataSlotPower = DataSlotPower("power", this)
   val rsMode: DataSlotEnum[RSMode.type] = DataSlotEnum("rsMode", this, RSMode)
   val ioMode: DataSlotEnum[AutoIOMode.type] = DataSlotEnum("ioMode", this, AutoIOMode)

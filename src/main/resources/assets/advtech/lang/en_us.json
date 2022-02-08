@@ -5,5 +5,10 @@
   "advtech.iomode.output": "Push to adjacent inventories",
   "advtech.iomode.none": "Automatic push/pull disabled",
   "advtech.gui.openupgrades": "Show upgrades and stats",
-  "advtech.gui.upgrades": "Upgrades"
+  "advtech.gui.upgrades": "Upgrades",
+  "advtech.tooltip.modifiers": "Modifiers:",
+  "advtech.stat.work_speed": "Work speed",
+  "advtech.stat.energy_consumption": "Energy consumption",
+  "advtech.stat.charge_rate": "Charge rate",
+  "advtech.stat.energy_capacity": "Energy capacity"
 }

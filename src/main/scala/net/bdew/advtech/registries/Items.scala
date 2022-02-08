@@ -1,5 +1,6 @@
 package net.bdew.advtech.registries
 
+import net.bdew.advtech.upgrades.UpgradeItems
 import net.bdew.lib.managers.ItemManager
 import net.minecraft.world.item.{CreativeModeTab, Item, ItemStack}
 
@@ -21,4 +22,8 @@ object Items extends ItemManager(CreativeTab) {
     }
   }
 
+  override def init(): Unit = {
+    super.init()
+    UpgradeItems.init()
+  }
 }
