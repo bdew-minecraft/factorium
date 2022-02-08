@@ -4,6 +4,7 @@ import net.bdew.advtech.Config
 import net.bdew.advtech.machines.{BaseMachineEntity, MachineRecipes}
 import net.bdew.advtech.misc.AutoIOMode
 import net.bdew.advtech.registries.Blocks
+import net.bdew.advtech.upgrades.{DataSlotUpgradesInventory, UpgradeableMachine}
 import net.bdew.lib.Text
 import net.bdew.lib.capabilities.Capabilities
 import net.bdew.lib.capabilities.handlers.{PowerEnergyHandler, SidedInventoryItemHandler}
@@ -24,17 +25,19 @@ import net.minecraftforge.common.util.LazyOptional
 import net.minecraftforge.energy.IEnergyStorage
 import net.minecraftforge.items.IItemHandler
 
+import scala.util.Random
 
-class CrusherEntity(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends BaseMachineEntity(teType, pos, state) {
+
+class CrusherEntity(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends BaseMachineEntity(teType, pos, state) with UpgradeableMachine {
   object Slots {
     val input: Range = 0 to 5
     val output: Range = 6 to 11
-    val upgrades: Range = 12 to 17
   }
 
   def config: CrusherConfig = Config.Crusher
 
-  val inventory: DataSlotInventory = DataSlotInventory("inputs", this, 18)
+  val inventory: DataSlotInventory = DataSlotInventory("inv", this, 18)
+  val upgradesInventory: DataSlotInventory = new DataSlotUpgradesInventory(this)
   val power: DataSlotPower = DataSlotPower("power", this)
   val rsMode: DataSlotEnum[RSMode.type] = DataSlotEnum("rsMode", this, RSMode)
   val ioMode: DataSlotEnum[AutoIOMode.type] = DataSlotEnum("ioMode", this, AutoIOMode)
@@ -62,6 +65,9 @@ class CrusherEntity(teType: BlockEntityType[_], pos: BlockPos, state: BlockState
   }
 
   def isValidInput(stack: ItemStack): Boolean = MachineRecipes.crusher.exists(_.input.test(stack))
+
+  override def statsDisplay: List[Component] =
+    List(Text.string("TEST 1"), Text.string("TEST 2"), Text.string(s"TEST 3 ${Random.nextInt(100)}"), Text.string("4"), Text.string("5"))
 
   override def getDisplayName: Component = Text.translate(Blocks.crusher.block.get().getDescriptionId)
   override def createMenu(id: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu =

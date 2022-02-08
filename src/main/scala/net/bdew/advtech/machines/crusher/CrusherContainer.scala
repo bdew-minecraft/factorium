@@ -1,14 +1,15 @@
 package net.bdew.advtech.machines.crusher
 
 import net.bdew.advtech.misc.AutoIOMode
-import net.bdew.advtech.network.{AutoIOConfigurableContainer, RsModeConfigurableContainer, UpgradeableContainer}
+import net.bdew.advtech.network.{AutoIOConfigurableContainer, RsModeConfigurableContainer}
 import net.bdew.advtech.registries.Containers
+import net.bdew.advtech.upgrades.UpgradeableContainer
 import net.bdew.lib.container.{BaseContainer, SlotValidating}
 import net.bdew.lib.data.base.ContainerDataSlots
 import net.bdew.lib.misc.RSMode
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.player.Inventory
-import org.apache.logging.log4j.LogManager
+import net.minecraftforge.network.NetworkHooks
 
 class CrusherContainer(val te: CrusherEntity, playerInventory: Inventory, id: Int)
   extends BaseContainer(te.externalInventory, Containers.crusher.get(), id)
@@ -41,7 +42,8 @@ class CrusherContainer(val te: CrusherEntity, playerInventory: Inventory, id: In
   override def setAutoIoMode(mode: AutoIOMode.Value): Unit = {
     te.ioMode := mode
   }
+
   override def openUpgrades(player: ServerPlayer): Unit = {
-    LogManager.getLogger.info(s"open upgrades for ${player}")
+    NetworkHooks.openGui(player, te.upgradesMenuProvider, te.getBlockPos)
   }
 }
