@@ -5,19 +5,21 @@ import net.bdew.advtech.machines.{BaseMachineEntity, MachineRecipes}
 import net.bdew.advtech.misc.AutoIOMode
 import net.bdew.advtech.registries.Blocks
 import net.bdew.lib.Text
+import net.bdew.lib.capabilities.Capabilities
 import net.bdew.lib.capabilities.handlers.{PowerEnergyHandler, SidedInventoryItemHandler}
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.data.{DataSlotEnum, DataSlotFloat, DataSlotInventory}
 import net.bdew.lib.inventory.RestrictedInventory
 import net.bdew.lib.misc.RSMode
 import net.bdew.lib.power.DataSlotPower
-import net.minecraft.core.BlockPos
+import net.minecraft.core.{BlockPos, Direction}
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.{Inventory, Player}
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.util.LazyOptional
 import net.minecraftforge.energy.IEnergyStorage
 import net.minecraftforge.items.IItemHandler
@@ -65,6 +67,15 @@ class CrusherEntity(teType: BlockEntityType[_], pos: BlockPos, state: BlockState
   override def createMenu(id: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu =
     new CrusherContainer(this, playerInventory, id)
 
+  //noinspection ComparingUnrelatedTypes
+  override def getCapability[T](cap: Capability[T], side: Direction): LazyOptional[T] = {
+    if (cap == Capabilities.CAP_ITEM_HANDLER)
+      inventoryHandler.cast()
+    else if (cap == Capabilities.CAP_ENERGY_HANDLER)
+      powerHandler.cast()
+    else
+      super.getCapability(cap, side)
+  }
 
   override def invalidateCaps(): Unit = {
     super.invalidateCaps()

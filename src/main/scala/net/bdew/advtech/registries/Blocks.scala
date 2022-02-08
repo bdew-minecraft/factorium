@@ -3,10 +3,10 @@ package net.bdew.advtech.registries
 import net.bdew.advtech.machines.crusher.CrusherEntity
 import net.bdew.advtech.machines.{BaseMachineBlock, BaseMachineItem}
 import net.bdew.lib.managers.BlockManager
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.{OreBlock, SoundType}
 import net.minecraft.world.level.material.Material
-import net.minecraftforge.registries.RegistryObject
 
 object Blocks extends BlockManager(Items) {
   def oreProps: Properties = props(Material.STONE)
@@ -23,8 +23,10 @@ object Blocks extends BlockManager(Items) {
       .withItem(b => new BaseMachineItem(b))
       .register
 
-  val ores: Map[MetalEntry, RegistryObject[OreBlock]] =
+  val ores: Map[MetalEntry, Blocks.DefBI[OreBlock, BlockItem]] =
     Metals.all.filter(_.registerOre)
-      .map(metal => metal -> register(s"ore_${metal.name}", () => new OreBlock(oreProps)))
-      .toMap
+      .map(metal => metal ->
+        define(s"ore_${metal.name}", () => new OreBlock(oreProps))
+          .withDefaultItem.register
+      ).toMap
 }
