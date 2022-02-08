@@ -8,6 +8,6 @@ object DataGeneration {
     val efh = ev.getExistingFileHelper
     dataGenerator.addProvider(new LootTables(dataGenerator))
     dataGenerator.addProvider(new BlockStates(dataGenerator, efh))
-    dataGenerator.addProvider(new MyItemModels(dataGenerator, efh))
+    dataGenerator.addProvider(new ItemModels(dataGenerator, efh))
   }
 }

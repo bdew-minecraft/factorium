@@ -2,21 +2,12 @@ package net.bdew.advtech.datagen
 
 import net.bdew.advtech.AdvTech
 import net.bdew.advtech.registries.Items
+import net.bdew.lib.datagen.ItemModelGenerator
 import net.minecraft.data.DataGenerator
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.{BlockItem, Item}
-import net.minecraftforge.client.model.generators.{ItemModelProvider, ModelFile}
+import net.minecraft.world.item.BlockItem
 import net.minecraftforge.common.data.ExistingFileHelper
 
-abstract class ItemModels(gen: DataGenerator, modId: String, efh: ExistingFileHelper) extends ItemModelProvider(gen, modId, efh) {
-  def simpleItemModel(item: Item, texture: String): Unit = {
-    getBuilder(item.getRegistryName.getPath)
-      .parent(new ModelFile.UncheckedModelFile("item/generated"))
-      .texture("layer0", new ResourceLocation(modId, texture))
-  }
-}
-
-class MyItemModels(gen: DataGenerator, efh: ExistingFileHelper) extends ItemModels(gen, AdvTech.ModId, efh) {
+class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) extends ItemModelGenerator(gen, AdvTech.ModId, efh) {
   override def registerModels(): Unit = {
     Items.all.foreach(_.get() match {
       case _: BlockItem => //skip
