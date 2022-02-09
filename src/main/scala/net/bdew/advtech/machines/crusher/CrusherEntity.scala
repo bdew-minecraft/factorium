@@ -34,7 +34,7 @@ class CrusherEntity(teType: BlockEntityType[_], pos: BlockPos, state: BlockState
     val output: Range = 6 to 11
   }
 
-  def config: CrusherConfig = Config.Crusher
+  def config: CrusherConfig = Config.Machines.Crusher
 
   val inventory: DataSlotInventory = DataSlotInventory("inv", this, 18)
   val upgradesInventory: DataSlotInventory = new DataSlotUpgrades(this)

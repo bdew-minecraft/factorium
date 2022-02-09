@@ -7,12 +7,16 @@ import net.minecraft.data.DataGenerator
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraftforge.common.data.ExistingFileHelper
+import net.minecraftforge.registries.ForgeRegistryEntry
 
 class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStateGenerator(gen, AdvTech.ModId, efh) {
+  def matTex(obj: ForgeRegistryEntry[_]) =
+    "materials/" + obj.getRegistryName.getPath.substring(4).split("_", 2).mkString("/")
+
   def makeMaterialBlock(block: Block): Unit = {
     val model = models().getBuilder(block.getRegistryName.getPath)
       .parent(vanillaModel("block/cube_all"))
-      .texture("all", new ResourceLocation(AdvTech.ModId, "materials/" + block.getRegistryName.getPath.substring(4).replace("_", "/")))
+      .texture("all", new ResourceLocation(AdvTech.ModId, matTex(block)))
     genStates(block, _ => model)
     makeBlockItem(block, model)
   }

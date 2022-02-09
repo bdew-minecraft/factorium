@@ -9,5 +9,8 @@ object DataGeneration {
     dataGenerator.addProvider(new LootTables(dataGenerator))
     dataGenerator.addProvider(new BlockStates(dataGenerator, efh))
     dataGenerator.addProvider(new ItemModels(dataGenerator, efh))
+    val blockTags = new BlockTagsGen(dataGenerator, efh)
+    dataGenerator.addProvider(blockTags)
+    dataGenerator.addProvider(new ItemTagsGen(dataGenerator, efh, blockTags))
   }
 }

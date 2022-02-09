@@ -3,15 +3,20 @@ package net.bdew.advtech.registries
 import net.bdew.advtech.machines.crusher.CrusherEntity
 import net.bdew.advtech.machines.{BaseMachineBlock, BaseMachineItem}
 import net.bdew.lib.managers.BlockManager
-import net.minecraft.world.item.BlockItem
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.{OreBlock, SoundType}
-import net.minecraft.world.level.material.Material
+import net.minecraft.world.level.material.{Material, MaterialColor}
 
 object Blocks extends BlockManager(Items) {
-  def oreProps: Properties = props(Material.STONE)
+  def normalOreProps: Properties = props(Material.STONE)
     .requiresCorrectToolForDrops()
     .strength(3, 3)
+
+  def deepOreProps: Properties = props(Material.STONE)
+    .requiresCorrectToolForDrops()
+    .strength(4.5f, 3)
+    .color(MaterialColor.DEEPSLATE)
+    .sound(SoundType.DEEPSLATE)
 
   def storageProps = props(Material.METAL)
     .requiresCorrectToolForDrops()
@@ -28,14 +33,14 @@ object Blocks extends BlockManager(Items) {
       .withItem(b => new BaseMachineItem(b))
       .register
 
-  val ores: Map[MetalEntry, Blocks.DefBI[OreBlock, BlockItem]] =
-    Metals.all.filter(_.registerOre)
-      .map(metal => metal ->
-        define(s"mat_${metal.name}_ore", () => new OreBlock(oreProps))
-          .withDefaultItem.register
-      ).toMap
-
   for (metal <- Metals.all) {
-    if (metal.registerBlock) simple(s"mat_${metal.name}_block", storageProps)
+    if (metal.registerOre) {
+      define(metal.registryName(MetalItemType.OreNormal), () => new OreBlock(normalOreProps))
+        .withDefaultItem.register
+      define(metal.registryName(MetalItemType.OreDeep), () => new OreBlock(deepOreProps))
+        .withDefaultItem.register
+      simple(metal.registryName(MetalItemType.RawBlock), storageProps)
+    }
+    if (metal.registerBlock) simple(metal.registryName(MetalItemType.StorageBlock), storageProps)
   }
 }
