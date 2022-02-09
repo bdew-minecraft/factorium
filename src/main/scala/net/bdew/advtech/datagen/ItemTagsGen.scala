@@ -24,25 +24,35 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
     copy(Tags.Blocks.ORES, Tags.Items.ORES)
 
     for (metal <- Metals.all) {
+      val smeltableTag = ItemTags.createOptional(new ResourceLocation(AdvTech.ModId, s"smeltable/${metal.name}"))
+
       if (metal.registerIngot) {
         val ingot = metal.item(MetalItemType.Ingot)
         tag(Tags.Items.INGOTS).add(ingot)
         tag(forgeTagCustom(s"ingots/${metal.name}")).add(ingot)
       }
+
       if (metal.registerNugget) {
         val nugget = metal.item(MetalItemType.Nugget)
         tag(Tags.Items.NUGGETS).add(nugget)
         tag(forgeTagCustom(s"nuggets/${metal.name}")).add(nugget)
       }
+
       if (metal.registerOre) {
         val rawDrop = metal.item(MetalItemType.RawDrop)
         tag(Tags.Items.RAW_MATERIALS).add(rawDrop)
         tag(forgeTagCustom(s"raw_materials/${metal.name}")).add(rawDrop)
         copy(blockTags.forgeTagCustom("ores", metal.name), forgeTagCustom("ores", metal.name))
         copy(blockTags.forgeTagCustom("storage_blocks", s"raw_${metal.name}"), forgeTagCustom("storage_blocks", s"raw_${metal.name}"))
+        tag(smeltableTag).add(metal.item(MetalItemType.OreDeep), metal.item(MetalItemType.OreDeep), rawDrop)
       }
+
       if (metal.registerBlock) {
         copy(blockTags.forgeTagCustom("storage_blocks", metal.name), forgeTagCustom("storage_blocks", metal.name))
+      }
+
+      if (metal.registerProcessing) {
+        tag(smeltableTag).add(metal.item(MetalItemType.Chunks), metal.item(MetalItemType.Dust), metal.item(MetalItemType.Powder))
       }
     }
   }

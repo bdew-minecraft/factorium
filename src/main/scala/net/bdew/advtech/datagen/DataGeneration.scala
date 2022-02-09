@@ -12,5 +12,6 @@ object DataGeneration {
     val blockTags = new BlockTagsGen(dataGenerator, efh)
     dataGenerator.addProvider(blockTags)
     dataGenerator.addProvider(new ItemTagsGen(dataGenerator, efh, blockTags))
+    dataGenerator.addProvider(new RecipeGen(dataGenerator))
   }
 }
