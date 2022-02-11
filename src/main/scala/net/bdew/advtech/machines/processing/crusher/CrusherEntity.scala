@@ -16,9 +16,7 @@ class CrusherEntity(teType: BlockEntityType[_], pos: BlockPos, state: BlockState
   override def config: CrusherConfig = Config.Machines.Crusher
   override def recipes: Set[CrusherRecipe] = MachineRecipes.crusher
 
-
   override def getDisplayName: Component = Text.translate(Blocks.crusher.block.get().getDescriptionId)
   override def createMenu(id: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu =
     new CrusherContainer(this, playerInventory, id)
-
 }

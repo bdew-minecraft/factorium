@@ -1,4 +1,4 @@
-package net.bdew.advtech.machines.processing.crusher
+package net.bdew.advtech.machines.processing
 
 import net.bdew.advtech.gui.WidgetMode
 import net.bdew.advtech.machines.MachineTextures
@@ -10,7 +10,7 @@ import net.bdew.lib.power.WidgetPowerGauge
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
-class CrusherScreen(container: CrusherContainer, playerInv: Inventory) extends BaseScreen(container, playerInv, container.te.getDisplayName) {
+class ProcessingMachineScreen(container: ProcessingMachineContainer, playerInv: Inventory) extends BaseScreen(container, playerInv, container.te.getDisplayName) {
 
   override val background: Texture = MachineTextures.screen
 
