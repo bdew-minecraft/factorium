@@ -38,5 +38,10 @@ object UpgradeItems {
       UpgradeFloatModifier(UpgradeStat.WorkSpeed, 0.2f),
       UpgradeFloatModifier(UpgradeStat.EnergyConsumption, 0.3f),
     ))
+
+    Items.register("parallel_t1", () => UpgradeItem(UpgradeClass.Parallel,
+      UpgradeIntSet(UpgradeStat.ParallelProcess, 2),
+      UpgradeFloatModifier(UpgradeStat.EnergyConsumption, 0.5f),
+    ))
   }
 }

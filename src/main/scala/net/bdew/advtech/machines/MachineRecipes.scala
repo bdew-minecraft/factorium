@@ -1,6 +1,6 @@
 package net.bdew.advtech.machines
 
-import net.bdew.advtech.machines.crusher.CrusherRecipe
+import net.bdew.advtech.machines.processing.crusher.CrusherRecipe
 import net.bdew.advtech.registries.Recipes
 import net.bdew.lib.recipes.RecipeReloadListener
 import net.minecraft.world.item.crafting.RecipeManager

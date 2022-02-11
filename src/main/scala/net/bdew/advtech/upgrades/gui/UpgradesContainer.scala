@@ -9,13 +9,13 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraftforge.network.NetworkHooks
 
 class UpgradesContainer(val te: UpgradeableMachine, playerInventory: Inventory, id: Int)
-  extends BaseContainer(te.upgradesInventory, Containers.upgrades.get(), id) with ContainerDataSlots {
+  extends BaseContainer(te.upgrades, Containers.upgrades.get(), id) with ContainerDataSlots {
 
   override lazy val dataSource: UpgradeableMachine = te
 
   for (y <- 0 to 1; x <- 0 to 2) {
     this.addSlot(new SlotValidating(
-      te.upgradesInventory,
+      te.upgrades,
       x + y * 3,
       15 + x * 18, 25 + y * 18
     ))

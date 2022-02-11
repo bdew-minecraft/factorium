@@ -19,3 +19,9 @@ case class UpgradeFloatModifier(stat: UpgradeStat[Float], modifier: Float) exten
   override def display: MutableComponent = stat.display & string(" ") &
     string("%s%.0f%%".format(if (modifier < 0) "" else "+", modifier * 100)).setColor(Color.YELLOW)
 }
+
+case class UpgradeIntSet(stat: UpgradeStat[Int], value: Int) extends UpgradeModifier[Int] {
+  override def calculate(initial: Int): Int = value
+  override def display: MutableComponent = stat.display & string(" ") &
+    string("%d".format(value)).setColor(Color.YELLOW)
+}

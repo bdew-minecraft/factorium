@@ -7,4 +7,5 @@ object UpgradeClass {
   val Core: UpgradeClass = UpgradeClass("core")
   val Efficiency: UpgradeClass = UpgradeClass("efficiency")
   val Speed: UpgradeClass = UpgradeClass("speed")
+  val Parallel: UpgradeClass = UpgradeClass("parallel")
 }

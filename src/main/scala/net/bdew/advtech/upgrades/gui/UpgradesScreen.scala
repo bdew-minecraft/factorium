@@ -1,6 +1,5 @@
 package net.bdew.advtech.upgrades.gui
 
-import net.bdew.advtech.gui.WidgetTextLines
 import net.bdew.advtech.network.{MsgCloseUpgrades, NetworkHandler}
 import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.WidgetLabel
@@ -16,7 +15,8 @@ class UpgradesScreen(container: UpgradesContainer, playerInv: Inventory) extends
     widgets.add(new WidgetLabel(title, 8, 6, Color.darkGray))
     widgets.add(new WidgetLabel(playerInv.getName, 8, rect.h - 93, Color.darkGray))
 
-    widgets.add(new WidgetTextLines(container.te.statsDisplay, 83, 20, Color.white))
+    for (i <- 0 until 5)
+      widgets.add(new WidgetInfoDisplay(Rect(82, 18 + 10 * i, 84, 9), container.te, i))
   }
 
   override def onClose(): Unit = {

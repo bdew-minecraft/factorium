@@ -6,6 +6,7 @@ import net.minecraft.world.item.ItemStack
 
 class DataSlotUpgrades(parent: UpgradeableMachine) extends DataSlotInventory("upgrades", parent, 6) {
   override def getMaxStackSize: Int = 1
+  var needsUpdate = true
 
   override def canPlaceItem(slot: Int, stack: ItemStack): Boolean =
     stack.getItem match {
@@ -22,4 +23,8 @@ class DataSlotUpgrades(parent: UpgradeableMachine) extends DataSlotInventory("up
       .flatMap(stack => Misc.asInstanceOpt(stack.getItem, classOf[UpgradeItem]))
       .foldLeft(initial)((value, item) => item.calculate(stat, value))
 
+  override def setChanged(): Unit = {
+    super.setChanged()
+    needsUpdate = true
+  }
 }

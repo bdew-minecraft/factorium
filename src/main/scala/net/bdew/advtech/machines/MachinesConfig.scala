@@ -1,6 +1,6 @@
 package net.bdew.advtech.machines
 
-import net.bdew.advtech.machines.crusher.CrusherConfig
+import net.bdew.advtech.machines.processing.crusher.CrusherConfig
 import net.bdew.lib.config.ConfigSection
 import net.minecraftforge.common.ForgeConfigSpec
 

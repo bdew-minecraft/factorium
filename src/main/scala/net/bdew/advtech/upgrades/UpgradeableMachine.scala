@@ -8,14 +8,12 @@ import net.minecraft.world.entity.player.{Inventory, Player}
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.{Container, MenuProvider}
 
-trait UpgradeableMachine extends BaseMachineEntity {
-  def upgradesInventory: Container
+trait UpgradeableMachine extends BaseMachineEntity with InfoSource {
+  def upgrades: Container
 
   val upgradesMenuProvider: MenuProvider = new MenuProvider {
     override def getDisplayName: Component = Text.translate("advtech.gui.upgrades")
     override def createMenu(id: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu =
       new UpgradesContainer(UpgradeableMachine.this, playerInventory, id)
   }
-
-  def statsDisplay: List[Component]
 }

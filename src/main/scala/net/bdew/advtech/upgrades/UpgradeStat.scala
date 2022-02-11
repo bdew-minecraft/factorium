@@ -12,4 +12,5 @@ object UpgradeStat {
   val EnergyConsumption: UpgradeStat[Float] = UpgradeStat("energy_consumption")
   val ChargeRate: UpgradeStat[Float] = UpgradeStat("charge_rate")
   val EnergyCapacity: UpgradeStat[Float] = UpgradeStat("energy_capacity")
+  val ParallelProcess: UpgradeStat[Int] = UpgradeStat("parallel_process")
 }

@@ -1,6 +1,6 @@
 package net.bdew.advtech.registries
 
-import net.bdew.advtech.machines.crusher.{CrusherContainer, CrusherScreen}
+import net.bdew.advtech.machines.processing.crusher.{CrusherContainer, CrusherScreen}
 import net.bdew.advtech.upgrades.UpgradeableMachine
 import net.bdew.advtech.upgrades.gui.{UpgradesContainer, UpgradesScreen}
 import net.bdew.lib.managers.ContainerManager

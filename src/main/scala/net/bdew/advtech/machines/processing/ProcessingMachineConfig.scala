@@ -1,9 +1,9 @@
-package net.bdew.advtech.machines.crusher
+package net.bdew.advtech.machines.processing
 
 import net.bdew.lib.config.ConfigSection
 import net.minecraftforge.common.ForgeConfigSpec
 
-class CrusherConfig(spec: ForgeConfigSpec.Builder) extends ConfigSection {
+class ProcessingMachineConfig(spec: ForgeConfigSpec.Builder) extends ConfigSection {
   val basePowerUsage: () => Float = floatVal(spec, "basePowerUsage",
     "Base power usage (RF/t)", 50, minVal = 1)
 

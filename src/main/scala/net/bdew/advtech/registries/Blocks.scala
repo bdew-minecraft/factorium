@@ -1,7 +1,8 @@
 package net.bdew.advtech.registries
 
-import net.bdew.advtech.machines.crusher.CrusherEntity
-import net.bdew.advtech.machines.{BaseMachineBlock, BaseMachineItem}
+import net.bdew.advtech.machines.BaseMachineItem
+import net.bdew.advtech.machines.processing.ProcessingMachineBlock
+import net.bdew.advtech.machines.processing.crusher.CrusherEntity
 import net.bdew.lib.managers.BlockManager
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.{OreBlock, SoundType}
@@ -27,8 +28,8 @@ object Blocks extends BlockManager(Items) {
     .sound(SoundType.STONE)
     .strength(2, 8)
 
-  val crusher: Def[BaseMachineBlock[CrusherEntity], CrusherEntity, BaseMachineItem] =
-    define("crusher", () => new BaseMachineBlock[CrusherEntity])
+  val crusher: Def[ProcessingMachineBlock[CrusherEntity], CrusherEntity, BaseMachineItem] =
+    define("crusher", () => new ProcessingMachineBlock[CrusherEntity])
       .withTE(new CrusherEntity(_, _, _))
       .withItem(b => new BaseMachineItem(b))
       .register

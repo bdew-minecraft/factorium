@@ -5,10 +5,28 @@ import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.ShapedRecipe
 
-class ItemStackWithChance(stack: ItemStack, chance: Float) {
+import scala.util.Random
+
+class ItemStackWithChance(val stack: ItemStack, val chance: Float) {
   def toNetwork(buffer: FriendlyByteBuf): Unit = {
     buffer.writeItem(stack)
     buffer.writeFloat(chance)
+  }
+
+  def roll(count: Int): ItemStack = {
+    if (stack.isEmpty || chance == 0) return ItemStack.EMPTY
+
+    val rolls =
+      if (chance == 1)
+        count
+      else if (count == 1)
+        if (Random.nextFloat() <= chance) 1 else 0
+      else
+        (0 until count).map(_ => if (Random.nextFloat() <= chance) 1 else 0).sum
+
+    val res = stack.copy()
+    res.setCount(rolls * res.getCount)
+    res
   }
 }
 

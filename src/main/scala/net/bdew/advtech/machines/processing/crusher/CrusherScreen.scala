@@ -1,4 +1,4 @@
-package net.bdew.advtech.machines.crusher
+package net.bdew.advtech.machines.processing.crusher
 
 import net.bdew.advtech.gui.WidgetMode
 import net.bdew.advtech.machines.MachineTextures

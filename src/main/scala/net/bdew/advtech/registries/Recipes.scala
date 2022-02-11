@@ -1,6 +1,6 @@
 package net.bdew.advtech.registries
 
-import net.bdew.advtech.machines.crusher.{CrusherRecipe, CrusherRecipeSerializer}
+import net.bdew.advtech.machines.processing.crusher.{CrusherRecipe, CrusherRecipeSerializer}
 import net.bdew.lib.managers.RegistryManager
 import net.bdew.lib.recipes.MachineRecipeType
 import net.minecraftforge.registries.{ForgeRegistries, RegistryObject}
