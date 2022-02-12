@@ -1,16 +1,24 @@
 package net.bdew.advtech.datagen
 
 import net.bdew.advtech.AdvTech
+import net.bdew.advtech.machines.processing.crusher.CrusherRecipe
+import net.bdew.advtech.misc.ItemStackWithChance
 import net.bdew.advtech.registries.{MetalEntry, MetalItemType, Metals}
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.recipes.{FinishedRecipe, RecipeProvider, ShapelessRecipeBuilder, SimpleCookingRecipeBuilder}
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.ItemTags
+import net.minecraft.tags.{ItemTags, Tag}
 import net.minecraft.world.item.crafting.{Ingredient, RecipeSerializer}
+import net.minecraft.world.item.{Item, ItemStack}
+import net.minecraftforge.common.crafting.conditions.{NotCondition, TagEmptyCondition}
 
 import java.util.function.Consumer
 
 class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
+  def forgeTagCustom(name: String*): Tag.Named[Item] =
+    ItemTags.createOptional(new ResourceLocation("forge", name.mkString("/")))
+
+
   def addStorageRecipes(metal: MetalEntry, big: MetalItemType, small: MetalItemType, consumer: Consumer[FinishedRecipe]): Unit = {
     ShapelessRecipeBuilder.shapeless(metal.item(small), 9)
       .requires(metal.item(big))
@@ -57,7 +65,29 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
           .unlockedBy("has_item", RecipeProvider.has(smeltableTag))
           .group(s"${AdvTech.ModId}:smelting")
           .save(consumer, new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/ingot_from_blasting"))
+      }
 
+      val oreTag = forgeTagCustom("ores", metal.name)
+      val rawTag = forgeTagCustom("raw_materials", metal.name)
+
+      if (metal.registerProcessing) {
+        RecipeHelper.saveProcessingRecipe(
+          new CrusherRecipe(
+            new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/crushing_ore"),
+            Ingredient.of(oreTag),
+            new ItemStackWithChance(new ItemStack(metal.item(MetalItemType.Chunks), 2), 1),
+            new ItemStackWithChance(new ItemStack(metal.item(MetalItemType.Chunks)), 0.5f),
+            ItemStackWithChance.EMPTY,
+          ), consumer, new NotCondition(new TagEmptyCondition(oreTag.getName)))
+
+        RecipeHelper.saveProcessingRecipe(
+          new CrusherRecipe(
+            new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/crushing_raw"),
+            Ingredient.of(rawTag),
+            new ItemStackWithChance(new ItemStack(metal.item(MetalItemType.Chunks), 2), 1),
+            new ItemStackWithChance(new ItemStack(metal.item(MetalItemType.Chunks)), 0.5f),
+            ItemStackWithChance.EMPTY,
+          ), consumer, new NotCondition(new TagEmptyCondition(oreTag.getName)))
       }
     }
   }
