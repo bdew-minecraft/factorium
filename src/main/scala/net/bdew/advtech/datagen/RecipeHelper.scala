@@ -24,9 +24,9 @@ object RecipeHelper {
     override def serializeRecipeData(obj: JsonObject): Unit = {
       obj.add("input", rec.input.toJson)
       obj.add("output", writeItemStackWithChance(rec.output))
-      if (!rec.secondary.stack.isEmpty && rec.secondary.chance > 0)
+      if (rec.secondary.nonEmpty)
         obj.add("secondary", writeItemStackWithChance(rec.secondary))
-      if (!rec.bonus.stack.isEmpty && rec.bonus.chance > 0)
+      if (rec.bonus.nonEmpty)
         obj.add("bonus", writeItemStackWithChance(rec.bonus))
     }
   }
@@ -34,8 +34,10 @@ object RecipeHelper {
   def writeItemStackWithChance(v: ItemStackWithChance): JsonObject = {
     val obj = new JsonObject
     obj.addProperty("item", v.stack.getItem.getRegistryName.toString)
-    obj.addProperty("count", v.stack.getCount)
-    obj.addProperty("chance", v.chance)
+    if (v.stack.getCount > 1)
+      obj.addProperty("count", v.stack.getCount)
+    if (v.chance != 1)
+      obj.addProperty("chance", v.chance)
     obj
   }
 

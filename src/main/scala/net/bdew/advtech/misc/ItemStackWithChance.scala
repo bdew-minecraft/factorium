@@ -13,8 +13,11 @@ class ItemStackWithChance(val stack: ItemStack, val chance: Float) {
     buffer.writeFloat(chance)
   }
 
+  def isEmpty: Boolean = stack.isEmpty || chance <= 0
+  def nonEmpty: Boolean = !isEmpty
+
   def roll(count: Int): ItemStack = {
-    if (stack.isEmpty || chance == 0) return ItemStack.EMPTY
+    if (isEmpty) return ItemStack.EMPTY
 
     val rolls =
       if (chance == 1)
