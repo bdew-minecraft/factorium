@@ -8,7 +8,6 @@ import net.bdew.lib.Client
 import net.bdew.lib.gui.{DrawTarget, SimpleDrawTarget}
 import net.minecraft.client.gui.Font
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.ItemStack
 
 @JeiPlugin
 class JEIPlugin extends IModPlugin {
@@ -18,15 +17,18 @@ class JEIPlugin extends IModPlugin {
     JEIPlugin.helpers = registration.getJeiHelpers
     registration.addRecipeCategories(
       CrusherRecipes,
+      SmelterRecipes,
     )
   }
 
   override def registerRecipes(registration: IRecipeRegistration): Unit = {
     CrusherRecipes.initRecipes(registration)
+    SmelterRecipes.initRecipes(registration)
   }
 
   override def registerRecipeCatalysts(registration: IRecipeCatalystRegistration): Unit = {
-    registration.addRecipeCatalyst(new ItemStack(CrusherRecipes.block), CrusherRecipes.getUid)
+    CrusherRecipes.initCatalyst(registration)
+    SmelterRecipes.initCatalyst(registration)
   }
 }
 

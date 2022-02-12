@@ -44,7 +44,7 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
         tag(forgeTagCustom(s"raw_materials/${metal.name}")).add(rawDrop)
         copy(blockTags.forgeTagCustom("ores", metal.name), forgeTagCustom("ores", metal.name))
         copy(blockTags.forgeTagCustom("storage_blocks", s"raw_${metal.name}"), forgeTagCustom("storage_blocks", s"raw_${metal.name}"))
-        tag(smeltableTag).add(metal.item(MetalItemType.OreDeep), metal.item(MetalItemType.OreDeep), rawDrop)
+        tag(smeltableTag).add(metal.item(MetalItemType.OreNormal), metal.item(MetalItemType.OreDeep), rawDrop)
       }
 
       if (metal.registerBlock) {

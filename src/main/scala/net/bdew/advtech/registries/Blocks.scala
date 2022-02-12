@@ -3,6 +3,7 @@ package net.bdew.advtech.registries
 import net.bdew.advtech.machines.BaseMachineItem
 import net.bdew.advtech.machines.processing.ProcessingMachineBlock
 import net.bdew.advtech.machines.processing.crusher.CrusherEntity
+import net.bdew.advtech.machines.processing.smelter.SmelterEntity
 import net.bdew.lib.managers.BlockManager
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.{OreBlock, SoundType}
@@ -31,6 +32,12 @@ object Blocks extends BlockManager(Items) {
   val crusher: Def[ProcessingMachineBlock[CrusherEntity], CrusherEntity, BaseMachineItem] =
     define("crusher", () => new ProcessingMachineBlock[CrusherEntity])
       .withTE(new CrusherEntity(_, _, _))
+      .withItem(b => new BaseMachineItem(b))
+      .register
+
+  val smelter: Def[ProcessingMachineBlock[SmelterEntity], SmelterEntity, BaseMachineItem] =
+    define("smelter", () => new ProcessingMachineBlock[SmelterEntity])
+      .withTE(new SmelterEntity(_, _, _))
       .withItem(b => new BaseMachineItem(b))
       .register
 

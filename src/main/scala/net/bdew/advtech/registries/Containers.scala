@@ -1,6 +1,7 @@
 package net.bdew.advtech.registries
 
 import net.bdew.advtech.machines.processing.crusher.CrusherContainer
+import net.bdew.advtech.machines.processing.smelter.SmelterContainer
 import net.bdew.advtech.machines.processing.{ProcessingMachineContainer, ProcessingMachineScreen}
 import net.bdew.advtech.upgrades.UpgradeableMachine
 import net.bdew.advtech.upgrades.gui.{UpgradesContainer, UpgradesScreen}
@@ -16,6 +17,11 @@ object Containers extends ContainerManager {
       (id, inv, te) => new CrusherContainer(te, inv, id)
     }
 
+  val smelter: RegistryObject[MenuType[ProcessingMachineContainer]] =
+    registerPositional("smelter", Blocks.smelter.teType) {
+      (id, inv, te) => new SmelterContainer(te, inv, id)
+    }
+
   val upgrades: RegistryObject[MenuType[UpgradesContainer]] =
     registerSimple("upgrades") { (id, inv, data) =>
       inv.player.level.getBlockEntity(data.readBlockPos()) match {
@@ -27,6 +33,7 @@ object Containers extends ContainerManager {
   @OnlyIn(Dist.CLIENT)
   override def onClientSetup(ev: FMLClientSetupEvent): Unit = {
     registerScreen(crusher) { (c, i, _) => new ProcessingMachineScreen(c, i) }
+    registerScreen(smelter) { (c, i, _) => new ProcessingMachineScreen(c, i) }
     registerScreen(upgrades) { (c, i, _) => new UpgradesScreen(c, i) }
   }
 }

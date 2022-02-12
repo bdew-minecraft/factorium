@@ -5,12 +5,14 @@ import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.ingredients.IIngredients
 import mezz.jei.api.recipe.category.IRecipeCategory
-import mezz.jei.api.registration.IRecipeRegistration
+import mezz.jei.api.registration.{IRecipeCatalystRegistration, IRecipeRegistration}
 import net.bdew.advtech.AdvTech
+import net.bdew.advtech.machines.MachineRecipes
 import net.bdew.advtech.machines.processing.ProcessingRecipe
 import net.bdew.advtech.machines.processing.crusher.CrusherRecipe
+import net.bdew.advtech.machines.processing.smelter.SmelterRecipe
 import net.bdew.advtech.registries.{Blocks, Recipes}
-import net.bdew.lib.recipes.{MachineRecipeType, RecipeReloadListener}
+import net.bdew.lib.recipes.MachineRecipeType
 import net.bdew.lib.{DecFormat, Text}
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
@@ -21,7 +23,10 @@ import net.minecraft.world.level.block.Block
 import java.util
 import scala.jdk.CollectionConverters._
 
-class ProcessingRecipes[T <: ProcessingRecipe](recipeType: MachineRecipeType[T], cls: Class[T], val block: Block) extends IRecipeCategory[T] {
+abstract class ProcessingRecipes[T <: ProcessingRecipe](recipeType: MachineRecipeType[T], cls: Class[T]) extends IRecipeCategory[T] {
+  def getRecipes: List[T]
+  def block: Block
+
   override def getUid: ResourceLocation = recipeType.registryName
   override def getRecipeClass: Class[T] = cls
   override def getTitle: Component = block.getName
@@ -74,7 +79,6 @@ class ProcessingRecipes[T <: ProcessingRecipe](recipeType: MachineRecipeType[T],
       itemStacks.set(2, recipe.secondary.stack)
     if (recipe.bonus.nonEmpty)
       itemStacks.set(3, recipe.bonus.stack)
-
   }
 
   override def getTooltipStrings(recipe: T, mouseX: Double, mouseY: Double): util.List[Component] = {
@@ -82,8 +86,20 @@ class ProcessingRecipes[T <: ProcessingRecipe](recipeType: MachineRecipeType[T],
   }
 
   def initRecipes(reg: IRecipeRegistration): Unit = {
-    reg.addRecipes(recipeType.getAllRecipes(RecipeReloadListener.clientRecipeManager).asJava, getUid)
+    reg.addRecipes(getRecipes.asJava, getUid)
+  }
+
+  def initCatalyst(reg: IRecipeCatalystRegistration): Unit = {
+    reg.addRecipeCatalyst(new ItemStack(block), getUid)
   }
 }
 
-object CrusherRecipes extends ProcessingRecipes(Recipes.crusherType, classOf[CrusherRecipe], Blocks.crusher.block.get())
+object CrusherRecipes extends ProcessingRecipes(Recipes.crusherType, classOf[CrusherRecipe]) {
+  override def block: Block = Blocks.crusher.block.get()
+  override def getRecipes: List[CrusherRecipe] = MachineRecipes.crusher.toList
+}
+
+object SmelterRecipes extends ProcessingRecipes(Recipes.smelterType, classOf[SmelterRecipe]) {
+  override def block: Block = Blocks.smelter.block.get()
+  override def getRecipes: List[SmelterRecipe] = MachineRecipes.smelter.toList
+}

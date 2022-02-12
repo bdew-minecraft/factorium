@@ -4,10 +4,11 @@ import com.google.gson.JsonObject
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.ShapedRecipe
+import net.minecraft.world.level.ItemLike
 
 import scala.util.Random
 
-class ItemStackWithChance(val stack: ItemStack, val chance: Float) {
+case class ItemStackWithChance(stack: ItemStack, chance: Float = 1) {
   def toNetwork(buffer: FriendlyByteBuf): Unit = {
     buffer.writeItem(stack)
     buffer.writeFloat(chance)
@@ -34,18 +35,21 @@ class ItemStackWithChance(val stack: ItemStack, val chance: Float) {
 }
 
 object ItemStackWithChance {
-  val EMPTY = new ItemStackWithChance(ItemStack.EMPTY, 0)
+  val EMPTY: ItemStackWithChance = ItemStackWithChance(ItemStack.EMPTY, 0)
+
+  def from(item: ItemLike, count: Int = 1, chance: Float = 1): ItemStackWithChance =
+    ItemStackWithChance(new ItemStack(item, count), chance)
 
   def fromNetwork(buffer: FriendlyByteBuf): ItemStackWithChance = {
     val stack = buffer.readItem()
     val chance = buffer.readFloat()
-    new ItemStackWithChance(stack, chance)
+    ItemStackWithChance(stack, chance)
   }
 
   def fromJson(obj: JsonObject): ItemStackWithChance = {
     val stack = ShapedRecipe.itemStackFromJson(obj)
     val chance = if (obj.has("chance")) obj.get("chance").getAsFloat else 1
-    new ItemStackWithChance(stack, chance)
+    ItemStackWithChance(stack, chance)
   }
 
   def fromJsonOpt(parent: JsonObject, name: String): ItemStackWithChance = {

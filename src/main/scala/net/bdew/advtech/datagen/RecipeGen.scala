@@ -1,16 +1,13 @@
 package net.bdew.advtech.datagen
 
 import net.bdew.advtech.AdvTech
-import net.bdew.advtech.machines.processing.crusher.CrusherRecipe
-import net.bdew.advtech.misc.ItemStackWithChance
-import net.bdew.advtech.registries.{MetalEntry, MetalItemType, Metals}
+import net.bdew.advtech.registries.{MetalEntry, MetalItemType, Metals, Recipes}
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.recipes.{FinishedRecipe, RecipeProvider, ShapelessRecipeBuilder, SimpleCookingRecipeBuilder}
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.{ItemTags, Tag}
 import net.minecraft.world.item.crafting.{Ingredient, RecipeSerializer}
-import net.minecraft.world.item.{Item, ItemStack}
-import net.minecraftforge.common.crafting.conditions.{NotCondition, TagEmptyCondition}
+import net.minecraft.world.item.{Item, Items}
 
 import java.util.function.Consumer
 
@@ -67,28 +64,34 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
           .save(consumer, new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/ingot_from_blasting"))
       }
 
-      val oreTag = forgeTagCustom("ores", metal.name)
-      val rawTag = forgeTagCustom("raw_materials", metal.name)
-
       if (metal.registerProcessing) {
-        RecipeHelper.saveProcessingRecipe(
-          new CrusherRecipe(
-            new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/crushing_ore"),
-            Ingredient.of(oreTag),
-            new ItemStackWithChance(new ItemStack(metal.item(MetalItemType.Chunks), 2), 1),
-            new ItemStackWithChance(new ItemStack(metal.item(MetalItemType.Chunks)), 0.5f),
-            ItemStackWithChance.EMPTY,
-          ), consumer, new NotCondition(new TagEmptyCondition(oreTag.getName)))
-
-        RecipeHelper.saveProcessingRecipe(
-          new CrusherRecipe(
-            new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/crushing_raw"),
-            Ingredient.of(rawTag),
-            new ItemStackWithChance(new ItemStack(metal.item(MetalItemType.Chunks), 2), 1),
-            new ItemStackWithChance(new ItemStack(metal.item(MetalItemType.Chunks)), 0.5f),
-            ItemStackWithChance.EMPTY,
-          ), consumer, new NotCondition(new TagEmptyCondition(oreTag.getName)))
+        makeCrusherRecipe(
+          id = s"metals/${metal.name}/crushing_ore",
+          input = forgeTagCustom("ores", metal.name),
+          output = metal.item(MetalItemType.Chunks),
+          gravel = true,
+          consumer
+        )
+        makeCrusherRecipe(
+          id = s"metals/${metal.name}/crushing_raw",
+          input = forgeTagCustom("raw_materials", metal.name),
+          output = metal.item(MetalItemType.Chunks),
+          gravel = false,
+          consumer
+        )
       }
     }
+  }
+
+  def makeCrusherRecipe(id: String, input: Tag.Named[Item], output: Item, gravel: Boolean, consumer: Consumer[FinishedRecipe]): Unit = {
+    var builder = ProcessingRecipeBuilder(Recipes.crusherSerializer.get())
+      .withInput(Ingredient.of(input))
+      .withOutput(output, count = 2)
+      .requireTag(input)
+
+    if (gravel) builder = builder.withSecondary(Items.GRAVEL, chance = 0.1f)
+
+    builder.build(id)
+      .save(consumer)
   }
 }
