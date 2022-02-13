@@ -4,6 +4,7 @@ import net.bdew.advtech.machines.BaseMachineItem
 import net.bdew.advtech.machines.processing.ProcessingMachineBlock
 import net.bdew.advtech.machines.processing.crusher.CrusherEntity
 import net.bdew.advtech.machines.processing.smelter.SmelterEntity
+import net.bdew.advtech.metals.{MetalItemType, Metals}
 import net.bdew.lib.managers.BlockManager
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.{OreBlock, SoundType}
@@ -41,14 +42,16 @@ object Blocks extends BlockManager(Items) {
       .withItem(b => new BaseMachineItem(b))
       .register
 
-  for (metal <- Metals.all) {
-    if (metal.registerOre) {
-      define(metal.registryName(MetalItemType.OreNormal), () => new OreBlock(normalOreProps))
-        .withDefaultItem.register
-      define(metal.registryName(MetalItemType.OreDeep), () => new OreBlock(deepOreProps))
-        .withDefaultItem.register
-      simple(metal.registryName(MetalItemType.RawBlock), storageProps)
+  for (metal <- Metals.all; (block, ref) <- metal.blocks if ref.isOwned) {
+    block.group match {
+      case MetalItemType.groupStorageBlock =>
+        simple(metal.registryName(block), storageProps)
+      case MetalItemType.groupOreNormal =>
+        define(metal.registryName(block), () => new OreBlock(normalOreProps)).withDefaultItem.register
+      case MetalItemType.groupOreDeep =>
+        define(metal.registryName(block), () => new OreBlock(deepOreProps)).withDefaultItem.register
+      case _ => // pass
     }
-    if (metal.registerBlock) simple(metal.registryName(MetalItemType.StorageBlock), storageProps)
   }
+
 }

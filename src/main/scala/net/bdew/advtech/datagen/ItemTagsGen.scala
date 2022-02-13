@@ -1,7 +1,7 @@
 package net.bdew.advtech.datagen
 
 import net.bdew.advtech.AdvTech
-import net.bdew.advtech.registries.{MetalItemType, Metals}
+import net.bdew.advtech.metals.{MetalItemType, Metals}
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.tags.ItemTagsProvider
 import net.minecraft.resources.ResourceLocation
@@ -24,35 +24,39 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
     copy(Tags.Blocks.ORES, Tags.Items.ORES)
 
     for (metal <- Metals.all) {
-      val smeltableTag = ItemTags.createOptional(new ResourceLocation(AdvTech.ModId, s"smeltable/${metal.name}"))
-
-      if (metal.registerIngot) {
+      if (metal.ownItem(MetalItemType.Ingot)) {
         val ingot = metal.item(MetalItemType.Ingot)
         tag(Tags.Items.INGOTS).add(ingot)
         tag(forgeTagCustom(s"ingots/${metal.name}")).add(ingot)
       }
 
-      if (metal.registerNugget) {
+      if (metal.ownItem(MetalItemType.Nugget)) {
         val nugget = metal.item(MetalItemType.Nugget)
         tag(Tags.Items.NUGGETS).add(nugget)
         tag(forgeTagCustom(s"nuggets/${metal.name}")).add(nugget)
       }
 
-      if (metal.registerOre) {
+      if (metal.ownItem(MetalItemType.RawBlock)) {
+        copy(blockTags.forgeTagCustom("storage_blocks", s"raw_${metal.name}"), forgeTagCustom("storage_blocks", s"raw_${metal.name}"))
+      }
+
+      if (metal.ownItem(MetalItemType.RawDrop)) {
         val rawDrop = metal.item(MetalItemType.RawDrop)
         tag(Tags.Items.RAW_MATERIALS).add(rawDrop)
         tag(forgeTagCustom(s"raw_materials/${metal.name}")).add(rawDrop)
-        copy(blockTags.forgeTagCustom("ores", metal.name), forgeTagCustom("ores", metal.name))
-        copy(blockTags.forgeTagCustom("storage_blocks", s"raw_${metal.name}"), forgeTagCustom("storage_blocks", s"raw_${metal.name}"))
-        tag(smeltableTag).add(metal.item(MetalItemType.OreNormal), metal.item(MetalItemType.OreDeep), rawDrop)
       }
 
-      if (metal.registerBlock) {
+      if (MetalItemType.ores.exists(metal.ownItem)) {
+        copy(blockTags.forgeTagCustom("ores", metal.name), forgeTagCustom("ores", metal.name))
+      }
+
+      if (metal.ownItem(MetalItemType.StorageBlock)) {
         copy(blockTags.forgeTagCustom("storage_blocks", metal.name), forgeTagCustom("storage_blocks", metal.name))
       }
 
-      if (metal.registerProcessing) {
-        tag(smeltableTag).add(metal.item(MetalItemType.Chunks), metal.item(MetalItemType.Dust), metal.item(MetalItemType.Powder))
+      if (MetalItemType.smeltables.exists(metal.ownItem)) {
+        val smeltableTag = ItemTags.createOptional(new ResourceLocation(AdvTech.ModId, s"smeltable/${metal.name}"))
+        tag(smeltableTag).add(MetalItemType.smeltables.filter(metal.ownItem).map(metal.item).toArray: _*)
       }
     }
   }

@@ -2,7 +2,8 @@ package net.bdew.advtech.datagen
 
 import net.bdew.advtech.AdvTech
 import net.bdew.advtech.machines.BaseMachineBlock
-import net.bdew.advtech.registries.{Blocks, MetalEntry, MetalItemType, Metals}
+import net.bdew.advtech.metals.{MetalEntry, MetalItemType, Metals}
+import net.bdew.advtech.registries.Blocks
 import net.bdew.lib.datagen.LootTableGenerator
 import net.minecraft.advancements.critereon.{EnchantmentPredicate, ItemPredicate, MinMaxBounds}
 import net.minecraft.data.DataGenerator
@@ -40,13 +41,9 @@ class LootTables(gen: DataGenerator) extends LootTableGenerator(gen, AdvTech.Mod
 
   override def makeTables(): Map[ResourceLocation, LootTable] = {
     val oreBlocksMap: Map[Block, MetalEntry] =
-      Metals.all.filter(_.registerOre)
-        .flatMap(metal =>
-          List(
-            metal.block(MetalItemType.OreNormal) -> metal,
-            metal.block(MetalItemType.OreDeep) -> metal
-          )
-        ).toMap
+      Metals.all.flatMap(metal =>
+        MetalItemType.ores.filter(metal.ownBlock).map(ore => metal.block(ore) -> metal)
+      ).toMap
 
     Blocks.all.map(_.get() match {
       case block: OreBlock =>

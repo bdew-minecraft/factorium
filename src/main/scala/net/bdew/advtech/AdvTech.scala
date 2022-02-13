@@ -2,6 +2,7 @@ package net.bdew.advtech
 
 import net.bdew.advtech.datagen.DataGeneration
 import net.bdew.advtech.machines.MachineRecipes
+import net.bdew.advtech.metals.Metals
 import net.bdew.advtech.network.NetworkHandler
 import net.bdew.advtech.registries.{Blocks, Containers, Items, Recipes}
 import net.bdew.advtech.worldgen.OreGeneration
@@ -15,8 +16,7 @@ object AdvTech {
   Config.init()
   Items.init()
   Blocks.init()
-  //  Fluids.init()
-  //  Machines.init()
+  Metals.init()
   Recipes.init()
   Containers.init()
   MachineRecipes.init()

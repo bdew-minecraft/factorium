@@ -9,13 +9,17 @@ import net.minecraftforge.fml.config.ModConfig
 
 object Config {
   private val commonBuilder = new ForgeConfigSpec.Builder
+  private val serverBuilder = new ForgeConfigSpec.Builder
 
-  val OreGen: OreGenConfig = ConfigSection(commonBuilder, "OreGeneration", new OreGenConfig(commonBuilder))
+  val OreGen: OreGenConfig = ConfigSection(serverBuilder, "OreGeneration", new OreGenConfig(serverBuilder))
+
   val Machines: MachinesConfig = ConfigSection(commonBuilder, "Machines", new MachinesConfig(commonBuilder))
 
   val COMMON: ForgeConfigSpec = commonBuilder.build()
+  val SERVER: ForgeConfigSpec = serverBuilder.build()
 
   def init(): Unit = {
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON)
+    ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER)
   }
 }
