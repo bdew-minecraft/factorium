@@ -1,6 +1,5 @@
 package net.bdew.advtech.machines
 
-import net.bdew.advtech.registries.Blocks
 import net.bdew.lib.block.HasTETickingServer
 import net.bdew.lib.keepdata.BlockKeepData
 import net.minecraft.core.BlockPos
@@ -13,7 +12,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.{InteractionHand, InteractionResult}
 import net.minecraftforge.network.NetworkHooks
 
-class BaseMachineBlock[E <: BaseMachineEntity] extends Block(Blocks.machineProps) with BlockKeepData with HasTETickingServer[E] {
+trait BaseMachineBlock[E <: BaseMachineEntity] extends Block with BlockKeepData with HasTETickingServer[E] {
   override def use(state: BlockState, world: Level, pos: BlockPos, player: Player, hand: InteractionHand, hit: BlockHitResult): InteractionResult = {
     if (world.isClientSide) {
       InteractionResult.SUCCESS
