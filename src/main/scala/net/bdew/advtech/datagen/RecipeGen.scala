@@ -16,6 +16,8 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
   def forgeTagCustom(name: String*): Tag.Named[Item] =
     ItemTags.createOptional(new ResourceLocation("forge", name.mkString("/")))
 
+  def myTag(name: String*): Tag.Named[Item] =
+    ItemTags.createOptional(new ResourceLocation(AdvTech.ModId, name.mkString("/")))
 
   def maybeAddStorageRecipes(metal: MetalEntry, big: MetalItemType, small: MetalItemType, consumer: Consumer[FinishedRecipe]): Unit = {
     if (metal.ownItem(big) || metal.ownItem(small)) {
@@ -78,6 +80,24 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
           consumer
         )
       }
+
+      if (metal.ownItem(MetalItemType.Powder)) {
+        makeGrinderRecipe(
+          id = s"metals/${metal.name}/grinding",
+          input = myTag("chunks", metal.name),
+          output = metal.item(MetalItemType.Powder),
+          consumer
+        )
+      }
+
+      if (metal.ownItem(MetalItemType.Dust)) {
+        makePulverizerRecipe(
+          id = s"metals/${metal.name}/pulverizing",
+          input = myTag("powders", metal.name),
+          output = metal.item(MetalItemType.Dust),
+          consumer
+        )
+      }
     }
   }
 
@@ -89,7 +109,26 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
 
     if (gravel) builder = builder.withSecondary(Items.GRAVEL, chance = 0.1f)
 
-    builder.build(id)
+    builder.build(id).save(consumer)
+  }
+
+  def makeGrinderRecipe(id: String, input: Tag.Named[Item], output: Item, consumer: Consumer[FinishedRecipe]): Unit = {
+    ProcessingRecipeBuilder(Recipes.grinderSerializer.get())
+      .withInput(Ingredient.of(input))
+      .withOutput(output)
+      .withBonus(output, chance = 0.25f)
+      .requireTag(input)
+      .build(id)
+      .save(consumer)
+  }
+
+  def makePulverizerRecipe(id: String, input: Tag.Named[Item], output: Item, consumer: Consumer[FinishedRecipe]): Unit = {
+    ProcessingRecipeBuilder(Recipes.pulverizerSerializer.get())
+      .withInput(Ingredient.of(input))
+      .withOutput(output)
+      .withBonus(output, chance = 0.25f)
+      .requireTag(input)
+      .build(id)
       .save(consumer)
   }
 }

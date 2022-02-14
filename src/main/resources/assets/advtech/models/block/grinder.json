@@ -1,0 +1,8 @@
+{
+  "parent": "advtech:block/top_bottom_sides",
+  "textures": {
+    "top": "advtech:block/grinder/top",
+    "side": "advtech:block/grinder/side",
+    "bottom": "advtech:block/grinder/bottom"
+  }
+}

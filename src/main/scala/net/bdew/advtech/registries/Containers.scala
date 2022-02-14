@@ -1,6 +1,8 @@
 package net.bdew.advtech.registries
 
 import net.bdew.advtech.machines.processing.crusher.CrusherContainer
+import net.bdew.advtech.machines.processing.grinder.GrinderContainer
+import net.bdew.advtech.machines.processing.pulverizer.PulverizerContainer
 import net.bdew.advtech.machines.processing.smelter.SmelterContainer
 import net.bdew.advtech.machines.processing.{ProcessingMachineContainer, ProcessingMachineScreen}
 import net.bdew.advtech.upgrades.UpgradeableMachine
@@ -15,6 +17,16 @@ object Containers extends ContainerManager {
   val crusher: RegistryObject[MenuType[ProcessingMachineContainer]] =
     registerPositional("crusher", Blocks.crusher.teType) {
       (id, inv, te) => new CrusherContainer(te, inv, id)
+    }
+
+  val grinder: RegistryObject[MenuType[ProcessingMachineContainer]] =
+    registerPositional("grinder", Blocks.grinder.teType) {
+      (id, inv, te) => new GrinderContainer(te, inv, id)
+    }
+
+  val pulverizer: RegistryObject[MenuType[ProcessingMachineContainer]] =
+    registerPositional("pulverizer", Blocks.pulverizer.teType) {
+      (id, inv, te) => new PulverizerContainer(te, inv, id)
     }
 
   val smelter: RegistryObject[MenuType[ProcessingMachineContainer]] =
@@ -33,6 +45,8 @@ object Containers extends ContainerManager {
   @OnlyIn(Dist.CLIENT)
   override def onClientSetup(ev: FMLClientSetupEvent): Unit = {
     registerScreen(crusher) { (c, i, _) => new ProcessingMachineScreen(c, i) }
+    registerScreen(grinder) { (c, i, _) => new ProcessingMachineScreen(c, i) }
+    registerScreen(pulverizer) { (c, i, _) => new ProcessingMachineScreen(c, i) }
     registerScreen(smelter) { (c, i, _) => new ProcessingMachineScreen(c, i) }
     registerScreen(upgrades) { (c, i, _) => new UpgradesScreen(c, i) }
   }

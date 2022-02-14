@@ -3,6 +3,8 @@ package net.bdew.advtech.registries
 import net.bdew.advtech.machines.BaseMachineItem
 import net.bdew.advtech.machines.processing.ProcessingMachineBlock
 import net.bdew.advtech.machines.processing.crusher.CrusherEntity
+import net.bdew.advtech.machines.processing.grinder.GrinderEntity
+import net.bdew.advtech.machines.processing.pulverizer.PulverizerEntity
 import net.bdew.advtech.machines.processing.smelter.SmelterEntity
 import net.bdew.advtech.metals.{MetalItemType, Metals}
 import net.bdew.lib.managers.BlockManager
@@ -33,6 +35,18 @@ object Blocks extends BlockManager(Items) {
   val crusher: Def[ProcessingMachineBlock[CrusherEntity], CrusherEntity, BaseMachineItem] =
     define("crusher", () => new ProcessingMachineBlock[CrusherEntity])
       .withTE(new CrusherEntity(_, _, _))
+      .withItem(b => new BaseMachineItem(b))
+      .register
+
+  val grinder: Def[ProcessingMachineBlock[GrinderEntity], GrinderEntity, BaseMachineItem] =
+    define("grinder", () => new ProcessingMachineBlock[GrinderEntity])
+      .withTE(new GrinderEntity(_, _, _))
+      .withItem(b => new BaseMachineItem(b))
+      .register
+
+  val pulverizer: Def[ProcessingMachineBlock[PulverizerEntity], PulverizerEntity, BaseMachineItem] =
+    define("pulverizer", () => new ProcessingMachineBlock[PulverizerEntity])
+      .withTE(new PulverizerEntity(_, _, _))
       .withItem(b => new BaseMachineItem(b))
       .register
 

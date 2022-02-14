@@ -10,6 +10,8 @@ import net.bdew.advtech.AdvTech
 import net.bdew.advtech.machines.MachineRecipes
 import net.bdew.advtech.machines.processing.ProcessingRecipe
 import net.bdew.advtech.machines.processing.crusher.CrusherRecipe
+import net.bdew.advtech.machines.processing.grinder.GrinderRecipe
+import net.bdew.advtech.machines.processing.pulverizer.PulverizerRecipe
 import net.bdew.advtech.machines.processing.smelter.SmelterRecipe
 import net.bdew.advtech.registries.{Blocks, Recipes}
 import net.bdew.lib.recipes.MachineRecipeType
@@ -97,6 +99,16 @@ abstract class ProcessingRecipes[T <: ProcessingRecipe](recipeType: MachineRecip
 object CrusherRecipes extends ProcessingRecipes(Recipes.crusherType, classOf[CrusherRecipe]) {
   override def block: Block = Blocks.crusher.block.get()
   override def getRecipes: List[CrusherRecipe] = MachineRecipes.crusher.toList
+}
+
+object GrinderRecipes extends ProcessingRecipes(Recipes.grinderType, classOf[GrinderRecipe]) {
+  override def block: Block = Blocks.grinder.block.get()
+  override def getRecipes: List[GrinderRecipe] = MachineRecipes.grinder.toList
+}
+
+object PulverizerRecipes extends ProcessingRecipes(Recipes.pulverizerType, classOf[PulverizerRecipe]) {
+  override def block: Block = Blocks.pulverizer.block.get()
+  override def getRecipes: List[PulverizerRecipe] = MachineRecipes.pulverizer.toList
 }
 
 object SmelterRecipes extends ProcessingRecipes(Recipes.smelterType, classOf[SmelterRecipe]) {

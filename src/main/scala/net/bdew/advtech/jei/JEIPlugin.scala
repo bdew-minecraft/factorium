@@ -17,17 +17,23 @@ class JEIPlugin extends IModPlugin {
     JEIPlugin.helpers = registration.getJeiHelpers
     registration.addRecipeCategories(
       CrusherRecipes,
+      GrinderRecipes,
+      PulverizerRecipes,
       SmelterRecipes,
     )
   }
 
   override def registerRecipes(registration: IRecipeRegistration): Unit = {
     CrusherRecipes.initRecipes(registration)
+    GrinderRecipes.initRecipes(registration)
+    PulverizerRecipes.initRecipes(registration)
     SmelterRecipes.initRecipes(registration)
   }
 
   override def registerRecipeCatalysts(registration: IRecipeCatalystRegistration): Unit = {
     CrusherRecipes.initCatalyst(registration)
+    GrinderRecipes.initCatalyst(registration)
+    PulverizerRecipes.initCatalyst(registration)
     SmelterRecipes.initCatalyst(registration)
   }
 }

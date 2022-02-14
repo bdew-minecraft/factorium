@@ -1,6 +1,8 @@
 package net.bdew.advtech.machines
 
 import net.bdew.advtech.machines.processing.crusher.CrusherRecipe
+import net.bdew.advtech.machines.processing.grinder.GrinderRecipe
+import net.bdew.advtech.machines.processing.pulverizer.PulverizerRecipe
 import net.bdew.advtech.machines.processing.smelter.SmelterRecipe
 import net.bdew.advtech.misc.ItemStackWithChance
 import net.bdew.advtech.registries.Recipes
@@ -14,6 +16,8 @@ import scala.jdk.CollectionConverters._
 
 object MachineRecipes {
   var crusher = Set.empty[CrusherRecipe]
+  var grinder = Set.empty[GrinderRecipe]
+  var pulverizer = Set.empty[PulverizerRecipe]
   var smelter = Set.empty[SmelterRecipe]
 
   private def makeVanillaAdaptedRecipes(mgr: RecipeManager): (List[CrusherRecipe], List[SmelterRecipe]) = {
@@ -50,6 +54,8 @@ object MachineRecipes {
     val (crusherAdapted, smelterAdapted) = makeVanillaAdaptedRecipes(manager)
     crusher = (Recipes.crusherType.getAllRecipes(manager) ++ crusherAdapted).toSet
     smelter = (Recipes.smelterType.getAllRecipes(manager) ++ smelterAdapted).toSet
+    grinder = Recipes.grinderType.getAllRecipes(manager).toSet
+    pulverizer = Recipes.pulverizerType.getAllRecipes(manager).toSet
   }
 
   def init(): Unit = {

@@ -1,7 +1,7 @@
 package net.bdew.advtech.datagen
 
 import net.bdew.advtech.AdvTech
-import net.bdew.advtech.metals.{MetalItemType, Metals}
+import net.bdew.advtech.metals.{MetalEntry, MetalItemType, Metals}
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.tags.ItemTagsProvider
 import net.minecraft.resources.ResourceLocation
@@ -14,6 +14,14 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
   def forgeTagCustom(name: String*): Tag.Named[Item] =
     ItemTags.createOptional(new ResourceLocation("forge", name.mkString("/")))
 
+  def addTypedForgeTag(metal: MetalEntry, kind: MetalItemType, groupTag: Tag.Named[Item]): Unit = {
+    if (!metal.ownItem(kind)) return
+    val item = metal.item(kind)
+    val subTag = ItemTags.createOptional(new ResourceLocation(groupTag.getName.getNamespace, s"${groupTag.getName.getPath}/${metal.name}"))
+    tag(groupTag).add(item)
+    tag(subTag).add(item)
+  }
+
   override def addTags(): Unit = {
     copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS)
     copy(Tags.Blocks.ORE_RATES_SINGULAR, Tags.Items.ORE_RATES_SINGULAR)
@@ -23,27 +31,19 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
     copy(Tags.Blocks.ORES_IN_GROUND_STONE, Tags.Items.ORES_IN_GROUND_STONE)
     copy(Tags.Blocks.ORES, Tags.Items.ORES)
 
-    for (metal <- Metals.all) {
-      if (metal.ownItem(MetalItemType.Ingot)) {
-        val ingot = metal.item(MetalItemType.Ingot)
-        tag(Tags.Items.INGOTS).add(ingot)
-        tag(forgeTagCustom(s"ingots/${metal.name}")).add(ingot)
-      }
+    val chunksTag = ItemTags.createOptional(new ResourceLocation(AdvTech.ModId, "chunks"))
+    val powdersTag = ItemTags.createOptional(new ResourceLocation(AdvTech.ModId, "powders"))
 
-      if (metal.ownItem(MetalItemType.Nugget)) {
-        val nugget = metal.item(MetalItemType.Nugget)
-        tag(Tags.Items.NUGGETS).add(nugget)
-        tag(forgeTagCustom(s"nuggets/${metal.name}")).add(nugget)
-      }
+    for (metal <- Metals.all) {
+      addTypedForgeTag(metal, MetalItemType.Ingot, Tags.Items.INGOTS)
+      addTypedForgeTag(metal, MetalItemType.Nugget, Tags.Items.NUGGETS)
+      addTypedForgeTag(metal, MetalItemType.RawDrop, Tags.Items.RAW_MATERIALS)
+      addTypedForgeTag(metal, MetalItemType.Chunks, chunksTag)
+      addTypedForgeTag(metal, MetalItemType.Powder, powdersTag)
+      addTypedForgeTag(metal, MetalItemType.Dust, Tags.Items.DUSTS)
 
       if (metal.ownItem(MetalItemType.RawBlock)) {
         copy(blockTags.forgeTagCustom("storage_blocks", s"raw_${metal.name}"), forgeTagCustom("storage_blocks", s"raw_${metal.name}"))
-      }
-
-      if (metal.ownItem(MetalItemType.RawDrop)) {
-        val rawDrop = metal.item(MetalItemType.RawDrop)
-        tag(Tags.Items.RAW_MATERIALS).add(rawDrop)
-        tag(forgeTagCustom(s"raw_materials/${metal.name}")).add(rawDrop)
       }
 
       if (MetalItemType.ores.exists(metal.ownItem)) {

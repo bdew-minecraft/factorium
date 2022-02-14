@@ -1,6 +1,8 @@
 {
   "itemGroup.advtech": "Advanced Technologies",
   "block.advtech.crusher": "Crusher",
+  "block.advtech.grinder": "Grinder",
+  "block.advtech.pulverizer": "Pulverizer",
   "block.advtech.smelter": "Smelter",
   "item.advtech.upgrade_core_t1": "Enhanced Machine Core",
   "item.advtech.upgrade_efficiency": "Machine Efficiency Upgrade",
