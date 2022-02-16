@@ -1,4 +1,4 @@
-package net.bdew.advtech.upgrades.upgradable
+package net.bdew.advtech.machines.upgradable
 
 import net.bdew.advtech.AdvTech
 import net.bdew.lib.gui.{Sprite, Texture}

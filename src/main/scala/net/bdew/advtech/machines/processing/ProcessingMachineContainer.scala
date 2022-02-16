@@ -1,8 +1,8 @@
 package net.bdew.advtech.machines.processing
 
-import net.bdew.advtech.misc.AutoIOMode
-import net.bdew.advtech.network.{AutoIOConfigurableContainer, RsModeConfigurableContainer}
-import net.bdew.advtech.upgrades.upgradable.UpgradeableContainer
+import net.bdew.advtech.machines.sided.SidedItemIOContainer
+import net.bdew.advtech.machines.upgradable.UpgradeableContainer
+import net.bdew.advtech.network.RsModeConfigurableContainer
 import net.bdew.lib.container.BaseContainer
 import net.bdew.lib.container.switchable.{SwitchableContainer, SwitchableSlot}
 import net.bdew.lib.data.base.ContainerDataSlots
@@ -12,7 +12,7 @@ import net.minecraft.world.inventory.MenuType
 
 class ProcessingMachineContainer(val te: ProcessingMachineEntity, playerInventory: Inventory, id: Int, menuType: MenuType[_ <: ProcessingMachineContainer])
   extends BaseContainer(te.externalInventory, menuType, id)
-    with ContainerDataSlots with RsModeConfigurableContainer with AutoIOConfigurableContainer with UpgradeableContainer {
+    with ContainerDataSlots with RsModeConfigurableContainer with SidedItemIOContainer with UpgradeableContainer {
 
   override lazy val dataSource: ProcessingMachineEntity = te
 
@@ -44,9 +44,5 @@ class ProcessingMachineContainer(val te: ProcessingMachineEntity, playerInventor
 
   override def setRsMode(mode: RSMode.Value): Unit = {
     te.rsMode := mode
-  }
-
-  override def setAutoIoMode(mode: AutoIOMode.Value): Unit = {
-    te.ioMode := mode
   }
 }

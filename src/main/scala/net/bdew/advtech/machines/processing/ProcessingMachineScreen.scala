@@ -2,8 +2,9 @@ package net.bdew.advtech.machines.processing
 
 import net.bdew.advtech.gui.WidgetMode
 import net.bdew.advtech.machines.MachineTextures
-import net.bdew.advtech.network.{MsgSetAutoIOMode, MsgSetRsMode}
-import net.bdew.advtech.upgrades.upgradable.{UpgradableScreen, UpgradeableContainer}
+import net.bdew.advtech.machines.sided.{SidedItemIOContainer, SidedItemIOScreen}
+import net.bdew.advtech.machines.upgradable.{UpgradableScreen, UpgradeableContainer}
+import net.bdew.advtech.network.MsgSetRsMode
 import net.bdew.lib.Text
 import net.bdew.lib.container.switchable.{SwitchableContainer, SwitchableScreen}
 import net.bdew.lib.gui._
@@ -12,7 +13,7 @@ import net.bdew.lib.power.WidgetPowerGauge
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
-class ProcessingMachineScreen(container: ProcessingMachineContainer, playerInv: Inventory) extends BaseScreen(container, playerInv, container.te.getDisplayName) with SwitchableScreen[ProcessingMachineContainer] with UpgradableScreen[ProcessingMachineContainer] {
+class ProcessingMachineScreen(container: ProcessingMachineContainer, playerInv: Inventory) extends BaseScreen(container, playerInv, container.te.getDisplayName) with SwitchableScreen[ProcessingMachineContainer] with UpgradableScreen[ProcessingMachineContainer] with SidedItemIOScreen[ProcessingMachineContainer] {
   override def init(): Unit = {
     initGui(176, 166)
     initSwitchable()
@@ -28,15 +29,23 @@ class ProcessingMachineScreen(container: ProcessingMachineContainer, playerInv: 
 
       sub.add(new WidgetButtonIcon(Point(152, 18), openUpgrades, MachineTextures.buttonBase, MachineTextures.buttonHover) {
         override def icon: Texture = MachineTextures.upgrades
-        override def hover: Component = Text.translate("advtech.gui.openupgrades")
+        override def hover: Component = Text.translate("advtech.gui.upgrades")
       })
 
       sub.add(WidgetMode(Point(152, 36), container.te.rsMode, MachineTextures.rsMode, MsgSetRsMode, "bdlib.rsmode"))
-      sub.add(WidgetMode(Point(152, 54), container.te.ioMode, MachineTextures.autoIoMode, MsgSetAutoIOMode, "advtech.iomode"))
+
+      sub.add(new WidgetButtonIcon(Point(152, 54), openSides, MachineTextures.buttonBase, MachineTextures.buttonHover) {
+        override def icon: Texture = MachineTextures.ioConfig
+        override def hover: Component = Text.translate("advtech.gui.sidecfg")
+      })
     }
   }
 
   def openUpgrades(b: WidgetButtonIcon): Unit = {
     container.activateModeClient(UpgradeableContainer.UpgradesMode)
+  }
+
+  def openSides(b: WidgetButtonIcon): Unit = {
+    container.activateModeClient(SidedItemIOContainer.SidedItemIOMode)
   }
 }

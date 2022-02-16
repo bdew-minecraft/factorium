@@ -1,6 +1,5 @@
-package net.bdew.advtech.upgrades.upgradable
+package net.bdew.advtech.machines.upgradable
 
-import net.bdew.advtech.upgrades.DataSlotUpgrades
 import net.bdew.lib.container.switchable.{ContainerMode, SwitchableContainer, SwitchableSlot}
 
 trait UpgradeableContainer extends SwitchableContainer {

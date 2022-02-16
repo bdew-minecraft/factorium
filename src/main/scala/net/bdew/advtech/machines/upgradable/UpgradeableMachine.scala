@@ -1,8 +1,7 @@
-package net.bdew.advtech.upgrades.upgradable
+package net.bdew.advtech.machines.upgradable
 
 import net.bdew.advtech.machines.BaseMachineEntity
-import net.minecraft.world.Container
 
 trait UpgradeableMachine extends BaseMachineEntity with InfoSource {
-  def upgrades: Container
+  def upgrades: DataSlotUpgrades
 }

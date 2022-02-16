@@ -1,4 +1,4 @@
-package net.bdew.advtech.upgrades.upgradable
+package net.bdew.advtech.machines.upgradable
 
 import com.mojang.blaze3d.vertex.PoseStack
 import net.bdew.lib.gui.widgets.Widget

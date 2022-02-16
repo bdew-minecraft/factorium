@@ -1,19 +1,20 @@
 package net.bdew.advtech.network
 
+import net.bdew.advtech.machines.sided.BlockSide
 import net.bdew.advtech.misc.AutoIOMode
 import net.minecraft.network.FriendlyByteBuf
-import net.minecraft.world.inventory.AbstractContainerMenu
 
-case class MsgSetAutoIOMode(autoIOMode: AutoIOMode.Value) extends NetworkHandler.Message
+case class MsgSetItemSidedIO(side: BlockSide.Value, mode: AutoIOMode.Value) extends NetworkHandler.Message
 
-object CodecSetAutoIOMode extends NetworkHandler.Codec[MsgSetAutoIOMode] {
-  override def encodeMsg(m: MsgSetAutoIOMode, p: FriendlyByteBuf): Unit =
-    p.writeByte(m.autoIOMode.id)
+object CodecSetItemSidedIO extends NetworkHandler.Codec[MsgSetItemSidedIO] {
+  override def encodeMsg(m: MsgSetItemSidedIO, p: FriendlyByteBuf): Unit = {
+    p.writeByte(m.side.id)
+    p.writeByte(m.mode.id)
+  }
 
-  override def decodeMsg(p: FriendlyByteBuf): MsgSetAutoIOMode =
-    MsgSetAutoIOMode(AutoIOMode(p.readByte()))
-}
-
-trait AutoIOConfigurableContainer extends AbstractContainerMenu {
-  def setAutoIoMode(mode: AutoIOMode.Value): Unit
+  override def decodeMsg(p: FriendlyByteBuf): MsgSetItemSidedIO = {
+    val side = BlockSide(p.readByte())
+    val mode = AutoIOMode(p.readByte())
+    MsgSetItemSidedIO(side, mode)
+  }
 }

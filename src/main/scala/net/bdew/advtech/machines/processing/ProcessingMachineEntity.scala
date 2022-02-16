@@ -1,9 +1,10 @@
 package net.bdew.advtech.machines.processing
 
-import net.bdew.advtech.machines.BaseMachineEntity
+import net.bdew.advtech.machines.sided.{DataSlotSidedIOConfig, SidedItemIOEntity}
+import net.bdew.advtech.machines.upgradable.{DataSlotUpgrades, InfoEntry, InfoEntryKind, UpgradeableMachine}
+import net.bdew.advtech.machines.{BaseMachineEntity, RotatableMachineBlock}
 import net.bdew.advtech.misc.{AutoIOMode, DataSlotItemQueue}
 import net.bdew.advtech.upgrades._
-import net.bdew.advtech.upgrades.upgradable.{InfoEntry, InfoEntryKind, UpgradeableMachine}
 import net.bdew.lib.capabilities.Capabilities
 import net.bdew.lib.capabilities.handlers.{PowerEnergyHandler, SidedInventoryItemHandler}
 import net.bdew.lib.data.base.{DataSlot, UpdateKind}
@@ -23,7 +24,7 @@ import net.minecraftforge.common.util.LazyOptional
 import net.minecraftforge.energy.IEnergyStorage
 import net.minecraftforge.items.IItemHandler
 
-abstract class ProcessingMachineEntity(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends BaseMachineEntity(teType, pos, state) with UpgradeableMachine {
+abstract class ProcessingMachineEntity(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends BaseMachineEntity(teType, pos, state) with UpgradeableMachine with SidedItemIOEntity {
   object Slots {
     val input: Range = 0 to 5
     val output: Range = 6 to 11
@@ -41,6 +42,9 @@ abstract class ProcessingMachineEntity(teType: BlockEntityType[_], pos: BlockPos
   val power: DataSlotPower = DataSlotPower("power", this)
   val rsMode: DataSlotEnum[RSMode.type] = DataSlotEnum("rsMode", this, RSMode)
   val ioMode: DataSlotEnum[AutoIOMode.type] = DataSlotEnum("ioMode", this, AutoIOMode)
+
+  override val itemIOConfig: DataSlotSidedIOConfig = DataSlotSidedIOConfig("itemIoSides", this)
+  override def getFacing: Direction = getBlockState.getBlock.asInstanceOf[RotatableMachineBlock].getFacing(getBlockState)
 
   val progress: DataSlotFloat = DataSlotFloat("progress", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
   val workSpeed: DataSlotFloat = DataSlotFloat("workSpeed", this).setUpdate(UpdateKind.GUI)

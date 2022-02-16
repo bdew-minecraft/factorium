@@ -1,4 +1,4 @@
-package net.bdew.advtech.upgrades.upgradable
+package net.bdew.advtech.machines.upgradable
 
 import net.bdew.lib.Text
 import net.minecraft.network.chat.{Component, TranslatableComponent}
