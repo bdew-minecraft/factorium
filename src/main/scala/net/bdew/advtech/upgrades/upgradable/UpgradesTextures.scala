@@ -1,7 +1,6 @@
-package net.bdew.advtech.upgrades.gui
+package net.bdew.advtech.upgrades.upgradable
 
 import net.bdew.advtech.AdvTech
-import net.bdew.advtech.upgrades.InfoEntryKind
 import net.bdew.lib.gui.{Sprite, Texture}
 import net.minecraft.resources.ResourceLocation
 

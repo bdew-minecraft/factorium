@@ -1,5 +1,6 @@
 package net.bdew.advtech.upgrades
 
+import net.bdew.advtech.upgrades.upgradable.UpgradeableMachine
 import net.bdew.lib.Misc
 import net.bdew.lib.data.DataSlotInventory
 import net.minecraft.world.item.ItemStack

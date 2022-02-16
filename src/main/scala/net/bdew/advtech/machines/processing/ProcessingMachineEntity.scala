@@ -3,6 +3,7 @@ package net.bdew.advtech.machines.processing
 import net.bdew.advtech.machines.BaseMachineEntity
 import net.bdew.advtech.misc.{AutoIOMode, DataSlotItemQueue}
 import net.bdew.advtech.upgrades._
+import net.bdew.advtech.upgrades.upgradable.{InfoEntry, InfoEntryKind, UpgradeableMachine}
 import net.bdew.lib.capabilities.Capabilities
 import net.bdew.lib.capabilities.handlers.{PowerEnergyHandler, SidedInventoryItemHandler}
 import net.bdew.lib.data.base.{DataSlot, UpdateKind}

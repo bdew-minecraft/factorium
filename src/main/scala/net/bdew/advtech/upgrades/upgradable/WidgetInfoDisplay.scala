@@ -1,7 +1,6 @@
-package net.bdew.advtech.upgrades.gui
+package net.bdew.advtech.upgrades.upgradable
 
 import com.mojang.blaze3d.vertex.PoseStack
-import net.bdew.advtech.upgrades.InfoSource
 import net.bdew.lib.gui.widgets.Widget
 import net.bdew.lib.gui.{Color, Point, Rect}
 import net.minecraft.network.chat.Component
