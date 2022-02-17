@@ -1,6 +1,6 @@
 package net.bdew.advtech.machines.processing
 
-import net.bdew.advtech.machines.sided.{DataSlotSidedIOConfig, SidedItemIOEntity}
+import net.bdew.advtech.machines.sided.SidedItemIOEntity
 import net.bdew.advtech.machines.upgradable.{DataSlotUpgrades, InfoEntry, InfoEntryKind, UpgradeableMachine}
 import net.bdew.advtech.machines.{BaseMachineEntity, RotatableMachineBlock}
 import net.bdew.advtech.misc.{AutoIOMode, DataSlotItemQueue}
@@ -43,9 +43,6 @@ abstract class ProcessingMachineEntity(teType: BlockEntityType[_], pos: BlockPos
   val rsMode: DataSlotEnum[RSMode.type] = DataSlotEnum("rsMode", this, RSMode)
   val ioMode: DataSlotEnum[AutoIOMode.type] = DataSlotEnum("ioMode", this, AutoIOMode)
 
-  override val itemIOConfig: DataSlotSidedIOConfig = DataSlotSidedIOConfig("itemIoSides", this)
-  override def getFacing: Direction = getBlockState.getBlock.asInstanceOf[RotatableMachineBlock].getFacing(getBlockState)
-
   val progress: DataSlotFloat = DataSlotFloat("progress", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
   val workSpeed: DataSlotFloat = DataSlotFloat("workSpeed", this).setUpdate(UpdateKind.GUI)
   val powerUse: DataSlotFloat = DataSlotFloat("powerUse", this).setUpdate(UpdateKind.GUI)
@@ -58,6 +55,8 @@ abstract class ProcessingMachineEntity(teType: BlockEntityType[_], pos: BlockPos
 
   val inventoryHandler: LazyOptional[IItemHandler] = SidedInventoryItemHandler.create(externalInventory)
   val powerHandler: LazyOptional[IEnergyStorage] = PowerEnergyHandler.create(power, true, false)
+
+  override def getFacing: Direction = getBlockState.getBlock.asInstanceOf[RotatableMachineBlock].getFacing(getBlockState)
 
   serverTick.listen(doTick)
 
