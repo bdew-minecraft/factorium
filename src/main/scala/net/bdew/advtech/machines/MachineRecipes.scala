@@ -1,5 +1,6 @@
 package net.bdew.advtech.machines
 
+import net.bdew.advtech.machines.alloy.AlloyRecipe
 import net.bdew.advtech.machines.processing.crusher.CrusherRecipe
 import net.bdew.advtech.machines.processing.grinder.GrinderRecipe
 import net.bdew.advtech.machines.processing.pulverizer.PulverizerRecipe
@@ -19,6 +20,7 @@ object MachineRecipes {
   var grinder = Set.empty[GrinderRecipe]
   var pulverizer = Set.empty[PulverizerRecipe]
   var smelter = Set.empty[SmelterRecipe]
+  var alloy = Set.empty[AlloyRecipe]
 
   private def makeVanillaAdaptedRecipes(mgr: RecipeManager): (List[CrusherRecipe], List[SmelterRecipe]) = {
     val (crusher, smelter) =
@@ -56,6 +58,7 @@ object MachineRecipes {
     smelter = (Recipes.smelterType.getAllRecipes(manager) ++ smelterAdapted).toSet
     grinder = Recipes.grinderType.getAllRecipes(manager).toSet
     pulverizer = Recipes.pulverizerType.getAllRecipes(manager).toSet
+    alloy = Recipes.alloyType.getAllRecipes(manager).toSet
   }
 
   def init(): Unit = {

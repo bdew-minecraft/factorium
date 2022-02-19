@@ -20,6 +20,7 @@ class JEIPlugin extends IModPlugin {
       GrinderRecipes,
       PulverizerRecipes,
       SmelterRecipes,
+      AlloyRecipes,
     )
   }
 
@@ -28,6 +29,7 @@ class JEIPlugin extends IModPlugin {
     GrinderRecipes.initRecipes(registration)
     PulverizerRecipes.initRecipes(registration)
     SmelterRecipes.initRecipes(registration)
+    AlloyRecipes.initRecipes(registration)
   }
 
   override def registerRecipeCatalysts(registration: IRecipeCatalystRegistration): Unit = {
@@ -35,6 +37,7 @@ class JEIPlugin extends IModPlugin {
     GrinderRecipes.initCatalyst(registration)
     PulverizerRecipes.initCatalyst(registration)
     SmelterRecipes.initCatalyst(registration)
+    AlloyRecipes.initCatalyst(registration)
   }
 }
 

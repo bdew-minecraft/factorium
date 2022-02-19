@@ -1,6 +1,7 @@
-package net.bdew.advtech.machines.processing
+package net.bdew.advtech.machines.alloy
 
 import net.bdew.advtech.gui.WidgetMode
+import net.bdew.advtech.machines.processing.ProcessingTextures
 import net.bdew.advtech.machines.sided.{SidedItemIOContainer, SidedItemIOScreen}
 import net.bdew.advtech.machines.upgradable.{UpgradableScreen, UpgradeableContainer}
 import net.bdew.advtech.network.MsgSetRsMode
@@ -12,14 +13,14 @@ import net.bdew.lib.power.WidgetPowerGauge
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
-class ProcessingMachineScreen(container: ProcessingMachineContainer, playerInv: Inventory) extends BaseScreen[ProcessingMachineContainer](container, playerInv, container.te.getDisplayName) with SwitchableScreen[ProcessingMachineContainer] with UpgradableScreen[ProcessingMachineContainer] with SidedItemIOScreen[ProcessingMachineContainer] {
+class AlloySmelterScreen(container: AlloySmelterContainer, playerInv: Inventory) extends BaseScreen(container, playerInv, container.te.getDisplayName) with SwitchableScreen[AlloySmelterContainer] with UpgradableScreen[AlloySmelterContainer] with SidedItemIOScreen[AlloySmelterContainer] {
   override def init(): Unit = {
     initGui(176, 166)
     initSwitchable()
 
     widgets.add(new WidgetLabel(playerInv.getName, 8, rect.h - 93, Color.darkGray))
 
-    addMode(SwitchableContainer.NormalMode, ProcessingTextures.screen) { sub =>
+    addMode(SwitchableContainer.NormalMode, AlloyTextures.screen) { sub =>
       sub.add(new WidgetLabel(title, 8, 6, Color.darkGray))
 
       sub.add(new WidgetPowerGauge(Rect(10, 18, 12, 52), ProcessingTextures.powerFill, container.te.power))

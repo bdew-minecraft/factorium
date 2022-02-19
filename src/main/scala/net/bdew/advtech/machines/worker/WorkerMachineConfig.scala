@@ -1,9 +1,9 @@
-package net.bdew.advtech.machines.processing
+package net.bdew.advtech.machines.worker
 
 import net.bdew.lib.config.ConfigSection
 import net.minecraftforge.common.ForgeConfigSpec
 
-class ProcessingMachineConfig(spec: ForgeConfigSpec.Builder, defPowerUse: Float, defCycleTicks: Float) extends ConfigSection {
+class WorkerMachineConfig(spec: ForgeConfigSpec.Builder, defPowerUse: Float, defCycleTicks: Float) extends ConfigSection {
   val basePowerUsage: () => Float = floatVal(spec, "basePowerUsage",
     "Base power usage (RF/t)", defPowerUse, minVal = 1)
 

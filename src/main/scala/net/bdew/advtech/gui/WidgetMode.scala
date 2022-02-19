@@ -1,7 +1,7 @@
 package net.bdew.advtech.gui
 
 import com.mojang.blaze3d.vertex.PoseStack
-import net.bdew.advtech.machines.MachineTextures
+import net.bdew.advtech.machines.processing.ProcessingTextures
 import net.bdew.advtech.network.NetworkHandler
 import net.bdew.lib.data.DataSlotEnum
 import net.bdew.lib.gui.widgets.Widget
@@ -22,9 +22,9 @@ case class WidgetMode[T <: Enumeration](p: Point, ds: DataSlotEnum[T], textures:
 
   override def drawBackground(m: PoseStack, mouse: Point): Unit = {
     if (rect.contains(mouse))
-      parent.drawTexture(m, rect, MachineTextures.buttonHover)
+      parent.drawTexture(m, rect, ProcessingTextures.buttonHover)
     else
-      parent.drawTexture(m, rect, MachineTextures.buttonBase)
+      parent.drawTexture(m, rect, ProcessingTextures.buttonBase)
   }
 
   override def draw(m: PoseStack, mouse: Point, partial: Float): Unit = {

@@ -6,13 +6,12 @@ import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.ingredients.IIngredients
 import mezz.jei.api.recipe.category.IRecipeCategory
 import mezz.jei.api.registration.{IRecipeCatalystRegistration, IRecipeRegistration}
-import net.bdew.advtech.AdvTech
 import net.bdew.advtech.machines.MachineRecipes
-import net.bdew.advtech.machines.processing.ProcessingRecipe
 import net.bdew.advtech.machines.processing.crusher.CrusherRecipe
 import net.bdew.advtech.machines.processing.grinder.GrinderRecipe
 import net.bdew.advtech.machines.processing.pulverizer.PulverizerRecipe
 import net.bdew.advtech.machines.processing.smelter.SmelterRecipe
+import net.bdew.advtech.machines.processing.{ProcessingRecipe, ProcessingTextures}
 import net.bdew.advtech.registries.{Blocks, Recipes}
 import net.bdew.lib.recipes.MachineRecipeType
 import net.bdew.lib.{DecFormat, Text}
@@ -35,7 +34,7 @@ abstract class ProcessingRecipes[T <: ProcessingRecipe](recipeType: MachineRecip
 
   override def getBackground: IDrawable =
     JEIPlugin.guiHelper.drawableBuilder(
-      new ResourceLocation(AdvTech.ModId, "textures/gui/machine.png"),
+      ProcessingTextures.image,
       7, 15, 162, 58
     ).build()
 

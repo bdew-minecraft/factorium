@@ -33,10 +33,10 @@ abstract class ProcessingRecipeSerializer[T <: ProcessingRecipe] extends BaseMac
     factory(recipeId, input, output, secondary, bonus)
   }
 
-  override def toNetwork(buffer: FriendlyByteBuf, recipe: T): Unit = {
-    recipe.input.toNetwork(buffer)
-    recipe.output.toNetwork(buffer)
-    recipe.secondary.toNetwork(buffer)
-    recipe.bonus.toNetwork(buffer)
+  override def toNetwork(buff: FriendlyByteBuf, recipe: T): Unit = {
+    recipe.input.toNetwork(buff)
+    recipe.output.toNetwork(buff)
+    recipe.secondary.toNetwork(buff)
+    recipe.bonus.toNetwork(buff)
   }
 }

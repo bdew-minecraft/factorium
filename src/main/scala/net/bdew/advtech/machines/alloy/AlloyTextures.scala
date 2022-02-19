@@ -1,12 +1,12 @@
-package net.bdew.advtech.machines
+package net.bdew.advtech.machines.alloy
 
 import net.bdew.advtech.AdvTech
-import net.bdew.lib.gui._
+import net.bdew.lib.gui.{Sprite, Texture}
 import net.bdew.lib.misc.RSMode
 import net.minecraft.resources.ResourceLocation
 
-object MachineTextures {
-  val image = new ResourceLocation(AdvTech.ModId, "textures/gui/machine.png")
+object AlloyTextures {
+  val image = new ResourceLocation(AdvTech.ModId, "textures/gui/alloy.png")
 
   val screen: Sprite = Texture(image, 0, 0, 176, 166)
 

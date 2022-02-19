@@ -1,5 +1,6 @@
 package net.bdew.advtech.registries
 
+import net.bdew.advtech.machines.alloy.{AlloySmelterContainer, AlloySmelterScreen}
 import net.bdew.advtech.machines.processing.crusher.CrusherContainer
 import net.bdew.advtech.machines.processing.grinder.GrinderContainer
 import net.bdew.advtech.machines.processing.pulverizer.PulverizerContainer
@@ -32,11 +33,17 @@ object Containers extends ContainerManager {
       (id, inv, te) => new SmelterContainer(te, inv, id)
     }
 
+  val alloySmelter: RegistryObject[MenuType[AlloySmelterContainer]] =
+    registerPositional("alloy", Blocks.alloySmelter.teType) {
+      (id, inv, te) => new AlloySmelterContainer(te, inv, id)
+    }
+
   @OnlyIn(Dist.CLIENT)
   override def onClientSetup(ev: FMLClientSetupEvent): Unit = {
     registerScreen(crusher) { (c, i, _) => new ProcessingMachineScreen(c, i) }
     registerScreen(grinder) { (c, i, _) => new ProcessingMachineScreen(c, i) }
     registerScreen(pulverizer) { (c, i, _) => new ProcessingMachineScreen(c, i) }
     registerScreen(smelter) { (c, i, _) => new ProcessingMachineScreen(c, i) }
+    registerScreen(alloySmelter) { (c, i, _) => new AlloySmelterScreen(c, i) }
   }
 }

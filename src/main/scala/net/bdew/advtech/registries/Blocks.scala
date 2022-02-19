@@ -1,11 +1,12 @@
 package net.bdew.advtech.registries
 
 import net.bdew.advtech.machines.BaseMachineItem
-import net.bdew.advtech.machines.processing.ProcessingMachineBlock
+import net.bdew.advtech.machines.alloy.AlloySmelterEntity
 import net.bdew.advtech.machines.processing.crusher.CrusherEntity
 import net.bdew.advtech.machines.processing.grinder.GrinderEntity
 import net.bdew.advtech.machines.processing.pulverizer.PulverizerEntity
 import net.bdew.advtech.machines.processing.smelter.SmelterEntity
+import net.bdew.advtech.machines.worker.WorkerMachineBlock
 import net.bdew.advtech.metals.{MetalItemType, Metals}
 import net.bdew.lib.managers.BlockManager
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
@@ -32,27 +33,33 @@ object Blocks extends BlockManager(Items) {
     .sound(SoundType.STONE)
     .strength(2, 8)
 
-  val crusher: Def[ProcessingMachineBlock[CrusherEntity], CrusherEntity, BaseMachineItem] =
-    define("crusher", () => new ProcessingMachineBlock[CrusherEntity])
+  val crusher: Def[WorkerMachineBlock[CrusherEntity], CrusherEntity, BaseMachineItem] =
+    define("crusher", () => new WorkerMachineBlock[CrusherEntity])
       .withTE(new CrusherEntity(_, _, _))
       .withItem(b => new BaseMachineItem(b))
       .register
 
-  val grinder: Def[ProcessingMachineBlock[GrinderEntity], GrinderEntity, BaseMachineItem] =
-    define("grinder", () => new ProcessingMachineBlock[GrinderEntity])
+  val grinder: Def[WorkerMachineBlock[GrinderEntity], GrinderEntity, BaseMachineItem] =
+    define("grinder", () => new WorkerMachineBlock[GrinderEntity])
       .withTE(new GrinderEntity(_, _, _))
       .withItem(b => new BaseMachineItem(b))
       .register
 
-  val pulverizer: Def[ProcessingMachineBlock[PulverizerEntity], PulverizerEntity, BaseMachineItem] =
-    define("pulverizer", () => new ProcessingMachineBlock[PulverizerEntity])
+  val pulverizer: Def[WorkerMachineBlock[PulverizerEntity], PulverizerEntity, BaseMachineItem] =
+    define("pulverizer", () => new WorkerMachineBlock[PulverizerEntity])
       .withTE(new PulverizerEntity(_, _, _))
       .withItem(b => new BaseMachineItem(b))
       .register
 
-  val smelter: Def[ProcessingMachineBlock[SmelterEntity], SmelterEntity, BaseMachineItem] =
-    define("smelter", () => new ProcessingMachineBlock[SmelterEntity])
+  val smelter: Def[WorkerMachineBlock[SmelterEntity], SmelterEntity, BaseMachineItem] =
+    define("smelter", () => new WorkerMachineBlock[SmelterEntity])
       .withTE(new SmelterEntity(_, _, _))
+      .withItem(b => new BaseMachineItem(b))
+      .register
+
+  val alloySmelter: Def[WorkerMachineBlock[AlloySmelterEntity], AlloySmelterEntity, BaseMachineItem] =
+    define("alloy", () => new WorkerMachineBlock[AlloySmelterEntity])
+      .withTE(new AlloySmelterEntity(_, _, _))
       .withItem(b => new BaseMachineItem(b))
       .register
 

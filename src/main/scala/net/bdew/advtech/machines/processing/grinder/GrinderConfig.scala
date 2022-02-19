@@ -1,8 +1,8 @@
 package net.bdew.advtech.machines.processing.grinder
 
-import net.bdew.advtech.machines.processing.ProcessingMachineConfig
+import net.bdew.advtech.machines.worker.WorkerMachineConfig
 import net.minecraftforge.common.ForgeConfigSpec
 
-class GrinderConfig(spec: ForgeConfigSpec.Builder) extends ProcessingMachineConfig(spec, 50, 200)
+class GrinderConfig(spec: ForgeConfigSpec.Builder) extends WorkerMachineConfig(spec, 50, 200)
 
 

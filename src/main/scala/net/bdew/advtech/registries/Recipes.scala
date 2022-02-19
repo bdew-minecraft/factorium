@@ -1,5 +1,6 @@
 package net.bdew.advtech.registries
 
+import net.bdew.advtech.machines.alloy.{AlloyRecipe, AlloyRecipeSerializer}
 import net.bdew.advtech.machines.processing.crusher.{CrusherRecipe, CrusherRecipeSerializer}
 import net.bdew.advtech.machines.processing.grinder.{GrinderRecipe, GrinderRecipeSerializer}
 import net.bdew.advtech.machines.processing.pulverizer.{PulverizerRecipe, PulverizerRecipeSerializer}
@@ -20,4 +21,7 @@ object Recipes extends RegistryManager(ForgeRegistries.RECIPE_SERIALIZERS) {
 
   val smelterSerializer: RegistryObject[SmelterRecipeSerializer] = register("smelter", () => new SmelterRecipeSerializer)
   val smelterType: MachineRecipeType[SmelterRecipe] = new MachineRecipeType(smelterSerializer)
+
+  val alloySerializer: RegistryObject[AlloyRecipeSerializer] = register("alloy", () => new AlloyRecipeSerializer)
+  val alloyType: MachineRecipeType[AlloyRecipe] = new MachineRecipeType(alloySerializer)
 }
