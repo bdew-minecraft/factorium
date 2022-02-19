@@ -4,7 +4,7 @@ import net.bdew.advtech.AdvTech
 import net.bdew.advtech.metals.{MetalEntry, MetalItemType, Metals}
 import net.bdew.advtech.registries.Recipes
 import net.minecraft.data.DataGenerator
-import net.minecraft.data.recipes.{FinishedRecipe, RecipeProvider, ShapelessRecipeBuilder, SimpleCookingRecipeBuilder}
+import net.minecraft.data.recipes._
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.{ItemTags, Tag}
 import net.minecraft.world.item.crafting.{Ingredient, RecipeSerializer}
@@ -18,21 +18,6 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
 
   def myTag(name: String*): Tag.Named[Item] =
     ItemTags.createOptional(new ResourceLocation(AdvTech.ModId, name.mkString("/")))
-
-  def maybeAddStorageRecipes(metal: MetalEntry, big: MetalItemType, small: MetalItemType, consumer: Consumer[FinishedRecipe]): Unit = {
-    if (metal.ownItem(big) || metal.ownItem(small)) {
-      ShapelessRecipeBuilder.shapeless(metal.item(small), 9)
-        .requires(metal.item(big))
-        .unlockedBy("has_item", RecipeProvider.has(metal.item(big)))
-        .group(s"${AdvTech.ModId}:misc")
-        .save(consumer, new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/${small.kind}_from_${big.kind}"))
-      ShapelessRecipeBuilder.shapeless(metal.item(big))
-        .requires(metal.item(small), 9)
-        .unlockedBy("has_item", RecipeProvider.has(metal.item(small)))
-        .group(s"${AdvTech.ModId}:misc")
-        .save(consumer, new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/${big.kind}_from_${small.kind}"))
-    }
-  }
 
   override def buildCraftingRecipes(consumer: Consumer[FinishedRecipe]): Unit = {
     for (metal <- Metals.all) {
@@ -62,6 +47,39 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
           .unlockedBy("has_item", RecipeProvider.has(smeltableTag))
           .group(s"${AdvTech.ModId}:smelting")
           .save(consumer, new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/ingot_from_blasting"))
+      }
+
+      if (metal.ownItem(MetalItemType.Plate)) {
+        val ingotTag = forgeTagCustom("ingots", metal.name)
+        ShapedRecipeBuilder.shaped(metal.item(MetalItemType.Plate), 3)
+          .define('x', Ingredient.of(ingotTag))
+          .pattern("xxx")
+          .unlockedBy("has_item", RecipeProvider.has(ingotTag))
+          .group(s"${AdvTech.ModId}:plates")
+          .save(consumer, new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/plate"))
+      }
+
+      if (metal.ownItem(MetalItemType.Gear)) {
+        val ingotTag = forgeTagCustom("ingots", metal.name)
+        ShapedRecipeBuilder.shaped(metal.item(MetalItemType.Gear))
+          .define('x', Ingredient.of(ingotTag))
+          .pattern(" x ")
+          .pattern("xxx")
+          .pattern(" x ")
+          .unlockedBy("has_item", RecipeProvider.has(ingotTag))
+          .group(s"${AdvTech.ModId}:gears")
+          .save(consumer, new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/gear"))
+      }
+
+      if (metal.ownItem(MetalItemType.Rod)) {
+        val ingotTag = forgeTagCustom("ingots", metal.name)
+        ShapedRecipeBuilder.shaped(metal.item(MetalItemType.Rod), 4)
+          .define('x', Ingredient.of(ingotTag))
+          .pattern(" x ")
+          .pattern(" x ")
+          .unlockedBy("has_item", RecipeProvider.has(ingotTag))
+          .group(s"${AdvTech.ModId}:rods")
+          .save(consumer, new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/rod"))
       }
 
       if (metal.ownItem(MetalItemType.Chunks)) {
@@ -98,6 +116,21 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
           consumer
         )
       }
+    }
+  }
+
+  def maybeAddStorageRecipes(metal: MetalEntry, big: MetalItemType, small: MetalItemType, consumer: Consumer[FinishedRecipe]): Unit = {
+    if (metal.ownItem(big) || metal.ownItem(small)) {
+      ShapelessRecipeBuilder.shapeless(metal.item(small), 9)
+        .requires(metal.item(big))
+        .unlockedBy("has_item", RecipeProvider.has(metal.item(big)))
+        .group(s"${AdvTech.ModId}:misc")
+        .save(consumer, new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/${small.kind}_from_${big.kind}"))
+      ShapelessRecipeBuilder.shapeless(metal.item(big))
+        .requires(metal.item(small), 9)
+        .unlockedBy("has_item", RecipeProvider.has(metal.item(small)))
+        .group(s"${AdvTech.ModId}:misc")
+        .save(consumer, new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/${big.kind}_from_${small.kind}"))
     }
   }
 

@@ -38,6 +38,10 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
     val chunksTag = ItemTags.createOptional(new ResourceLocation(AdvTech.ModId, "chunks"))
     val powdersTag = ItemTags.createOptional(new ResourceLocation(AdvTech.ModId, "powders"))
 
+    val platesTag = forgeTagCustom("plates")
+    val gearsTag = forgeTagCustom("gears")
+    val metalRodsTag = forgeTagCustom("rods", "all_metal")
+
     for (metal <- Metals.all) {
       addTypedForgeTag(metal, MetalItemType.Ingot, Tags.Items.INGOTS)
       addTypedForgeTag(metal, MetalItemType.Nugget, Tags.Items.NUGGETS)
@@ -45,6 +49,13 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
       addTypedForgeTag(metal, MetalItemType.Chunks, chunksTag)
       addTypedForgeTag(metal, MetalItemType.Powder, powdersTag)
       addTypedForgeTag(metal, MetalItemType.Dust, Tags.Items.DUSTS)
+      addTypedForgeTag(metal, MetalItemType.Rod, Tags.Items.RODS)
+      addTypedForgeTag(metal, MetalItemType.Plate, platesTag)
+      addTypedForgeTag(metal, MetalItemType.Gear, gearsTag)
+
+      if (metal.ownItem(MetalItemType.Rod)) {
+        tag(metalRodsTag).add(metal.item(MetalItemType.Rod))
+      }
 
       if (metal.ownItem(MetalItemType.RawBlock)) {
         copy(blockTags.forgeTagCustom("storage_blocks", s"raw_${metal.name}"), forgeTagCustom("storage_blocks", s"raw_${metal.name}"))

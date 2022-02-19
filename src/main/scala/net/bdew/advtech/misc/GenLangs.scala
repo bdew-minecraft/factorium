@@ -28,6 +28,7 @@ object GenLangs {
           case MetalItemType.Powder => out.addOne(key, s"$mname Powder")
           case MetalItemType.Plate => out.addOne(key, s"$mname Plate")
           case MetalItemType.Gear => out.addOne(key, s"$mname Gear")
+          case MetalItemType.Rod => out.addOne(key, s"$mname Rod")
           case x => throw new RuntimeException(s"Missing kind $x")
         }
       }

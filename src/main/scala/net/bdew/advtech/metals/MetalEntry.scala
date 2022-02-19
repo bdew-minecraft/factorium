@@ -81,6 +81,9 @@ case class MetalEntry(name: String) {
   def addPlate(): MetalEntry =
     addOwnItem(MetalItemType.Plate)
 
+  def addRod(): MetalEntry =
+    addOwnItem(MetalItemType.Rod)
+
   def addGear(): MetalEntry =
     addOwnItem(MetalItemType.Gear)
 

@@ -18,6 +18,7 @@ object Metals {
     .addProcessing()
     .addGear()
     .addPlate()
+    .addRod()
 
   val copper: MetalEntry = MetalEntry("copper")
     .addVanillaItem(MetalItemType.Ingot, () => MCItems.COPPER_INGOT)
@@ -31,6 +32,7 @@ object Metals {
     .addProcessing()
     .addGear()
     .addPlate()
+    .addRod()
 
   val gold: MetalEntry = MetalEntry("gold")
     .addVanillaItem(MetalItemType.Ingot, () => MCItems.GOLD_INGOT)
@@ -44,6 +46,7 @@ object Metals {
     .addProcessing()
     .addGear()
     .addPlate()
+    .addRod()
 
 
   val tin: MetalEntry = MetalEntry("tin")
@@ -51,6 +54,7 @@ object Metals {
     .addProcessing()
     .addPlate()
     .addGear()
+    .addRod()
     .addOreGen(OreGenOverworld("tin_overworld", _,
       defaultCount = 20,
       defaultMinY = -30,
@@ -62,6 +66,7 @@ object Metals {
     .addResource()
     .addPlate()
     .addGear()
+    .addRod()
 
   val all: List[MetalEntry] = List(iron, copper, gold, tin, bronze)
 
