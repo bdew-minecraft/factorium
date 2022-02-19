@@ -1,16 +1,21 @@
 package net.bdew.advtech.items
 
 import net.bdew.advtech.registries.Items
+import net.bdew.lib.Text
+import net.minecraft.ChatFormatting
 import net.minecraft.core.{BlockPos, Direction}
+import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.context.UseOnContext
-import net.minecraft.world.item.{Item, ItemStack}
+import net.minecraft.world.item.{Item, ItemStack, TooltipFlag}
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.{BlockStateProperties, ChestType}
 import net.minecraft.world.level.block.{Block, Rotation}
 import net.minecraft.world.level.{Level, LevelReader}
+
+import java.util
 
 class WrenchItem extends Item(Items.toolProps) with ToolItem {
   def checkAndSetState(world: Level, pos: BlockPos, prev: BlockState, state: BlockState, entity: Player): Boolean = {
@@ -26,7 +31,6 @@ class WrenchItem extends Item(Items.toolProps) with ToolItem {
       true
     } else false
   }
-
 
   override def doesSneakBypassUse(stack: ItemStack, world: LevelReader, pos: BlockPos, player: Player): Boolean =
     true
@@ -70,5 +74,11 @@ class WrenchItem extends Item(Items.toolProps) with ToolItem {
     }
 
     super.useOn(ctx)
+  }
+
+  override def appendHoverText(stack: ItemStack, world: Level, tip: util.List[Component], flag: TooltipFlag): Unit = {
+    super.appendHoverText(stack, world, tip, flag)
+    tip.add(Text.translate(getDescriptionId + ".desc").withStyle(ChatFormatting.GRAY))
+    tip.add(Text.translate(getDescriptionId + ".desc2").withStyle(ChatFormatting.GRAY))
   }
 }

@@ -36,7 +36,6 @@ abstract class WorkerMachineEntity(teType: BlockEntityType[_], pos: BlockPos, st
 
   override def getFacing: Direction = getBlockState.getBlock.asInstanceOf[RotatableMachineBlock].getFacing(getBlockState)
 
-
   def processRecipes(): Unit
   def haveValidInputs: Boolean
   def addToOutputs(stack: ItemStack): ItemStack
