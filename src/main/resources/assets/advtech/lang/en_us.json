@@ -8,6 +8,7 @@
   "item.advtech.upgrade_efficiency": "Machine Efficiency Upgrade",
   "item.advtech.upgrade_speed": "Machine Speed Upgrade",
   "item.advtech.upgrade_parallel_t1": "Dual Processing Upgrade",
+  "item.advtech.wrench": "Wrench",
   "advtech.iomode.both": "Push and Pull",
   "advtech.iomode.input": "Pull",
   "advtech.iomode.output": "Push",

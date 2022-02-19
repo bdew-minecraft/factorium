@@ -2,6 +2,7 @@ package net.bdew.advtech.datagen
 
 import net.bdew.advtech.AdvTech
 import net.bdew.advtech.metals.{MetalEntry, MetalItemType, Metals}
+import net.bdew.advtech.registries.Items
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.tags.ItemTagsProvider
 import net.minecraft.resources.ResourceLocation
@@ -30,6 +31,9 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
     copy(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE, Tags.Items.ORES_IN_GROUND_DEEPSLATE)
     copy(Tags.Blocks.ORES_IN_GROUND_STONE, Tags.Items.ORES_IN_GROUND_STONE)
     copy(Tags.Blocks.ORES, Tags.Items.ORES)
+
+    tag(forgeTagCustom("wrenches")).add(Items.wrench.get())
+    tag(forgeTagCustom("tools", "wrench")).add(Items.wrench.get())
 
     val chunksTag = ItemTags.createOptional(new ResourceLocation(AdvTech.ModId, "chunks"))
     val powdersTag = ItemTags.createOptional(new ResourceLocation(AdvTech.ModId, "powders"))
