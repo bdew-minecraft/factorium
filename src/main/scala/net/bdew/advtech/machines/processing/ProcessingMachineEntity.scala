@@ -56,7 +56,7 @@ abstract class ProcessingMachineEntity(teType: BlockEntityType[_], pos: BlockPos
   }
 
   def isValidInput(stack: ItemStack): Boolean = recipes.exists(_.input.test(stack))
-  override def haveValidInputs: Boolean = Slots.input.map(inventory.getItem).forall(_.isEmpty)
+  override def haveValidInputs: Boolean = !Slots.input.map(inventory.getItem).forall(_.isEmpty)
   override def addToOutputs(stack: ItemStack): ItemStack =
     ItemUtils.addStackToSlots(stack, inventory, Slots.output, false)
 
