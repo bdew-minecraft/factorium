@@ -14,7 +14,7 @@ import net.minecraftforge.common.data.ExistingFileHelper
 import net.minecraftforge.registries.ForgeRegistryEntry
 
 class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStateGenerator(gen, AdvTech.ModId, efh) {
-  def matTex(obj: ForgeRegistryEntry[_]) =
+  def matTex(obj: ForgeRegistryEntry[_]): String =
     "materials/" + obj.getRegistryName.getPath.substring(4).split("_", 2).mkString("/")
 
   def makeRotatableBlock(block: RotatableMachineBlock): Unit = {

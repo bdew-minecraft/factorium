@@ -34,7 +34,7 @@ class AlloyRecipeSerializer extends BaseMachineRecipeSerializer[AlloyRecipe] {
     val input1 = IngredientMulti.fromJson(obj.getAsJsonObject("input1"))
     val input2 = IngredientMulti.fromJson(obj.getAsJsonObject("input2"))
     val output = ShapedRecipe.itemStackFromJson(obj.getAsJsonObject("output"))
-    val speedMod = if (obj.has("speed")) obj.get("speed").getAsFloat else 1
+    val speedMod = if (obj.has("speedMod")) obj.get("speedMod").getAsFloat else 1
     new AlloyRecipe(recipeId, input1, input2, output, speedMod)
   }
 

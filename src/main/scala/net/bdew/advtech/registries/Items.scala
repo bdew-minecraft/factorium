@@ -24,6 +24,10 @@ object Items extends ItemManager(CreativeTab) {
     }
   }
 
+  for (name <- Metals.extraDusts) {
+    simple(s"mat_extra_dust_${name}", resourceProps)
+  }
+
   override def init(): Unit = {
     super.init()
     UpgradeItems.init()

@@ -1,0 +1,18 @@
+{
+  "type": "advtech:grinder",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:gems/emerald",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "input": {
+    "tag": "forge:gems/emerald"
+  },
+  "output": {
+    "item": "advtech:mat_extra_dust_emerald"
+  }
+}

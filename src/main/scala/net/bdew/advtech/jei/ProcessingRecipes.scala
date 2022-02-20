@@ -1,17 +1,20 @@
 package net.bdew.advtech.jei
 
+import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.IRecipeLayout
-import mezz.jei.api.gui.drawable.IDrawable
+import mezz.jei.api.gui.drawable.{IDrawable, IDrawableAnimated}
 import mezz.jei.api.ingredients.IIngredients
 import mezz.jei.api.recipe.category.IRecipeCategory
 import mezz.jei.api.registration.{IRecipeCatalystRegistration, IRecipeRegistration}
+import net.bdew.advtech.Config
 import net.bdew.advtech.machines.MachineRecipes
 import net.bdew.advtech.machines.processing.crusher.CrusherRecipe
 import net.bdew.advtech.machines.processing.grinder.GrinderRecipe
 import net.bdew.advtech.machines.processing.pulverizer.PulverizerRecipe
 import net.bdew.advtech.machines.processing.smelter.SmelterRecipe
 import net.bdew.advtech.machines.processing.{ProcessingRecipe, ProcessingTextures}
+import net.bdew.advtech.machines.worker.WorkerMachineConfig
 import net.bdew.advtech.registries.{Blocks, Recipes}
 import net.bdew.lib.recipes.MachineRecipeType
 import net.bdew.lib.{DecFormat, Text}
@@ -27,6 +30,7 @@ import scala.jdk.CollectionConverters._
 abstract class ProcessingRecipes[T <: ProcessingRecipe](recipeType: MachineRecipeType[T], cls: Class[T]) extends IRecipeCategory[T] {
   def getRecipes: List[T]
   def block: Block
+  def cfg: WorkerMachineConfig
 
   override def getUid: ResourceLocation = recipeType.registryName
   override def getRecipeClass: Class[T] = cls
@@ -37,6 +41,10 @@ abstract class ProcessingRecipes[T <: ProcessingRecipe](recipeType: MachineRecip
       ProcessingTextures.image,
       7, 15, 162, 58
     ).build()
+
+  lazy private val arrow = JEIPlugin.guiHelper.drawableBuilder(
+    ProcessingTextures.image, 192, 53, 24, 16)
+    .buildAnimated(cfg.baseCycleTicks().round, IDrawableAnimated.StartDirection.LEFT, false)
 
   override def getIcon: IDrawable =
     JEIPlugin.guiHelper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(block))
@@ -83,7 +91,10 @@ abstract class ProcessingRecipes[T <: ProcessingRecipe](recipeType: MachineRecip
   }
 
   override def getTooltipStrings(recipe: T, mouseX: Double, mouseY: Double): util.List[Component] = {
-    super.getTooltipStrings(recipe, mouseX, mouseY)
+    var res = super.getTooltipStrings(recipe, mouseX, mouseY).asScala
+    if (mouseX >= 68 && mouseX <= 92 && mouseY >= 20 && mouseY <= 36)
+      res :+= Text.amount(cfg.baseCycleTicks() / 20f, "seconds")
+    res.asJava
   }
 
   def initRecipes(reg: IRecipeRegistration): Unit = {
@@ -93,24 +104,33 @@ abstract class ProcessingRecipes[T <: ProcessingRecipe](recipeType: MachineRecip
   def initCatalyst(reg: IRecipeCatalystRegistration): Unit = {
     reg.addRecipeCatalyst(new ItemStack(block), getUid)
   }
+
+  override def draw(recipe: T, stack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
+    super.draw(recipe, stack, mouseX, mouseY)
+    arrow.draw(stack, 68, 20)
+  }
 }
 
 object CrusherRecipes extends ProcessingRecipes(Recipes.crusherType, classOf[CrusherRecipe]) {
   override def block: Block = Blocks.crusher.block.get()
   override def getRecipes: List[CrusherRecipe] = MachineRecipes.crusher.toList
+  override def cfg: WorkerMachineConfig = Config.Machines.Crusher
 }
 
 object GrinderRecipes extends ProcessingRecipes(Recipes.grinderType, classOf[GrinderRecipe]) {
   override def block: Block = Blocks.grinder.block.get()
   override def getRecipes: List[GrinderRecipe] = MachineRecipes.grinder.toList
+  override def cfg: WorkerMachineConfig = Config.Machines.Grinder
 }
 
 object PulverizerRecipes extends ProcessingRecipes(Recipes.pulverizerType, classOf[PulverizerRecipe]) {
   override def block: Block = Blocks.pulverizer.block.get()
   override def getRecipes: List[PulverizerRecipe] = MachineRecipes.pulverizer.toList
+  override def cfg: WorkerMachineConfig = Config.Machines.Pulverizer
 }
 
 object SmelterRecipes extends ProcessingRecipes(Recipes.smelterType, classOf[SmelterRecipe]) {
   override def block: Block = Blocks.smelter.block.get()
   override def getRecipes: List[SmelterRecipe] = MachineRecipes.smelter.toList
+  override def cfg: WorkerMachineConfig = Config.Machines.Smelter
 }

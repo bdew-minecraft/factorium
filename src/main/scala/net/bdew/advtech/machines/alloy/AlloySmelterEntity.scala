@@ -46,7 +46,19 @@ class AlloySmelterEntity(teType: BlockEntityType[_], pos: BlockPos, state: Block
     (slot == 0 || slot == 1) && recipes.exists(_.testSoft(stack, inventory.getItem(1 - slot)))
 
   def testRecipe(rec: AlloyRecipe): Boolean = rec.test(inventory.getItem(0), inventory.getItem(1))
-  def findRecipe: Option[AlloyRecipe] = recipes.find(testRecipe)
+
+  var cachedRecipe: Option[AlloyRecipe] = None
+
+  def findRecipe: Option[AlloyRecipe] = {
+    cachedRecipe match {
+      case Some(rec) if testRecipe(rec) => cachedRecipe
+      case _ =>
+        cachedRecipe = recipes.find(testRecipe)
+        cachedRecipe
+    }
+  }
+
+  override def getWorkSpeed: Float = super.getWorkSpeed * cachedRecipe.map(_.speedMod).getOrElse(0F)
 
   override def haveValidInputs: Boolean = findRecipe.isDefined
 

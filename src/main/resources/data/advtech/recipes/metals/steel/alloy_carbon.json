@@ -1,0 +1,23 @@
+{
+  "type": "advtech:alloy",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:dusts/carbon",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "input1": {
+    "tag": "forge:ingots/iron"
+  },
+  "input2": {
+    "tag": "forge:dusts/carbon",
+    "count": 1
+  },
+  "output": {
+    "item": "advtech:mat_steel_ingot"
+  },
+  "speedMod": 0.5
+}

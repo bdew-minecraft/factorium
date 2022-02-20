@@ -1,0 +1,18 @@
+{
+  "type": "advtech:grinder",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:obsidian",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "input": {
+    "tag": "forge:obsidian"
+  },
+  "output": {
+    "item": "advtech:mat_extra_dust_obsidian"
+  }
+}
