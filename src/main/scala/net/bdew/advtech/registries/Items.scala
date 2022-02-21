@@ -15,6 +15,9 @@ object Items extends ItemManager(CreativeTab) {
   def resourceProps: Item.Properties = props
   def toolProps: Item.Properties = props.stacksTo(1)
 
+  def resourceItems(prefix: String, names: String*): Map[String, RegistryObject[Item]] =
+    names.map(id => id -> simple(s"${prefix}_$id", resourceProps)).toMap
+
   val wrench: RegistryObject[WrenchItem] = register("wrench", () => new WrenchItem())
 
   for (metal <- Metals.all; (item, ref) <- metal.items if ref.isOwned) {
@@ -24,9 +27,23 @@ object Items extends ItemManager(CreativeTab) {
     }
   }
 
-  for (name <- Metals.extraDusts) {
-    simple(s"mat_extra_dust_${name}", resourceProps)
-  }
+  val extraDusts: Map[String, RegistryObject[Item]] =
+    resourceItems(prefix = "mat_extra_dust",
+      "coal",
+      "charcoal",
+      "carbon",
+      "diamond",
+      "emerald",
+      "ender_pearl",
+      "obsidian"
+    )
+
+  val craftingItems: Map[String, RegistryObject[Item]] =
+    resourceItems(prefix = "craft",
+      "coupler", "motor", "coil", "heater", "capacitor",
+      "wire_copper",
+      "crusher", "grinder", "pulverizer",
+    )
 
   override def init(): Unit = {
     super.init()

@@ -10,7 +10,6 @@ import net.minecraft.tags.{ItemTags, Tag}
 import net.minecraft.world.item.Item
 import net.minecraftforge.common.Tags
 import net.minecraftforge.common.data.ExistingFileHelper
-import net.minecraftforge.registries.ForgeRegistries
 
 class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockTagsGen) extends ItemTagsProvider(gen, blockTags, AdvTech.ModId, efh) {
   def forgeTagCustom(name: String*): Tag.Named[Item] =
@@ -76,10 +75,12 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
       }
     }
 
-    for (name <- Metals.extraDusts) {
-      val item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(AdvTech.ModId, s"mat_extra_dust_${name}"))
+    for ((name, regObj) <- Items.extraDusts; item = regObj.get()) {
       tag(Tags.Items.DUSTS).add(item)
       tag(forgeTagCustom("dusts", name)).add(item)
     }
+
+    tag(forgeTagCustom("wires")).add(Items.craftingItems("wire_copper").get())
+    tag(forgeTagCustom("wires", "copper")).add(Items.craftingItems("wire_copper").get())
   }
 }

@@ -19,6 +19,7 @@ object MetalItemType {
   val Gear: MetalItemType = MetalItemType("gear", groupResourceItem)
   val Plate: MetalItemType = MetalItemType("plate", groupResourceItem)
   val Rod: MetalItemType = MetalItemType("rod", groupResourceItem)
+  val Wire: MetalItemType = MetalItemType("wire", groupResourceItem)
   val Dust: MetalItemType = MetalItemType("dust", groupResourceItem)
   val Chunks: MetalItemType = MetalItemType("chunks", groupResourceItem)
   val Powder: MetalItemType = MetalItemType("powder", groupResourceItem)

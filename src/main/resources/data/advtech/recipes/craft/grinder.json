@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "advtech:misc",
+  "pattern": [
+    " I ",
+    "XGX",
+    " I "
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:rods/steel"
+    },
+    "X": {
+      "tag": "forge:ingots/steel"
+    },
+    "G": {
+      "tag": "forge:gears/bronze"
+    }
+  },
+  "result": {
+    "item": "advtech:craft_grinder"
+  }
+}

@@ -76,8 +76,6 @@ object Metals {
 
   val all: List[MetalEntry] = List(iron, copper, gold, tin, bronze, steel)
 
-  val extraDusts: List[String] = List("coal", "charcoal", "carbon", "diamond", "emerald", "ender_pearl", "obsidian")
-
   def init(): Unit = {
     LogManager.getLogger.info(s"Registered ${all.size} metals")
   }

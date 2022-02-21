@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "advtech:misc",
+  "pattern": [
+    "gCg",
+    "WQW",
+    "RRR"
+  ],
+  "key": {
+    "g": {
+      "tag": "forge:nuggets/gold"
+    },
+    "W": {
+      "tag": "forge:wires/copper"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "Q": {
+      "tag": "forge:gems/quartz"
+    },
+    "C": {
+      "item": "advtech:craft_capacitor"
+    }
+  },
+  "result": {
+    "item": "advtech:craft_coupler"
+  }
+}
