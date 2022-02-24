@@ -1,7 +1,7 @@
 package net.bdew.advtech
 
 import net.bdew.advtech.machines.MachinesConfig
-import net.bdew.advtech.worldgen.OreGenConfig
+import net.bdew.advtech.worldgen.WorldGenConfig
 import net.bdew.lib.config.ConfigSection
 import net.minecraftforge.common.ForgeConfigSpec
 import net.minecraftforge.fml.ModLoadingContext
@@ -11,7 +11,7 @@ object Config {
   private val commonBuilder = new ForgeConfigSpec.Builder
   private val serverBuilder = new ForgeConfigSpec.Builder
 
-  val OreGen: OreGenConfig = ConfigSection(serverBuilder, "OreGeneration", new OreGenConfig(serverBuilder))
+  val WorldGen: WorldGenConfig = ConfigSection(serverBuilder, "WorldGen", new WorldGenConfig(serverBuilder))
 
   val Machines: MachinesConfig = ConfigSection(commonBuilder, "Machines", new MachinesConfig(commonBuilder))
 

@@ -1,7 +1,7 @@
 package net.bdew.advtech.metals
 
 import net.bdew.advtech.AdvTech
-import net.bdew.advtech.worldgen.OreGenEntry
+import net.bdew.advtech.worldgen.WorldgenTemplate
 import net.bdew.lib.config.ConfigSection
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
@@ -31,7 +31,7 @@ case class External[+T](getter: () => T) extends Reference[T] {
 case class MetalEntry(name: String) {
   var items: Map[MetalItemType, Reference[Item]] = Map.empty
   var blocks: Map[MetalItemType, Reference[Block]] = Map.empty
-  var oreGen: List[OreGenEntry[_ <: ConfigSection]] = List.empty
+  var oreGen: List[WorldgenTemplate[_ <: ConfigSection]] = List.empty
 
   def addItem(kind: MetalItemType, ref: Reference[Item]): MetalEntry = {
     items += kind -> ref
@@ -63,7 +63,7 @@ case class MetalEntry(name: String) {
     }
   }
 
-  def addOreGen(factory: MetalEntry => OreGenEntry[_ <: ConfigSection]): MetalEntry = {
+  def addOreGen(factory: MetalEntry => WorldgenTemplate[_ <: ConfigSection]): MetalEntry = {
     oreGen :+= factory(this)
     this
   }

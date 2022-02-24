@@ -1,6 +1,6 @@
 package net.bdew.advtech.metals
 
-import net.bdew.advtech.worldgen.OreGenOverworld
+import net.bdew.advtech.worldgen.ores
 import net.minecraft.world.item.{Items => MCItems}
 import net.minecraft.world.level.block.{Blocks => MCBlocks}
 import org.apache.logging.log4j.LogManager
@@ -55,11 +55,12 @@ object Metals {
     .addPlate()
     .addGear()
     .addRod()
-    .addOreGen(OreGenOverworld("tin_overworld", _,
+    .addOreGen(ores.OreGenOverworld("tin_overworld", _,
       defaultCount = 20,
       defaultMinY = -30,
       defaultMaxY = 100,
-      defaultSize = 10)
+      defaultSize = 10,
+      defaultAirExposure = 0)
     )
 
   val bronze: MetalEntry = MetalEntry("bronze")

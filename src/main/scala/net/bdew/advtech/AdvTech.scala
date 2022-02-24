@@ -5,7 +5,7 @@ import net.bdew.advtech.machines.MachineRecipes
 import net.bdew.advtech.metals.Metals
 import net.bdew.advtech.network.NetworkHandler
 import net.bdew.advtech.registries.{Blocks, Containers, Items, Recipes}
-import net.bdew.advtech.worldgen.OreGeneration
+import net.bdew.advtech.worldgen.WorldGeneration
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 
@@ -21,7 +21,7 @@ object AdvTech {
   Containers.init()
   MachineRecipes.init()
   NetworkHandler.init()
-  OreGeneration.init()
+  WorldGeneration.init()
 
   FMLJavaModLoadingContext.get().getModEventBus.addListener(DataGeneration.onGatherData)
 }
