@@ -41,7 +41,6 @@ object Items extends ItemManager(CreativeTab) {
   val craftingItems: Map[String, RegistryObject[Item]] =
     resourceItems(prefix = "craft",
       "coupler", "motor", "coil", "heater", "capacitor",
-      "wire_copper",
       "crusher", "grinder", "pulverizer",
     )
 

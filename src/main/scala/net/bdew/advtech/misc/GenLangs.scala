@@ -13,6 +13,8 @@ object GenLangs {
         kind match {
           case MetalItemType.OreNormal => out.addOne(key, s"$mname Ore")
           case MetalItemType.OreDeep => out.addOne(key, s"Deepslate $mname Ore")
+          case MetalItemType.OreNether => out.addOne(key, s"Nether $mname Ore")
+          case MetalItemType.OreEnd => out.addOne(key, s"Endstone $mname Ore")
           case MetalItemType.RawBlock => out.addOne(key, s"Block of Raw $mname")
           case MetalItemType.StorageBlock => out.addOne(key, s"Block of $mname")
           case x => throw new RuntimeException(s"Missing kind $x")
@@ -29,6 +31,7 @@ object GenLangs {
           case MetalItemType.Plate => out.addOne(key, s"$mname Plate")
           case MetalItemType.Gear => out.addOne(key, s"$mname Gear")
           case MetalItemType.Rod => out.addOne(key, s"$mname Rod")
+          case MetalItemType.Wire => out.addOne(key, s"$mname Wire")
           case x => throw new RuntimeException(s"Missing kind $x")
         }
       }

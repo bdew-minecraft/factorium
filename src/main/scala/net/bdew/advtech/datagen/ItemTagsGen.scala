@@ -40,6 +40,7 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
 
     val platesTag = forgeTagCustom("plates")
     val gearsTag = forgeTagCustom("gears")
+    val wiresTag = forgeTagCustom("wires")
     val metalRodsTag = forgeTagCustom("rods", "all_metal")
 
     for (metal <- Metals.all) {
@@ -52,6 +53,7 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
       addTypedForgeTag(metal, MetalItemType.Rod, Tags.Items.RODS)
       addTypedForgeTag(metal, MetalItemType.Plate, platesTag)
       addTypedForgeTag(metal, MetalItemType.Gear, gearsTag)
+      addTypedForgeTag(metal, MetalItemType.Wire, wiresTag)
 
       if (metal.ownItem(MetalItemType.Rod)) {
         tag(metalRodsTag).add(metal.item(MetalItemType.Rod))
@@ -79,8 +81,5 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
       tag(Tags.Items.DUSTS).add(item)
       tag(forgeTagCustom("dusts", name)).add(item)
     }
-
-    tag(forgeTagCustom("wires")).add(Items.craftingItems("wire_copper").get())
-    tag(forgeTagCustom("wires", "copper")).add(Items.craftingItems("wire_copper").get())
   }
 }

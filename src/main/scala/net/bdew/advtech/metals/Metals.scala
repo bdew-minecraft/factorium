@@ -33,6 +33,7 @@ object Metals {
     .addGear()
     .addPlate()
     .addRod()
+    .addWire()
 
   val gold: MetalEntry = MetalEntry("gold")
     .addVanillaItem(MetalItemType.Ingot, () => MCItems.GOLD_INGOT)
@@ -48,7 +49,6 @@ object Metals {
     .addPlate()
     .addRod()
 
-
   val tin: MetalEntry = MetalEntry("tin")
     .addResource()
     .addProcessing()
@@ -63,6 +63,54 @@ object Metals {
       defaultAirExposure = 0)
     )
 
+  val lead: MetalEntry = MetalEntry("lead")
+    .addResource()
+    .addProcessing()
+    .addPlate()
+    .addOreGen(ores.OreGenOverworld("lead_overworld", _,
+      defaultCount = 10,
+      defaultMinY = -30,
+      defaultMaxY = 100,
+      defaultSize = 5,
+      defaultAirExposure = 0)
+    )
+
+  val nickel: MetalEntry = MetalEntry("nickel")
+    .addResource()
+    .addProcessing()
+    .addPlate()
+    .addOreGen(ores.OreGenOverworld("nickel_overworld", _,
+      defaultCount = 10,
+      defaultMinY = -30,
+      defaultMaxY = 35,
+      defaultSize = 5,
+      defaultAirExposure = 0)
+    )
+
+  val silver: MetalEntry = MetalEntry("silver")
+    .addResource()
+    .addProcessing()
+    .addOreGen(ores.OreGenOverworld("silver_overworld", _,
+      defaultCount = 3,
+      defaultMinY = -30,
+      defaultMaxY = 20,
+      defaultSize = 4,
+      defaultAirExposure = 0.8f)
+    )
+
+  val platinum: MetalEntry = MetalEntry("platinum")
+    .addResource()
+    .addProcessing()
+    .addPlate()
+    .addWire()
+    .addOreGen(ores.OreGenOverworld("platinum_overworld", _,
+      defaultCount = 1,
+      defaultMinY = -30,
+      defaultMaxY = 20,
+      defaultSize = 2,
+      defaultAirExposure = 0.8f)
+    )
+
   val bronze: MetalEntry = MetalEntry("bronze")
     .addResource()
     .addPlate()
@@ -75,7 +123,19 @@ object Metals {
     .addGear()
     .addRod()
 
-  val all: List[MetalEntry] = List(iron, copper, gold, tin, bronze, steel)
+  val invar: MetalEntry = MetalEntry("invar")
+    .addResource()
+    .addPlate()
+    .addGear()
+    .addRod()
+
+  val electrum: MetalEntry = MetalEntry("electrum")
+    .addResource()
+    .addPlate()
+    .addGear()
+    .addRod()
+
+  val all: List[MetalEntry] = List(iron, copper, gold, tin, nickel, lead, silver, platinum, bronze, steel, invar, electrum)
 
   def init(): Unit = {
     LogManager.getLogger.info(s"Registered ${all.size} metals")

@@ -87,6 +87,9 @@ case class MetalEntry(name: String) {
   def addGear(): MetalEntry =
     addOwnItem(MetalItemType.Gear)
 
+  def addWire(): MetalEntry =
+    addOwnItem(MetalItemType.Wire)
+
   def addVanillaItem(kind: MetalItemType, getter: () => Item): MetalEntry =
     addItem(kind, External(getter))
 

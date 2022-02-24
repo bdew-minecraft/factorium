@@ -71,6 +71,18 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
           .save(consumer, new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/gear"))
       }
 
+      if (metal.ownItem(MetalItemType.Wire)) {
+        val nuggetTag = forgeTagCustom("nuggets", metal.name)
+        ShapedRecipeBuilder.shaped(metal.item(MetalItemType.Wire))
+          .define('x', Ingredient.of(nuggetTag))
+          .pattern("xxx")
+          .pattern("x  ")
+          .pattern("xxx")
+          .unlockedBy("has_item", RecipeProvider.has(nuggetTag))
+          .group(s"${AdvTech.ModId}:wires")
+          .save(consumer, new ResourceLocation(AdvTech.ModId, s"metals/${metal.name}/wire"))
+      }
+
       if (metal.ownItem(MetalItemType.Rod)) {
         val ingotTag = forgeTagCustom("ingots", metal.name)
         ShapedRecipeBuilder.shaped(metal.item(MetalItemType.Rod), 4)

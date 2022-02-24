@@ -24,7 +24,18 @@ object Blocks extends BlockManager(Items) {
     .color(MaterialColor.DEEPSLATE)
     .sound(SoundType.DEEPSLATE)
 
-  def storageProps = props(Material.METAL)
+  def netherOreProps: Properties = props(Material.STONE)
+    .requiresCorrectToolForDrops()
+    .strength(3, 3)
+    .color(MaterialColor.NETHER)
+    .sound(SoundType.NETHER_GOLD_ORE)
+
+  def endOreProps: Properties = props(Material.STONE)
+    .requiresCorrectToolForDrops()
+    .strength(3, 9)
+    .color(MaterialColor.SAND)
+
+  def storageProps: Properties = props(Material.METAL)
     .requiresCorrectToolForDrops()
     .strength(5, 6)
     .sound(SoundType.METAL)
