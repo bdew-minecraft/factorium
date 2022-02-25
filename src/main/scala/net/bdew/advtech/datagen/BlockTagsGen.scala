@@ -4,16 +4,11 @@ import net.bdew.advtech.AdvTech
 import net.bdew.advtech.metals.{MetalItemType, Metals}
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.tags.BlockTagsProvider
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.{BlockTags, Tag}
-import net.minecraft.world.level.block.Block
+import net.minecraft.tags.BlockTags
 import net.minecraftforge.common.Tags
 import net.minecraftforge.common.data.ExistingFileHelper
 
 class BlockTagsGen(gen: DataGenerator, efh: ExistingFileHelper) extends BlockTagsProvider(gen, AdvTech.ModId, efh) {
-  def forgeTagCustom(name: String*): Tag.Named[Block] =
-    BlockTags.createOptional(new ResourceLocation("forge", name.mkString("/")))
-
   override def addTags(): Unit = {
     for (metal <- Metals.all) {
       for (kind <- MetalItemType.ores if metal.ownBlock(kind)) {
@@ -28,8 +23,12 @@ class BlockTagsGen(gen: DataGenerator, efh: ExistingFileHelper) extends BlockTag
           tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(oreBlock)
         if (kind == MetalItemType.OreDeep)
           tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).add(oreBlock)
+        if (kind == MetalItemType.OreNether)
+          tag(Tags.Blocks.ORES_IN_GROUND_NETHERRACK).add(oreBlock)
+        if (kind == MetalItemType.OreEnd)
+          tag(CustomTags.endStoneOres.block).add(oreBlock)
 
-        tag(forgeTagCustom("ores", metal.name)).add(oreBlock)
+        tag(CustomTags.ores(metal.name).block).add(oreBlock)
       }
 
       if (metal.ownBlock(MetalItemType.RawBlock)) {
@@ -37,7 +36,7 @@ class BlockTagsGen(gen: DataGenerator, efh: ExistingFileHelper) extends BlockTag
         tag(Tags.Blocks.STORAGE_BLOCKS).add(rawBlock)
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(rawBlock)
         tag(BlockTags.NEEDS_STONE_TOOL).add(rawBlock)
-        tag(forgeTagCustom("storage_blocks", s"raw_${metal.name}")).add(rawBlock)
+        tag(CustomTags.storageBlock(s"raw_${metal.name}").block).add(rawBlock)
       }
 
       if (metal.ownBlock(MetalItemType.StorageBlock)) {
@@ -45,7 +44,7 @@ class BlockTagsGen(gen: DataGenerator, efh: ExistingFileHelper) extends BlockTag
         tag(Tags.Blocks.STORAGE_BLOCKS).add(storageBlock)
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(storageBlock)
         tag(BlockTags.NEEDS_STONE_TOOL).add(storageBlock)
-        tag(forgeTagCustom("storage_blocks", metal.name)).add(storageBlock)
+        tag(CustomTags.storageBlock(metal.name).block).add(storageBlock)
       }
     }
   }

@@ -28,6 +28,6 @@ object MetalItemType {
   val Chunks: MetalItemType = MetalItemType("chunks", groupResourceItem)
   val Powder: MetalItemType = MetalItemType("powder", groupResourceItem)
 
-  val ores = Set(OreNormal, OreDeep)
-  val smeltables = Set(OreNormal, OreDeep, RawDrop, Dust, Chunks, Powder)
+  val ores = Set(OreNormal, OreDeep, OreNether, OreEnd)
+  val smeltables = Set(OreNormal, OreDeep, OreNether, OreEnd, RawDrop, Dust, Chunks, Powder)
 }

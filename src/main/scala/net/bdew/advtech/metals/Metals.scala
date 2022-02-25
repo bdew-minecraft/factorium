@@ -56,21 +56,20 @@ object Metals {
     .addGear()
     .addRod()
     .addOreGen(ores.OreGenOverworld("tin_overworld", _,
-      defaultCount = 20,
-      defaultMinY = -30,
+      defaultCount = 12,
+      defaultMinY = -64,
       defaultMaxY = 100,
       defaultSize = 10,
-      defaultAirExposure = 0)
-    )
+      defaultAirExposure = 0))
 
   val lead: MetalEntry = MetalEntry("lead")
     .addResource()
     .addProcessing()
     .addPlate()
     .addOreGen(ores.OreGenOverworld("lead_overworld", _,
-      defaultCount = 10,
-      defaultMinY = -30,
-      defaultMaxY = 100,
+      defaultCount = 8,
+      defaultMinY = -64,
+      defaultMaxY = 32,
       defaultSize = 5,
       defaultAirExposure = 0)
     )
@@ -80,23 +79,27 @@ object Metals {
     .addProcessing()
     .addPlate()
     .addOreGen(ores.OreGenOverworld("nickel_overworld", _,
-      defaultCount = 10,
-      defaultMinY = -30,
-      defaultMaxY = 35,
-      defaultSize = 5,
-      defaultAirExposure = 0)
-    )
+      defaultCount = 15,
+      defaultMinY = -64,
+      defaultMaxY = 64,
+      defaultSize = 6,
+      defaultAirExposure = 0))
 
   val silver: MetalEntry = MetalEntry("silver")
     .addResource()
     .addProcessing()
     .addOreGen(ores.OreGenOverworld("silver_overworld", _,
-      defaultCount = 3,
-      defaultMinY = -30,
-      defaultMaxY = 20,
+      defaultCount = 10,
+      defaultMinY = -64,
+      defaultMaxY = 32,
       defaultSize = 4,
-      defaultAirExposure = 0.8f)
-    )
+      defaultAirExposure = 0.5f))
+    .addOreGen(ores.OreGenEnd("silver_end", _,
+      defaultCount = 4,
+      defaultMinY = 0,
+      defaultMaxY = 255,
+      defaultSize = 10,
+      defaultAirExposure = 0))
 
   val platinum: MetalEntry = MetalEntry("platinum")
     .addResource()
@@ -104,12 +107,23 @@ object Metals {
     .addPlate()
     .addWire()
     .addOreGen(ores.OreGenOverworld("platinum_overworld", _,
-      defaultCount = 1,
-      defaultMinY = -30,
+      defaultCount = 5,
+      defaultMinY = -64,
       defaultMaxY = 20,
-      defaultSize = 2,
-      defaultAirExposure = 0.8f)
-    )
+      defaultSize = 5,
+      defaultAirExposure = 0.8f))
+    .addOreGen(ores.OreGenNether("platinum_nether", _,
+      defaultCount = 6,
+      defaultMinY = 0,
+      defaultMaxY = 255,
+      defaultSize = 8,
+      defaultAirExposure = 0.5f))
+    .addOreGen(ores.OreGenEnd("platinum_end", _,
+      defaultCount = 6,
+      defaultMinY = 0,
+      defaultMaxY = 255,
+      defaultSize = 8,
+      defaultAirExposure = 0))
 
   val bronze: MetalEntry = MetalEntry("bronze")
     .addResource()

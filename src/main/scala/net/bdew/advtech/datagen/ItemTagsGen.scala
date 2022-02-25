@@ -12,9 +12,6 @@ import net.minecraftforge.common.Tags
 import net.minecraftforge.common.data.ExistingFileHelper
 
 class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockTagsGen) extends ItemTagsProvider(gen, blockTags, AdvTech.ModId, efh) {
-  def forgeTagCustom(name: String*): Tag.Named[Item] =
-    ItemTags.createOptional(new ResourceLocation("forge", name.mkString("/")))
-
   def addTypedForgeTag(metal: MetalEntry, kind: MetalItemType, groupTag: Tag.Named[Item]): Unit = {
     if (!metal.ownItem(kind)) return
     val item = metal.item(kind)
@@ -32,54 +29,41 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
     copy(Tags.Blocks.ORES_IN_GROUND_STONE, Tags.Items.ORES_IN_GROUND_STONE)
     copy(Tags.Blocks.ORES, Tags.Items.ORES)
 
-    tag(forgeTagCustom("wrenches")).add(Items.wrench.get())
-    tag(forgeTagCustom("tools", "wrench")).add(Items.wrench.get())
+    copy(CustomTags.endStoneOres.block, CustomTags.endStoneOres.item)
 
-    val chunksTag = ItemTags.createOptional(new ResourceLocation(AdvTech.ModId, "chunks"))
-    val powdersTag = ItemTags.createOptional(new ResourceLocation(AdvTech.ModId, "powders"))
-
-    val platesTag = forgeTagCustom("plates")
-    val gearsTag = forgeTagCustom("gears")
-    val wiresTag = forgeTagCustom("wires")
-    val metalRodsTag = forgeTagCustom("rods", "all_metal")
+    CustomTags.wrenchTags.foreach(t => tag(t).add(Items.wrench.get()))
 
     for (metal <- Metals.all) {
       addTypedForgeTag(metal, MetalItemType.Ingot, Tags.Items.INGOTS)
       addTypedForgeTag(metal, MetalItemType.Nugget, Tags.Items.NUGGETS)
       addTypedForgeTag(metal, MetalItemType.RawDrop, Tags.Items.RAW_MATERIALS)
-      addTypedForgeTag(metal, MetalItemType.Chunks, chunksTag)
-      addTypedForgeTag(metal, MetalItemType.Powder, powdersTag)
+      addTypedForgeTag(metal, MetalItemType.Chunks, CustomTags.chunks)
+      addTypedForgeTag(metal, MetalItemType.Powder, CustomTags.powders)
       addTypedForgeTag(metal, MetalItemType.Dust, Tags.Items.DUSTS)
       addTypedForgeTag(metal, MetalItemType.Rod, Tags.Items.RODS)
-      addTypedForgeTag(metal, MetalItemType.Plate, platesTag)
-      addTypedForgeTag(metal, MetalItemType.Gear, gearsTag)
-      addTypedForgeTag(metal, MetalItemType.Wire, wiresTag)
+      addTypedForgeTag(metal, MetalItemType.Plate, CustomTags.plates)
+      addTypedForgeTag(metal, MetalItemType.Gear, CustomTags.gears)
+      addTypedForgeTag(metal, MetalItemType.Wire, CustomTags.wires)
 
-      if (metal.ownItem(MetalItemType.Rod)) {
-        tag(metalRodsTag).add(metal.item(MetalItemType.Rod))
-      }
+      if (metal.ownItem(MetalItemType.Rod))
+        tag(CustomTags.metalRods).add(metal.item(MetalItemType.Rod))
 
-      if (metal.ownItem(MetalItemType.RawBlock)) {
-        copy(blockTags.forgeTagCustom("storage_blocks", s"raw_${metal.name}"), forgeTagCustom("storage_blocks", s"raw_${metal.name}"))
-      }
+      if (metal.ownItem(MetalItemType.RawBlock))
+        copy(CustomTags.storageBlock(s"raw_${metal.name}").block, CustomTags.storageBlock(s"raw_${metal.name}").item)
 
-      if (MetalItemType.ores.exists(metal.ownItem)) {
-        copy(blockTags.forgeTagCustom("ores", metal.name), forgeTagCustom("ores", metal.name))
-      }
+      if (MetalItemType.ores.exists(metal.ownItem))
+        copy(CustomTags.ores(metal.name).block, CustomTags.ores(metal.name).item)
 
-      if (metal.ownItem(MetalItemType.StorageBlock)) {
-        copy(blockTags.forgeTagCustom("storage_blocks", metal.name), forgeTagCustom("storage_blocks", metal.name))
-      }
+      if (metal.ownItem(MetalItemType.StorageBlock))
+        copy(CustomTags.storageBlock(metal.name).block, CustomTags.storageBlock(metal.name).item)
 
-      if (MetalItemType.smeltables.exists(metal.ownItem)) {
-        val smeltableTag = ItemTags.createOptional(new ResourceLocation(AdvTech.ModId, s"smeltable/${metal.name}"))
-        tag(smeltableTag).add(MetalItemType.smeltables.filter(metal.ownItem).map(metal.item).toArray: _*)
-      }
+      if (MetalItemType.smeltables.exists(metal.ownItem))
+        tag(CustomTags.smeltable(metal.name)).add(MetalItemType.smeltables.filter(metal.ownItem).map(metal.item).toArray: _*)
     }
 
     for ((name, regObj) <- Items.extraDusts; item = regObj.get()) {
       tag(Tags.Items.DUSTS).add(item)
-      tag(forgeTagCustom("dusts", name)).add(item)
+      tag(CustomTags.dusts(name)).add(item)
     }
   }
 }
