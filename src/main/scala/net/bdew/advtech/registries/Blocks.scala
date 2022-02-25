@@ -7,10 +7,10 @@ import net.bdew.advtech.machines.processing.grinder.GrinderEntity
 import net.bdew.advtech.machines.processing.pulverizer.PulverizerEntity
 import net.bdew.advtech.machines.processing.smelter.SmelterEntity
 import net.bdew.advtech.machines.worker.WorkerMachineBlock
-import net.bdew.advtech.metals.{MetalItemType, Metals}
+import net.bdew.advtech.metals._
 import net.bdew.lib.managers.BlockManager
+import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
-import net.minecraft.world.level.block.{OreBlock, SoundType}
 import net.minecraft.world.level.material.{Material, MaterialColor}
 
 object Blocks extends BlockManager(Items) {
@@ -77,11 +77,15 @@ object Blocks extends BlockManager(Items) {
   for (metal <- Metals.all; (block, ref) <- metal.blocks if ref.isOwned) {
     block.group match {
       case MetalItemType.groupStorageBlock =>
-        simple(metal.registryName(block), storageProps)
+        define(metal.registryName(block), () => MetalBlock(storageProps, block, metal)).withItem(MetalBlockItem(_, defaultItemProps)).register
       case MetalItemType.groupOreNormal =>
-        define(metal.registryName(block), () => new OreBlock(normalOreProps)).withDefaultItem.register
+        define(metal.registryName(block), () => MetalOreBlock(normalOreProps, block, metal)).withItem(MetalBlockItem(_, defaultItemProps)).register
       case MetalItemType.groupOreDeep =>
-        define(metal.registryName(block), () => new OreBlock(deepOreProps)).withDefaultItem.register
+        define(metal.registryName(block), () => MetalOreBlock(deepOreProps, block, metal)).withItem(MetalBlockItem(_, defaultItemProps)).register
+      case MetalItemType.groupOreNether =>
+        define(metal.registryName(block), () => MetalOreBlock(netherOreProps, block, metal)).withItem(MetalBlockItem(_, defaultItemProps)).register
+      case MetalItemType.groupOreEnd =>
+        define(metal.registryName(block), () => MetalOreBlock(endOreProps, block, metal)).withItem(MetalBlockItem(_, defaultItemProps)).register
       case _ => // pass
     }
   }

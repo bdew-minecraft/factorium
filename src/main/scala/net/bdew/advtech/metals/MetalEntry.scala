@@ -2,7 +2,9 @@ package net.bdew.advtech.metals
 
 import net.bdew.advtech.AdvTech
 import net.bdew.advtech.worldgen.WorldgenTemplate
+import net.bdew.lib.Text
 import net.bdew.lib.config.ConfigSection
+import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -110,4 +112,6 @@ case class MetalEntry(name: String) {
 
   def block(kind: MetalItemType): Block =
     blocks.getOrElse(kind, throw new RuntimeException(s"No $kind registered for $name")).get
+
+  lazy val displayName: MutableComponent = Text.translate(s"${AdvTech.ModId}.metal.$name")
 }

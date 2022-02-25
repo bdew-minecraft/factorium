@@ -1,7 +1,7 @@
 package net.bdew.advtech.registries
 
 import net.bdew.advtech.items.WrenchItem
-import net.bdew.advtech.metals.{MetalItemType, Metals}
+import net.bdew.advtech.metals.{MetalItem, MetalItemType, Metals}
 import net.bdew.advtech.upgrades.UpgradeItems
 import net.bdew.lib.managers.ItemManager
 import net.minecraft.world.item.{CreativeModeTab, Item, ItemStack}
@@ -20,9 +20,9 @@ object Items extends ItemManager(CreativeTab) {
 
   val wrench: RegistryObject[WrenchItem] = register("wrench", () => new WrenchItem())
 
-  for (metal <- Metals.all; (item, ref) <- metal.items if ref.isOwned) {
-    item.group match {
-      case MetalItemType.groupResourceItem => simple(metal.registryName(item), resourceProps)
+  for (metal <- Metals.all; (kind, ref) <- metal.items if ref.isOwned) {
+    kind.group match {
+      case MetalItemType.groupResourceItem => register(metal.registryName(kind), () => MetalItem(resourceProps, kind, metal))
       case _ => // pass
     }
   }
