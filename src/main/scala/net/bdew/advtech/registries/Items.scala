@@ -27,6 +27,8 @@ object Items extends ItemManager(CreativeTab) {
     }
   }
 
+  simple("upgrade_frame", resourceProps)
+
   val extraDusts: Map[String, RegistryObject[Item]] =
     resourceItems(prefix = "mat_extra_dust",
       "coal",
@@ -38,11 +40,12 @@ object Items extends ItemManager(CreativeTab) {
       "obsidian"
     )
 
-  val craftingItems: Map[String, RegistryObject[Item]] =
-    resourceItems(prefix = "craft",
-      "coupler", "motor", "coil", "heater", "capacitor",
-      "crusher", "grinder", "pulverizer",
-    )
+  resourceItems(prefix = "craft",
+    "coupler", "motor", "coil", "heater", "capacitor",
+    "quartz_pulse", "quartz_clock", "container",
+    "core_basic", "core_advanced",
+    "crusher", "grinder", "pulverizer",
+  )
 
   override def init(): Unit = {
     super.init()

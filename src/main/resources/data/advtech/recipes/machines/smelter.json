@@ -11,13 +11,13 @@
       "item": "advtech:craft_heater"
     },
     "C": {
-      "item": "advtech:craft_coupler"
+      "item": "advtech:craft_core_basic"
     },
     "P": {
       "tag": "forge:plates/iron"
     },
     "H": {
-      "item": "minecraft:hopper"
+      "item": "advtech:craft_container"
     }
   },
   "result": {

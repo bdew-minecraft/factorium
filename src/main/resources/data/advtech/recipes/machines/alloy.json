@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "group": "advtech:machines",
   "pattern": [
-    "HMH",
+    "HPH",
     "EEE",
     "PCP"
   ],
@@ -11,16 +11,13 @@
       "item": "advtech:craft_heater"
     },
     "C": {
-      "item": "advtech:craft_coupler"
-    },
-    "M": {
-      "item": "advtech:craft_motor"
+      "item": "advtech:craft_core_basic"
     },
     "P": {
       "tag": "forge:plates/iron"
     },
     "H": {
-      "item": "minecraft:hopper"
+      "item": "advtech:craft_container"
     }
   },
   "result": {

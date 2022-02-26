@@ -2,19 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "group": "advtech:machines",
   "pattern": [
-    "BHB",
-    "GMG",
+    "PHP",
+    "BGB",
     "PCP"
   ],
   "key": {
     "B": {
       "item": "advtech:craft_grinder"
     },
-    "M": {
-      "item": "advtech:craft_motor"
-    },
     "C": {
-      "item": "advtech:craft_coupler"
+      "item": "advtech:craft_core_basic"
     },
     "G": {
       "tag": "forge:gears/iron"
@@ -23,7 +20,7 @@
       "tag": "forge:plates/iron"
     },
     "H": {
-      "item": "minecraft:hopper"
+      "item": "advtech:craft_container"
     }
   },
   "result": {
