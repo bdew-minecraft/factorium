@@ -3,7 +3,7 @@ package net.bdew.factorium.machines.sided
 import net.bdew.factorium.machines.BaseMachineEntity
 import net.bdew.factorium.misc.AutoIOMode
 import net.bdew.lib.capabilities.helpers.ItemHelper
-import net.minecraft.core.Direction
+import net.minecraft.core.{BlockPos, Direction}
 
 import scala.util.Random
 
@@ -19,7 +19,7 @@ trait SidedItemIOEntity extends BaseMachineEntity {
         side <- BlockSide.values
         cfg = itemIOConfig.get(side) if cfg != AutoIOMode.NONE
         dir = BlockSide.toDirection(getFacing, side)
-        pos = getBlockPos.relative(dir) if getLevel.isLoaded(pos)
+        pos: BlockPos = getBlockPos.relative(dir) if getLevel.isLoaded(pos)
         otherHandler <- ItemHelper.getItemHandler(getLevel, pos, dir.getOpposite)
         ourHandler <- ItemHelper.getItemHandler(getLevel, getBlockPos, null)
       } {

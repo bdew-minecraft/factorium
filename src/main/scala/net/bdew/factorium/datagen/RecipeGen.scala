@@ -34,6 +34,7 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
           0.7f, 200,
           RecipeSerializer.SMELTING_RECIPE
         )
+          .asInstanceOf[RecipeBuilder]
           .unlockedBy("has_item", RecipeProvider.has(smeltableTag))
           .group(s"${Factorium.ModId}:smelting")
           .save(consumer, new ResourceLocation(Factorium.ModId, s"metals/${metal.name}/ingot_from_smelting"))
@@ -43,7 +44,7 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
           metal.item(MetalItemType.Ingot),
           0.7f, 100,
           RecipeSerializer.BLASTING_RECIPE
-        )
+        ).asInstanceOf[RecipeBuilder]
           .unlockedBy("has_item", RecipeProvider.has(smeltableTag))
           .group(s"${Factorium.ModId}:smelting")
           .save(consumer, new ResourceLocation(Factorium.ModId, s"metals/${metal.name}/ingot_from_blasting"))
@@ -54,6 +55,7 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
         ShapedRecipeBuilder.shaped(metal.item(MetalItemType.Plate), 3)
           .define('x', Ingredient.of(ingotTag))
           .pattern("xxx")
+          .asInstanceOf[RecipeBuilder]
           .unlockedBy("has_item", RecipeProvider.has(ingotTag))
           .group(s"${Factorium.ModId}:plates")
           .save(consumer, new ResourceLocation(Factorium.ModId, s"metals/${metal.name}/plate"))
@@ -66,6 +68,7 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
           .pattern(" x ")
           .pattern("xxx")
           .pattern(" x ")
+          .asInstanceOf[RecipeBuilder]
           .unlockedBy("has_item", RecipeProvider.has(ingotTag))
           .group(s"${Factorium.ModId}:gears")
           .save(consumer, new ResourceLocation(Factorium.ModId, s"metals/${metal.name}/gear"))
@@ -78,6 +81,7 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
           .pattern("xxx")
           .pattern("x  ")
           .pattern("xxx")
+          .asInstanceOf[RecipeBuilder]
           .unlockedBy("has_item", RecipeProvider.has(nuggetTag))
           .group(s"${Factorium.ModId}:wires")
           .save(consumer, new ResourceLocation(Factorium.ModId, s"metals/${metal.name}/wire"))
@@ -89,6 +93,7 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
           .define('x', Ingredient.of(ingotTag))
           .pattern(" x ")
           .pattern(" x ")
+          .asInstanceOf[RecipeBuilder]
           .unlockedBy("has_item", RecipeProvider.has(ingotTag))
           .group(s"${Factorium.ModId}:rods")
           .save(consumer, new ResourceLocation(Factorium.ModId, s"metals/${metal.name}/rod"))
@@ -135,11 +140,13 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
     if (metal.ownItem(big) || metal.ownItem(small)) {
       ShapelessRecipeBuilder.shapeless(metal.item(small), 9)
         .requires(metal.item(big))
+        .asInstanceOf[RecipeBuilder]
         .unlockedBy("has_item", RecipeProvider.has(metal.item(big)))
         .group(s"${Factorium.ModId}:misc")
         .save(consumer, new ResourceLocation(Factorium.ModId, s"metals/${metal.name}/${small.kind}_from_${big.kind}"))
       ShapelessRecipeBuilder.shapeless(metal.item(big))
         .requires(metal.item(small), 9)
+        .asInstanceOf[RecipeBuilder]
         .unlockedBy("has_item", RecipeProvider.has(metal.item(small)))
         .group(s"${Factorium.ModId}:misc")
         .save(consumer, new ResourceLocation(Factorium.ModId, s"metals/${metal.name}/${big.kind}_from_${small.kind}"))
