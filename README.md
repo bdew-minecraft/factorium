@@ -1,5 +1,5 @@
-[![](http://cf.way2muchnoise.eu/full_factorium_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/advanced-generators)
-[![](http://cf.way2muchnoise.eu/versions/factorium.svg)](https://www.curseforge.com/minecraft/mc-mods/advanced-generators)
+[![](http://cf.way2muchnoise.eu/full_factorium_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/factorium)
+[![](http://cf.way2muchnoise.eu/versions/factorium.svg)](https://www.curseforge.com/minecraft/mc-mods/factorium)
 
 # Factorium
 
