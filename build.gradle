@@ -165,7 +165,7 @@ curseforge {
         addGameVersion config.minecraft.version
 
         mainArtifact(jar) {
-            displayName = "Advanced Technology ${simpleVersion} (MC ${config.minecraft.version})"
+            displayName = "Factorium ${simpleVersion} (MC ${config.minecraft.version})"
         }
 
         relations {
