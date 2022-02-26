@@ -1,10 +1,10 @@
-[![](http://cf.way2muchnoise.eu/full_advanced-generators_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/advanced-generators)
-[![](http://cf.way2muchnoise.eu/versions/advanced-generators.svg)](https://www.curseforge.com/minecraft/mc-mods/advanced-generators)
+[![](http://cf.way2muchnoise.eu/full_factorium_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/advanced-generators)
+[![](http://cf.way2muchnoise.eu/versions/factorium.svg)](https://www.curseforge.com/minecraft/mc-mods/advanced-generators)
 
-# Advanced Generators
+# Factorium
 
-Free Form, Multi Block, Modular Power Generators
+Ores, processing and various machines
 
-Curseforge: https://www.curseforge.com/minecraft/mc-mods/advanced-generators
+Curseforge: https://www.curseforge.com/minecraft/mc-mods/factorium
 
 Jenkins: https://jenkins.bdew.net/

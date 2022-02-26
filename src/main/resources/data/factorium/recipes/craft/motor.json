@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "factorium:misc",
+  "pattern": [
+    "PCP",
+    "III",
+    "PCP"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/iron"
+    },
+    "I": {
+      "tag": "forge:rods/iron"
+    },
+    "C": {
+      "item": "factorium:craft_coil"
+    }
+  },
+  "result": {
+    "item": "factorium:craft_motor"
+  }
+}

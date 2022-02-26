@@ -1,0 +1,23 @@
+{
+  "type": "factorium:alloy",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:dusts/coal_coke",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "input1": {
+    "tag": "forge:ingots/iron"
+  },
+  "input2": {
+    "tag": "forge:dusts/coal_coke",
+    "count": 1
+  },
+  "output": {
+    "item": "factorium:mat_steel_ingot"
+  },
+  "speedMod": 0.5
+}

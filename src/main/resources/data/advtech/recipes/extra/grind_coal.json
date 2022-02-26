@@ -1,9 +1,0 @@
-{
-  "type": "advtech:grinder",
-  "input": {
-    "item": "minecraft:coal"
-  },
-  "output": {
-    "item": "advtech:mat_extra_dust_coal"
-  }
-}

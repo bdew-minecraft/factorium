@@ -1,0 +1,18 @@
+{
+  "type": "factorium:grinder",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:ender_pearls",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "input": {
+    "tag": "forge:ender_pearls"
+  },
+  "output": {
+    "item": "factorium:mat_extra_dust_ender_pearl"
+  }
+}
