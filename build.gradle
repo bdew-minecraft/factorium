@@ -172,8 +172,6 @@ curseforge {
             requiredDependency 'scalable-cats-force'
             requiredDependency 'bdlib'
             optionalDependency 'jei'
-            optionalDependency 'mekanism'
-            optionalDependency 'thermal-expansion'
         }
     }
 }
