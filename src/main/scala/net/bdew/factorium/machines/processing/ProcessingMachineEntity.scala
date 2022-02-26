@@ -3,6 +3,7 @@ package net.bdew.factorium.machines.processing
 import net.bdew.factorium.machines.sided.SidedItemIOEntity
 import net.bdew.factorium.machines.upgradable.{InfoEntry, InfoEntryKind, UpgradeableMachine}
 import net.bdew.factorium.machines.worker.WorkerMachineEntity
+import net.bdew.factorium.upgrades.UpgradeClass
 import net.bdew.lib.capabilities.Capabilities
 import net.bdew.lib.capabilities.handlers.{PowerEnergyHandler, SidedInventoryItemHandler}
 import net.bdew.lib.data.DataSlotInventory
@@ -27,6 +28,9 @@ abstract class ProcessingMachineEntity(teType: BlockEntityType[_], pos: BlockPos
   def recipes: Set[_ <: ProcessingRecipe]
 
   val inventory: DataSlotInventory = DataSlotInventory("inv", this, 18)
+
+  override def validUpgradeClasses: Set[UpgradeClass] =
+    Set(UpgradeClass.Core, UpgradeClass.SpeedEfficiency, UpgradeClass.Parallel)
 
   val externalInventory = new RestrictedInventory(inventory,
     canExtract = (slot, _) => Slots.output.contains(slot),

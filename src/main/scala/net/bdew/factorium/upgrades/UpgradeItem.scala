@@ -29,12 +29,12 @@ object UpgradeItems {
       UpgradeFloatMultiplier(UpgradeStat.ChargeRate, 2),
     ))
 
-    Items.register("upgrade_efficiency", () => UpgradeItem(UpgradeClass.Efficiency,
-      UpgradeFloatModifier(UpgradeStat.WorkSpeed, -0.3f),
-      UpgradeFloatModifier(UpgradeStat.EnergyConsumption, -0.2f),
+    Items.register("upgrade_efficiency", () => UpgradeItem(UpgradeClass.SpeedEfficiency,
+      UpgradeFloatModifier(UpgradeStat.WorkSpeed, -0.2f),
+      UpgradeFloatModifier(UpgradeStat.EnergyConsumption, -0.3f),
     ))
 
-    Items.register("upgrade_speed", () => UpgradeItem(UpgradeClass.Speed,
+    Items.register("upgrade_speed", () => UpgradeItem(UpgradeClass.SpeedEfficiency,
       UpgradeFloatModifier(UpgradeStat.WorkSpeed, 0.2f),
       UpgradeFloatModifier(UpgradeStat.EnergyConsumption, 0.3f),
     ))

@@ -1,6 +1,6 @@
 package net.bdew.factorium.machines.upgradable
 
-import net.bdew.factorium.upgrades.{UpgradeClass, UpgradeItem, UpgradeStat}
+import net.bdew.factorium.upgrades.{UpgradeItem, UpgradeStat}
 import net.bdew.lib.Misc
 import net.bdew.lib.data.DataSlotInventory
 import net.minecraft.world.item.ItemStack
@@ -12,7 +12,7 @@ class DataSlotUpgrades(parent: UpgradeableMachine) extends DataSlotInventory("up
   override def canPlaceItem(slot: Int, stack: ItemStack): Boolean =
     stack.getItem match {
       case upgrade: UpgradeItem =>
-        upgrade.cls == UpgradeClass.None || !upgrades.exists(_.cls == upgrade.cls)
+        parent.validUpgradeClasses.contains(upgrade.cls) && !upgrades.exists(_.cls == upgrade.cls)
       case _ => false
     }
 

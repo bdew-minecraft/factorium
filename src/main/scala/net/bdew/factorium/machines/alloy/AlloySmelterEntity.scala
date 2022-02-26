@@ -5,6 +5,7 @@ import net.bdew.factorium.machines.MachineRecipes
 import net.bdew.factorium.machines.upgradable.{InfoEntry, InfoEntryKind}
 import net.bdew.factorium.machines.worker.WorkerMachineEntity
 import net.bdew.factorium.registries.Blocks
+import net.bdew.factorium.upgrades.UpgradeClass
 import net.bdew.lib.capabilities.Capabilities
 import net.bdew.lib.capabilities.handlers.{PowerEnergyHandler, SidedInventoryItemHandler}
 import net.bdew.lib.data.DataSlotInventory
@@ -31,6 +32,9 @@ class AlloySmelterEntity(teType: BlockEntityType[_], pos: BlockPos, state: Block
 
   override def config: AlloySmelterConfig = Config.Machines.AlloySmelter
   def recipes: Set[AlloyRecipe] = MachineRecipes.alloy
+
+  override def validUpgradeClasses: Set[UpgradeClass] =
+    Set(UpgradeClass.Core, UpgradeClass.SpeedEfficiency, UpgradeClass.Parallel)
 
   val inventory: DataSlotInventory = DataSlotInventory("inv", this, 18)
 
