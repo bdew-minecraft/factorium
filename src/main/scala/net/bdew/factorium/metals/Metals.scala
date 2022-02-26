@@ -85,6 +85,17 @@ object Metals {
       defaultSize = 6,
       defaultAirExposure = 0))
 
+  val zinc: MetalEntry = MetalEntry("zinc")
+    .addResource()
+    .addProcessing()
+    .addPlate()
+    .addOreGen(ores.OreGenOverworld("zinc_overworld", _,
+      defaultCount = 10,
+      defaultMinY = -64,
+      defaultMaxY = 128,
+      defaultSize = 4,
+      defaultAirExposure = 0))
+
   val silver: MetalEntry = MetalEntry("silver")
     .addResource()
     .addProcessing()
@@ -149,7 +160,19 @@ object Metals {
     .addGear()
     .addRod()
 
-  val all: List[MetalEntry] = List(iron, copper, gold, tin, nickel, lead, silver, platinum, bronze, steel, invar, electrum)
+  val constantan: MetalEntry = MetalEntry("constantan")
+    .addResource()
+    .addPlate()
+
+  val brass: MetalEntry = MetalEntry("brass")
+    .addResource()
+    .addPlate()
+    .addRod()
+
+  val all: List[MetalEntry] = List(
+    iron, copper, gold, tin, nickel, lead, silver, platinum, zinc,
+    bronze, steel, invar, electrum, brass, constantan
+  )
 
   def init(): Unit = {
     LogManager.getLogger.info(s"Registered ${all.size} metals")
