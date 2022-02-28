@@ -9,8 +9,9 @@ import net.bdew.factorium.machines.processing.smelter.SmelterEntity
 import net.bdew.factorium.machines.worker.WorkerMachineBlock
 import net.bdew.factorium.metals._
 import net.bdew.lib.managers.BlockManager
-import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
+import net.minecraft.world.level.block.{OreBlock, SoundType}
 import net.minecraft.world.level.material.{Material, MaterialColor}
 
 object Blocks extends BlockManager(Items) {
@@ -90,4 +91,10 @@ object Blocks extends BlockManager(Items) {
     }
   }
 
+  val meteoriteOre: Blocks.DefBI[OreBlock, BlockItem] =
+    define("mat_meteorite_ore",
+      () => new OreBlock(props(Material.STONE)
+        .requiresCorrectToolForDrops()
+        .strength(5, 3))
+    ).withDefaultItem.register
 }

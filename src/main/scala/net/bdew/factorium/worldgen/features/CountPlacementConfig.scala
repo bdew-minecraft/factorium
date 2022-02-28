@@ -3,7 +3,7 @@ package net.bdew.factorium.worldgen.features
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.bdew.factorium.Config
-import net.bdew.factorium.worldgen.ores.NormalOreGenConfigSection
+import net.bdew.factorium.worldgen.ores.OreGenConfigSection
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.levelgen.placement.{PlacementContext, PlacementModifier, PlacementModifierType}
 
@@ -11,7 +11,7 @@ import java.util.stream.IntStream
 import java.util.{Random, stream}
 
 case class CountPlacementConfig(sectionId: String) extends PlacementModifier {
-  def section: NormalOreGenConfigSection = Config.WorldGen.byId(sectionId).cfg.asInstanceOf[NormalOreGenConfigSection]
+  def section: OreGenConfigSection = Config.WorldGen.byId(sectionId).cfg.asInstanceOf[OreGenConfigSection]
   override def getPositions(ctx: PlacementContext, random: Random, pos: BlockPos): stream.Stream[BlockPos] =
     IntStream.range(0, section.count()).mapToObj(_ => pos)
   override def `type`(): PlacementModifierType[_] = CountPlacementConfigType

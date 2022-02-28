@@ -2,9 +2,12 @@ package net.bdew.factorium.datagen
 
 import net.bdew.factorium.Factorium
 import net.bdew.factorium.metals.{MetalItemType, Metals}
+import net.bdew.factorium.registries.Blocks
+import net.bdew.factorium.worldgen.ores.OreGenMeteorite
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.tags.BlockTagsProvider
 import net.minecraft.tags.BlockTags
+import net.minecraft.world.level.block.{Blocks => MCBlocks}
 import net.minecraftforge.common.Tags
 import net.minecraftforge.common.data.ExistingFileHelper
 
@@ -47,5 +50,16 @@ class BlockTagsGen(gen: DataGenerator, efh: ExistingFileHelper) extends BlockTag
         tag(CustomTags.storageBlock(metal.name).block).add(storageBlock)
       }
     }
+
+    val meteoriteOre = Blocks.meteoriteOre.block.get()
+    tag(Tags.Blocks.ORES).add(meteoriteOre)
+    tag(Tags.Blocks.ORE_RATES_DENSE).add(meteoriteOre)
+    tag(BlockTags.MINEABLE_WITH_PICKAXE).add(meteoriteOre)
+    tag(BlockTags.NEEDS_DIAMOND_TOOL).add(meteoriteOre)
+    tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(meteoriteOre)
+    tag(CustomTags.ores("meteorite").block).add(meteoriteOre)
+
+    tag(OreGenMeteorite.replaceables).addTag(BlockTags.STONE_ORE_REPLACEABLES)
+      .add(MCBlocks.SAND, MCBlocks.DIRT, MCBlocks.SANDSTONE, MCBlocks.GRAVEL)
   }
 }

@@ -3,7 +3,7 @@ package net.bdew.factorium.worldgen.features
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.bdew.factorium.Config
-import net.bdew.factorium.worldgen.ores.NormalOreGenConfigSection
+import net.bdew.factorium.worldgen.ores.OreGenConfigSection
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration.TargetBlockState
 import net.minecraft.world.level.levelgen.feature.configurations.{FeatureConfiguration, OreConfiguration}
 import net.minecraft.world.level.levelgen.feature.{ConfiguredFeature, Feature, FeaturePlaceContext}
@@ -26,7 +26,7 @@ class OreFeatureNormal extends Feature(OreFeatureConfig.CODEC) {
 }
 
 case class OreFeatureConfig(targets: util.List[TargetBlockState], sectionId: String) extends FeatureConfiguration {
-  def section: NormalOreGenConfigSection = Config.WorldGen.byId(sectionId).cfg.asInstanceOf[NormalOreGenConfigSection]
+  def section: OreGenConfigSection = Config.WorldGen.byId(sectionId).cfg.asInstanceOf[OreGenConfigSection]
 }
 
 object OreFeatureConfig {

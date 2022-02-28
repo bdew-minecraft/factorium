@@ -33,6 +33,8 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
 
     CustomTags.wrenchTags.foreach(t => tag(t).add(Items.wrench.get()))
 
+    copy(CustomTags.ores("meteorite").block, CustomTags.ores("meteorite").item)
+
     for (metal <- Metals.all) {
       addTypedForgeTag(metal, MetalItemType.Ingot, Tags.Items.INGOTS)
       addTypedForgeTag(metal, MetalItemType.Nugget, Tags.Items.NUGGETS)

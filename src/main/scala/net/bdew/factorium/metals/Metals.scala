@@ -15,6 +15,7 @@ object Metals {
     .addVanillaItem(MetalItemType.RawDrop, () => MCItems.RAW_IRON)
     .addVanillaBlock(MetalItemType.RawBlock, () => MCBlocks.RAW_IRON_BLOCK)
     .addVanillaItem(MetalItemType.RawDrop, () => MCItems.RAW_IRON)
+    .withMeteoriteWeight(100)
     .addProcessing()
     .addGear()
     .addPlate()
@@ -29,6 +30,7 @@ object Metals {
     .addVanillaBlock(MetalItemType.RawBlock, () => MCBlocks.RAW_COPPER_BLOCK)
     .addVanillaItem(MetalItemType.RawDrop, () => MCItems.RAW_COPPER)
     .addOwnItem(MetalItemType.Nugget)
+    .withMeteoriteWeight(10)
     .addProcessing()
     .addGear()
     .addPlate()
@@ -44,6 +46,7 @@ object Metals {
     .addVanillaItem(MetalItemType.RawDrop, () => MCItems.RAW_GOLD)
     .addVanillaBlock(MetalItemType.RawBlock, () => MCBlocks.RAW_GOLD_BLOCK)
     .addVanillaItem(MetalItemType.RawDrop, () => MCItems.RAW_GOLD)
+    .withMeteoriteWeight(10)
     .addProcessing()
     .addGear()
     .addPlate()
@@ -55,6 +58,7 @@ object Metals {
     .addPlate()
     .addGear()
     .addRod()
+    .withMeteoriteWeight(10)
     .addOreGen(ores.OreGenOverworld("tin_overworld", _,
       defaultCount = 12,
       defaultMinY = -64,
@@ -66,6 +70,7 @@ object Metals {
     .addResource()
     .addProcessing()
     .addPlate()
+    .withMeteoriteWeight(10)
     .addOreGen(ores.OreGenOverworld("lead_overworld", _,
       defaultCount = 8,
       defaultMinY = -64,
@@ -78,6 +83,7 @@ object Metals {
     .addResource()
     .addProcessing()
     .addPlate()
+    .withMeteoriteWeight(50)
     .addOreGen(ores.OreGenOverworld("nickel_overworld", _,
       defaultCount = 15,
       defaultMinY = -64,
@@ -89,6 +95,7 @@ object Metals {
     .addResource()
     .addProcessing()
     .addPlate()
+    .withMeteoriteWeight(10)
     .addOreGen(ores.OreGenOverworld("zinc_overworld", _,
       defaultCount = 10,
       defaultMinY = -64,
@@ -99,6 +106,7 @@ object Metals {
   val silver: MetalEntry = MetalEntry("silver")
     .addResource()
     .addProcessing()
+    .withMeteoriteWeight(10)
     .addOreGen(ores.OreGenOverworld("silver_overworld", _,
       defaultCount = 10,
       defaultMinY = -64,
@@ -117,6 +125,7 @@ object Metals {
     .addProcessing()
     .addPlate()
     .addWire()
+    .withMeteoriteWeight(10)
     .addOreGen(ores.OreGenOverworld("platinum_overworld", _,
       defaultCount = 5,
       defaultMinY = -64,

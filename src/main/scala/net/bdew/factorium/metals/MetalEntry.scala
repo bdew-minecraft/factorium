@@ -34,6 +34,7 @@ case class MetalEntry(name: String) {
   var items: Map[MetalItemType, Reference[Item]] = Map.empty
   var blocks: Map[MetalItemType, Reference[Block]] = Map.empty
   var oreGen: List[WorldgenTemplate[_ <: ConfigSection]] = List.empty
+  var meteoriteWeight = 0
 
   def addItem(kind: MetalItemType, ref: Reference[Item]): MetalEntry = {
     items += kind -> ref
@@ -97,6 +98,11 @@ case class MetalEntry(name: String) {
 
   def addVanillaBlock(kind: MetalItemType, getter: () => Block): MetalEntry =
     addBlock(kind, External(getter))
+
+  def withMeteoriteWeight(w: Int): MetalEntry = {
+    meteoriteWeight = w
+    this
+  }
 
   def haveItem(kind: MetalItemType): Boolean = items.isDefinedAt(kind)
   def haveBlock(kind: MetalItemType): Boolean = blocks.isDefinedAt(kind)

@@ -75,6 +75,7 @@
   "factorium.metal.electrum": "Electrum",
   "factorium.metal.brass": "Brass",
   "factorium.metal.constantan": "Constantan",
+  "block.factorium.mat_meteorite_ore": "Meteorite Ore",
   "block.factorium.metal.ore": "%s Ore",
   "block.factorium.metal.ore_deep": "Deepslate %s Ore",
   "block.factorium.metal.ore_end": "Endstone %s Ore",
