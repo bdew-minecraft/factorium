@@ -2,9 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "group": "factorium:misc",
   "pattern": [
-    "PCP",
-    "III",
-    "PCP"
+    "PWP",
+    "ICI",
+    "PWP"
   ],
   "key": {
     "P": {
@@ -15,6 +15,9 @@
     },
     "C": {
       "item": "factorium:craft_coil"
+    },
+    "W": {
+      "tag": "forge:wires/copper"
     }
   },
   "result": {
