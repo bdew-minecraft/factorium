@@ -11,10 +11,16 @@ case class IngredientMulti(ingredient: Ingredient, count: Int = 1) {
     pkt.writeInt(count)
   }
 
+  def toJson: JsonObject = {
+    val res = ingredient.toJson.asInstanceOf[JsonObject]
+    res.addProperty("count", count)
+    res
+  }
+
   def test(stack: ItemStack): Boolean = ingredient.test(stack) && stack.getCount >= count
+
   def testSoft(stack: ItemStack): Boolean = ingredient.test(stack)
 }
-
 
 object IngredientMulti {
   def fromNetwork(pkt: FriendlyByteBuf): IngredientMulti = {

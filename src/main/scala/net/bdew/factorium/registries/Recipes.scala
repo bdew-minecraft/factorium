@@ -1,6 +1,7 @@
 package net.bdew.factorium.registries
 
 import net.bdew.factorium.machines.alloy.{AlloyRecipe, AlloyRecipeSerializer}
+import net.bdew.factorium.machines.extruder.{ExtruderRecipe, ExtruderRecipeSerializer}
 import net.bdew.factorium.machines.processing.crusher.{CrusherRecipe, CrusherRecipeSerializer}
 import net.bdew.factorium.machines.processing.grinder.{GrinderRecipe, GrinderRecipeSerializer}
 import net.bdew.factorium.machines.processing.pulverizer.{PulverizerRecipe, PulverizerRecipeSerializer}
@@ -24,4 +25,7 @@ object Recipes extends RegistryManager(ForgeRegistries.RECIPE_SERIALIZERS) {
 
   val alloySerializer: RegistryObject[AlloyRecipeSerializer] = register("alloy", () => new AlloyRecipeSerializer)
   val alloyType: MachineRecipeType[AlloyRecipe] = new MachineRecipeType(alloySerializer)
+
+  val extruderSerializer: RegistryObject[ExtruderRecipeSerializer] = register("extruder", () => new ExtruderRecipeSerializer)
+  val extruderType: MachineRecipeType[ExtruderRecipe] = new MachineRecipeType(extruderSerializer)
 }

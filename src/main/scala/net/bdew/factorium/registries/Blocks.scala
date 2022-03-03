@@ -2,6 +2,7 @@ package net.bdew.factorium.registries
 
 import net.bdew.factorium.machines.BaseMachineItem
 import net.bdew.factorium.machines.alloy.AlloySmelterEntity
+import net.bdew.factorium.machines.extruder.ExtruderEntity
 import net.bdew.factorium.machines.processing.crusher.CrusherEntity
 import net.bdew.factorium.machines.processing.grinder.GrinderEntity
 import net.bdew.factorium.machines.processing.pulverizer.PulverizerEntity
@@ -72,6 +73,12 @@ object Blocks extends BlockManager(Items) {
   val alloySmelter: Def[WorkerMachineBlock[AlloySmelterEntity], AlloySmelterEntity, BaseMachineItem] =
     define("alloy", () => new WorkerMachineBlock[AlloySmelterEntity])
       .withTE(new AlloySmelterEntity(_, _, _))
+      .withItem(b => new BaseMachineItem(b))
+      .register
+
+  val extruder: Def[WorkerMachineBlock[ExtruderEntity], ExtruderEntity, BaseMachineItem] =
+    define("extruder", () => new WorkerMachineBlock[ExtruderEntity])
+      .withTE(new ExtruderEntity(_, _, _))
       .withItem(b => new BaseMachineItem(b))
       .register
 

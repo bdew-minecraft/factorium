@@ -13,6 +13,7 @@ object CreativeTab extends CreativeModeTab("factorium") {
 
 object Items extends ItemManager(CreativeTab) {
   def resourceProps: Item.Properties = props
+
   def toolProps: Item.Properties = props.stacksTo(1)
 
   def resourceItems(prefix: String, names: String*): Map[String, RegistryObject[Item]] =
@@ -44,7 +45,11 @@ object Items extends ItemManager(CreativeTab) {
     "coupler", "motor", "coil", "heater", "capacitor",
     "quartz_pulse", "quartz_clock", "container",
     "core_basic", "core_advanced",
-    "crusher", "grinder", "pulverizer",
+    "crusher", "grinder", "pulverizer", "compressor",
+  )
+
+  val dies: Map[String, RegistryObject[Item]] = resourceItems(prefix = "die",
+    "plate", "gear", "rod", "wire", "nugget",
   )
 
   override def init(): Unit = {

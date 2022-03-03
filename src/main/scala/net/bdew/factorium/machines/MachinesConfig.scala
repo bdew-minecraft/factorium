@@ -1,6 +1,7 @@
 package net.bdew.factorium.machines
 
 import net.bdew.factorium.machines.alloy.AlloySmelterConfig
+import net.bdew.factorium.machines.extruder.ExtruderConfig
 import net.bdew.factorium.machines.processing.crusher.CrusherConfig
 import net.bdew.factorium.machines.processing.grinder.GrinderConfig
 import net.bdew.factorium.machines.processing.pulverizer.PulverizerConfig
@@ -14,4 +15,5 @@ class MachinesConfig(spec: ForgeConfigSpec.Builder) extends ConfigSection {
   val Pulverizer: PulverizerConfig = ConfigSection(spec, "Pulverizer", new PulverizerConfig(spec))
   val Smelter: SmelterConfig = ConfigSection(spec, "Smelter", new SmelterConfig(spec))
   val AlloySmelter: AlloySmelterConfig = ConfigSection(spec, "AlloySmelter", new AlloySmelterConfig(spec))
+  val Extruder: ExtruderConfig = ConfigSection(spec, "Extruder", new ExtruderConfig(spec))
 }

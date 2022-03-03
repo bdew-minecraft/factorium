@@ -23,6 +23,10 @@ object CustomTags {
   lazy val chunks: Tag.Named[Item] = tagItem(Factorium.ModId, "chunks")
   lazy val powders: Tag.Named[Item] = tagItem(Factorium.ModId, "powders")
 
+  def chunks(name: String): Tag.Named[Item] = tagItem(Factorium.ModId, "chunks", name)
+
+  def powders(name: String): Tag.Named[Item] = tagItem(Factorium.ModId, "powders", name)
+
   lazy val plates: Tag.Named[Item] = tagItem("forge", "plates")
   lazy val gears: Tag.Named[Item] = tagItem("forge", "gears")
   lazy val wires: Tag.Named[Item] = tagItem("forge", "wires")
@@ -37,8 +41,16 @@ object CustomTags {
   lazy val endStoneOres: Duo = tagDual("forge", "ores_in_ground", "end_stone")
 
   def storageBlock(name: String): Duo = tagDual("forge", "storage_blocks", name)
+
   def ores(name: String): Duo = tagDual("forge", "ores", name)
 
   def dusts(name: String): Tag.Named[Item] = tagItem("forge", "dusts", name)
+
+  def ingots(name: String): Tag.Named[Item] = tagItem("forge", "ingots", name)
+
+  def nuggets(name: String): Tag.Named[Item] = tagItem("forge", "nuggets", name)
+
   def smeltable(name: String): Tag.Named[Item] = tagItem(Factorium.ModId, "smeltable", name)
+
+  def rawMaterials(name: String): Tag.Named[Item] = tagItem("forge", "raw_materials", name)
 }
