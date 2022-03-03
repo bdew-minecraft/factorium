@@ -91,5 +91,12 @@
   "item.factorium.metal.powder": "%s Powder",
   "item.factorium.metal.raw": "Raw %s",
   "item.factorium.metal.rod": "%s Rod",
-  "item.factorium.metal.wire": "%s Wire"
+  "item.factorium.metal.wire": "%s Wire",
+  "item.factorium.mat_extra_dust_coal": "Ground Coal",
+  "item.factorium.mat_extra_dust_charcoal": "Ground Charcoal",
+  "item.factorium.mat_extra_dust_carbon": "Carbon Dust",
+  "item.factorium.mat_extra_dust_diamond": "Ground Diamond",
+  "item.factorium.mat_extra_dust_emerald": "Ground Emerald",
+  "item.factorium.mat_extra_dust_ender_pearl": "Ground Ender Pearl",
+  "item.factorium.mat_extra_dust_obsidian": "Ground Obsidian"
 }
