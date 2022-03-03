@@ -8,10 +8,10 @@
   ],
   "key": {
     "I": {
-      "tag": "forge:rods/steel"
+      "tag": "forge:rods/bronze"
     },
     "X": {
-      "tag": "forge:ingots/steel"
+      "tag": "forge:ingots/iron"
     },
     "G": {
       "tag": "forge:gears/bronze"
