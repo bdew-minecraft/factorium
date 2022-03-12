@@ -3,6 +3,7 @@ package net.bdew.factorium.worldgen.features
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.bdew.factorium.Config
+import net.bdew.factorium.worldgen.PlacementModifiers
 import net.bdew.factorium.worldgen.ores.DepthOreGenConfigSection
 import net.minecraft.core.BlockPos
 import net.minecraft.util.Mth
@@ -24,10 +25,10 @@ case class BelowSurfacePlacementConfig(sectionId: String) extends PlacementModif
     Stream.of(pos.atY(Mth.randomBetweenInclusive(random, surface - section.maxDepth(), surface - section.minDepth())))
   }
 
-  override def `type`(): PlacementModifierType[_] = BelowSurfacePlacementConfigType
+  override def `type`(): PlacementModifierType[_] = PlacementModifiers.belowSurface.get
 }
 
-object BelowSurfacePlacementConfigType extends PlacementModifierType[BelowSurfacePlacementConfig] {
+class BelowSurfacePlacementConfigType extends PlacementModifierType[BelowSurfacePlacementConfig] {
   val CODEC: Codec[BelowSurfacePlacementConfig] = RecordCodecBuilder.create(app => app.group(
     Codec.STRING.fieldOf("sectionId").forGetter(_.sectionId)
   ).apply(app, BelowSurfacePlacementConfig(_)))

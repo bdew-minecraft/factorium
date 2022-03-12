@@ -6,26 +6,24 @@ import net.bdew.factorium.machines.processing.crusher.{CrusherRecipe, CrusherRec
 import net.bdew.factorium.machines.processing.grinder.{GrinderRecipe, GrinderRecipeSerializer}
 import net.bdew.factorium.machines.processing.pulverizer.{PulverizerRecipe, PulverizerRecipeSerializer}
 import net.bdew.factorium.machines.processing.smelter.{SmelterRecipe, SmelterRecipeSerializer}
-import net.bdew.lib.managers.RegistryManager
-import net.bdew.lib.recipes.MachineRecipeType
-import net.minecraftforge.registries.{ForgeRegistries, RegistryObject}
+import net.bdew.lib.managers.{MachineRecipeDef, RecipeManager}
 
-object Recipes extends RegistryManager(ForgeRegistries.RECIPE_SERIALIZERS) {
-  val crusherSerializer: RegistryObject[CrusherRecipeSerializer] = register("crusher", () => new CrusherRecipeSerializer)
-  val crusherType: MachineRecipeType[CrusherRecipe] = new MachineRecipeType(crusherSerializer)
+object Recipes extends RecipeManager {
+  val crusher: MachineRecipeDef[CrusherRecipe, CrusherRecipeSerializer] =
+    registerMachine("crusher", () => new CrusherRecipeSerializer)
 
-  val grinderSerializer: RegistryObject[GrinderRecipeSerializer] = register("grinder", () => new GrinderRecipeSerializer)
-  val grinderType: MachineRecipeType[GrinderRecipe] = new MachineRecipeType(grinderSerializer)
+  val grinder: MachineRecipeDef[GrinderRecipe, GrinderRecipeSerializer] =
+    registerMachine("grinder", () => new GrinderRecipeSerializer)
 
-  val pulverizerSerializer: RegistryObject[PulverizerRecipeSerializer] = register("pulverizer", () => new PulverizerRecipeSerializer)
-  val pulverizerType: MachineRecipeType[PulverizerRecipe] = new MachineRecipeType(pulverizerSerializer)
+  val pulverizer: MachineRecipeDef[PulverizerRecipe, PulverizerRecipeSerializer] =
+    registerMachine("pulverizer", () => new PulverizerRecipeSerializer)
 
-  val smelterSerializer: RegistryObject[SmelterRecipeSerializer] = register("smelter", () => new SmelterRecipeSerializer)
-  val smelterType: MachineRecipeType[SmelterRecipe] = new MachineRecipeType(smelterSerializer)
+  val smelter: MachineRecipeDef[SmelterRecipe, SmelterRecipeSerializer] =
+    registerMachine("smelter", () => new SmelterRecipeSerializer)
 
-  val alloySerializer: RegistryObject[AlloyRecipeSerializer] = register("alloy", () => new AlloyRecipeSerializer)
-  val alloyType: MachineRecipeType[AlloyRecipe] = new MachineRecipeType(alloySerializer)
+  val alloy: MachineRecipeDef[AlloyRecipe, AlloyRecipeSerializer] =
+    registerMachine("alloy", () => new AlloyRecipeSerializer)
 
-  val extruderSerializer: RegistryObject[ExtruderRecipeSerializer] = register("extruder", () => new ExtruderRecipeSerializer)
-  val extruderType: MachineRecipeType[ExtruderRecipe] = new MachineRecipeType(extruderSerializer)
+  val extruder: MachineRecipeDef[ExtruderRecipe, ExtruderRecipeSerializer] =
+    registerMachine("extruder", () => new ExtruderRecipeSerializer)
 }

@@ -4,14 +4,13 @@ import net.bdew.factorium.Factorium
 import net.bdew.factorium.metals.{MetalEntry, MetalItemType}
 import net.minecraft.data.recipes.{FinishedRecipe, RecipeBuilder, SimpleCookingRecipeBuilder}
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.crafting.{Ingredient, RecipeSerializer}
 
 import java.util.function.Consumer
 
 object RecipeGenSmelting {
   def addSmeltingRecipes(metal: MetalEntry, consumer: Consumer[FinishedRecipe]): Unit = {
-    val smeltableTag = ItemTags.createOptional(new ResourceLocation(Factorium.ModId, s"smeltable/${metal.name}"))
+    val smeltableTag = CustomTags.smeltable(metal.name)
 
     SimpleCookingRecipeBuilder.cooking(
       Ingredient.of(smeltableTag),

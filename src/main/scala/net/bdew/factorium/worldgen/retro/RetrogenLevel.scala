@@ -1,7 +1,7 @@
 package net.bdew.factorium.worldgen.retro
 
 import net.minecraft.core.particles.ParticleOptions
-import net.minecraft.core.{BlockPos, Direction, RegistryAccess, SectionPos}
+import net.minecraft.core.{BlockPos, Direction, Holder, RegistryAccess}
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.{SoundEvent, SoundSource}
@@ -19,8 +19,6 @@ import net.minecraft.world.level.dimension.DimensionType
 import net.minecraft.world.level.entity.EntityTypeTest
 import net.minecraft.world.level.gameevent.GameEvent
 import net.minecraft.world.level.levelgen.Heightmap
-import net.minecraft.world.level.levelgen.feature.StructureFeature
-import net.minecraft.world.level.levelgen.structure.StructureStart
 import net.minecraft.world.level.lighting.LevelLightEngine
 import net.minecraft.world.level.material.{Fluid, FluidState}
 import net.minecraft.world.level.storage.LevelData
@@ -32,8 +30,8 @@ import java.util.Random
 import java.util.function.Predicate
 
 class RetrogenLevel(base: ServerLevel) extends WorldGenLevel {
+
   override def getSeed: Long = base.getSeed
-  override def startsForFeature(pos: SectionPos, feature: StructureFeature[_]): util.List[_ <: StructureStart[_]] = base.startsForFeature(pos, feature)
   override def getLevel: ServerLevel = base
   override def nextSubTickCount(): Long = base.nextSubTickCount()
   override def getBlockTicks: LevelTickAccess[Block] = base.getBlockTicks
@@ -52,7 +50,7 @@ class RetrogenLevel(base: ServerLevel) extends WorldGenLevel {
   override def getHeight(kind: Heightmap.Types, x: Int, z: Int): Int = base.getHeight(kind, x, z)
   override def getSkyDarken: Int = base.getSkyDarken
   override def getBiomeManager: BiomeManager = base.getBiomeManager
-  override def getUncachedNoiseBiome(x: Int, y: Int, z: Int): Biome = base.getUncachedNoiseBiome(x, y, z)
+  override def getUncachedNoiseBiome(x: Int, y: Int, z: Int): Holder[Biome] = base.getUncachedNoiseBiome(x, y, z)
   override def isClientSide: Boolean = base.isClientSide
   override def getSeaLevel: Int = base.getSeaLevel
   override def dimensionType(): DimensionType = base.dimensionType()

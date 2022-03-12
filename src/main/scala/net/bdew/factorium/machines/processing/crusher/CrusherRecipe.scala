@@ -13,6 +13,6 @@ class CrusherRecipeSerializer extends ProcessingRecipeSerializer[CrusherRecipe] 
 
 class CrusherRecipe(id: ResourceLocation, input: Ingredient, output: ItemStackWithChance, secondary: ItemStackWithChance, bonus: ItemStackWithChance)
   extends ProcessingRecipe(id, input, output, secondary, bonus) {
-  override def getSerializer: RecipeSerializer[_] = Recipes.crusherSerializer.get()
-  override def getType: RecipeType[_] = Recipes.crusherType
+  override def getSerializer: RecipeSerializer[_] = Recipes.crusher.serializer
+  override def getType: RecipeType[_] = Recipes.crusher.recipeType
 }

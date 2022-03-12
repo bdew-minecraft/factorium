@@ -25,7 +25,7 @@ import scala.jdk.CollectionConverters._
 object AlloyRecipes extends IRecipeCategory[AlloyRecipe] {
   val block: Block = Blocks.alloySmelter.block.get()
 
-  override def getUid: ResourceLocation = Recipes.alloyType.registryName
+  override def getUid: ResourceLocation = Recipes.alloy.id
   override def getRecipeClass: Class[AlloyRecipe] = classOf[AlloyRecipe]
   override def getTitle: Component = block.getName
 

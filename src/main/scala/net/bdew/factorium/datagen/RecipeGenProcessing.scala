@@ -3,7 +3,7 @@ package net.bdew.factorium.datagen
 import net.bdew.factorium.metals.{MetalEntry, MetalItemType}
 import net.bdew.factorium.registries.Recipes
 import net.minecraft.data.recipes.FinishedRecipe
-import net.minecraft.tags.Tag
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.{Item, Items}
 
@@ -47,8 +47,8 @@ object RecipeGenProcessing {
     }
   }
 
-  def makeCrusherRecipe(id: String, input: Tag.Named[Item], output: Item, gravel: Boolean, consumer: Consumer[FinishedRecipe]): Unit = {
-    var builder = ProcessingRecipeBuilder(Recipes.crusherSerializer.get())
+  def makeCrusherRecipe(id: String, input: TagKey[Item], output: Item, gravel: Boolean, consumer: Consumer[FinishedRecipe]): Unit = {
+    var builder = ProcessingRecipeBuilder(Recipes.crusher.serializer)
       .withInput(Ingredient.of(input))
       .withOutput(output, count = 2)
       .requireTag(input)
@@ -58,8 +58,8 @@ object RecipeGenProcessing {
     builder.build(id).save(consumer)
   }
 
-  def makeGrinderRecipe(id: String, input: Tag.Named[Item], output: Item, consumer: Consumer[FinishedRecipe]): Unit = {
-    ProcessingRecipeBuilder(Recipes.grinderSerializer.get())
+  def makeGrinderRecipe(id: String, input: TagKey[Item], output: Item, consumer: Consumer[FinishedRecipe]): Unit = {
+    ProcessingRecipeBuilder(Recipes.grinder.serializer)
       .withInput(Ingredient.of(input))
       .withOutput(output)
       .withBonus(output, chance = 0.25f)
@@ -68,8 +68,8 @@ object RecipeGenProcessing {
       .save(consumer)
   }
 
-  def makePulverizerRecipe(id: String, input: Tag.Named[Item], output: Item, consumer: Consumer[FinishedRecipe]): Unit = {
-    ProcessingRecipeBuilder(Recipes.pulverizerSerializer.get())
+  def makePulverizerRecipe(id: String, input: TagKey[Item], output: Item, consumer: Consumer[FinishedRecipe]): Unit = {
+    ProcessingRecipeBuilder(Recipes.pulverizer.serializer)
       .withInput(Ingredient.of(input))
       .withOutput(output)
       .withBonus(output, chance = 0.25f)

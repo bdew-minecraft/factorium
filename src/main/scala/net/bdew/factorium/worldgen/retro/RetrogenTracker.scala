@@ -4,7 +4,7 @@ import net.bdew.factorium.worldgen.WorldGeneration
 import net.bdew.factorium.{Config, Factorium}
 import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.nbt.NBT
-import net.minecraft.core.BlockPos
+import net.minecraft.core.{BlockPos, Holder}
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
@@ -25,7 +25,7 @@ import scala.collection.mutable
 case class ChunkRef(pos: ChunkPos, features: Set[String])
 
 object RetrogenTracker {
-  private val log = LogManager.getLogger("RetroGen")
+  private val log = LogManager.getLogger
   private val chunkQueue = mutable.Map.empty[ResourceKey[Level], mutable.Map[ChunkPos, Set[String]]]
   private var totalCounter = 0
 
@@ -85,7 +85,6 @@ object RetrogenTracker {
         ev.getData.put(Factorium.ModId, myTag)
       case _ => // skip
     }
-
   }
 
   def onWorldTick(ev: TickEvent.WorldTickEvent): Unit = {
@@ -93,14 +92,14 @@ object RetrogenTracker {
     (next(ev.world), ev.world) match {
       case (Some((pos, features)), world: ServerLevel) if ev.world.hasChunk(pos.x, pos.z) =>
         val chunk = world.getChunk(pos.x, pos.z, ChunkStatus.FULL, false)
-        val biomes = mutable.ListBuffer.empty[Biome]
-        chunk.getSections.foreach(_.getBiomes.getAll(biomes.addOne))
+        val biomes = mutable.ListBuffer.empty[Holder[Biome]]
+        chunk.getSections.foreach(_.getBiomes.getAll(x=>biomes.addOne(x)))
         val rng = new Random(world.getSeed)
         val xSeed = rng.nextLong >> 3
         val zSeed = rng.nextLong >> 3
         val genLevel = new RetrogenLevel(world)
         rng.setSeed(xSeed * pos.x + zSeed * pos.z ^ world.getSeed)
-        for (entry <- WorldGeneration.features if entry.isEnabled() && !features.contains(entry.id) && biomes.exists(x => entry.filter.matches(x.getBiomeCategory))) {
+        for (entry <- WorldGeneration.features if entry.isEnabled() && !features.contains(entry.id) && biomes.exists(x => entry.filter.matches(Biome.getBiomeCategory(x)))) {
           log.info(s"Generating ${entry.id} in chunk $pos (${world.dimension().location()})")
           entry.feature.placeWithBiomeCheck(genLevel, world.getChunkSource.getGenerator, rng, new BlockPos(pos.x << 4, 0, pos.z << 4))
         }

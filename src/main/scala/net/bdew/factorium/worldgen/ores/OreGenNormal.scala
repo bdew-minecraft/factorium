@@ -3,8 +3,9 @@ package net.bdew.factorium.worldgen.ores
 import net.bdew.factorium.Factorium
 import net.bdew.factorium.metals.MetalEntry
 import net.bdew.factorium.worldgen.features.{CountPlacementConfig, HeightRangePlacementConfig}
-import net.bdew.factorium.worldgen.{WorldGeneration, WorldgenTemplate}
+import net.bdew.factorium.worldgen.{Features, WorldgenTemplate}
 import net.bdew.lib.config.ConfigSection
+import net.minecraft.core.Holder
 import net.minecraft.data.BuiltinRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration.TargetBlockState
@@ -29,20 +30,20 @@ abstract class OreGenNormal extends WorldgenTemplate[NormalOreGenConfigSection] 
 
   def oreTargets: List[TargetBlockState]
 
-  override def createFeature(cfg: NormalOreGenConfigSection): PlacedFeature = {
+  override def createFeature(cfg: NormalOreGenConfigSection): Holder[PlacedFeature] = {
     val configuredFeature = BuiltinRegistries.register(
       BuiltinRegistries.CONFIGURED_FEATURE,
       new ResourceLocation(Factorium.ModId, id),
-      WorldGeneration.FEATURE_ORE_NORMAL.configured(oreTargets.asJava, id)
+      Features.oreNormal.get.configured(oreTargets.asJava, id)
     )
 
     BuiltinRegistries.register(BuiltinRegistries.PLACED_FEATURE, new ResourceLocation(Factorium.ModId, id),
-      configuredFeature.placed(
+      new PlacedFeature(configuredFeature, List(
         CountPlacementConfig(id),
         InSquarePlacement.spread(),
         BiomeFilter.biome,
         HeightRangePlacementConfig(id),
-      )
+      ).asJava)
     )
   }
 

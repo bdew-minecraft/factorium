@@ -6,16 +6,16 @@ import net.bdew.factorium.registries.Items
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.tags.ItemTagsProvider
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.{ItemTags, Tag}
+import net.minecraft.tags.{ItemTags, TagKey}
 import net.minecraft.world.item.Item
 import net.minecraftforge.common.Tags
 import net.minecraftforge.common.data.ExistingFileHelper
 
 class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockTagsGen) extends ItemTagsProvider(gen, blockTags, Factorium.ModId, efh) {
-  def addTypedForgeTag(metal: MetalEntry, kind: MetalItemType, groupTag: Tag.Named[Item]): Unit = {
+  def addTypedForgeTag(metal: MetalEntry, kind: MetalItemType, groupTag: TagKey[Item]): Unit = {
     if (!metal.ownItem(kind)) return
     val item = metal.item(kind)
-    val subTag = ItemTags.createOptional(new ResourceLocation(groupTag.getName.getNamespace, s"${groupTag.getName.getPath}/${metal.name}"))
+    val subTag = ItemTags.create(new ResourceLocation(groupTag.location.getNamespace, s"${groupTag.location.getPath}/${metal.name}"))
     tag(groupTag).add(item)
     tag(subTag).add(item)
   }

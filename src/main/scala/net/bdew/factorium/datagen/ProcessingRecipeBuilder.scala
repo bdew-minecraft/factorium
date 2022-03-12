@@ -6,7 +6,7 @@ import net.bdew.factorium.machines.processing.ProcessingRecipe
 import net.bdew.factorium.misc.ItemStackWithChance
 import net.minecraft.data.recipes.FinishedRecipe
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.Tag
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.crafting.{Ingredient, RecipeSerializer}
 import net.minecraft.world.item.{Item, ItemStack}
 import net.minecraftforge.common.crafting.CraftingHelper
@@ -36,8 +36,8 @@ case class ProcessingRecipeBuilder(serializer: RecipeSerializer[_ <: ProcessingR
   def requireCondition(condition: ICondition): ProcessingRecipeBuilder =
     copy(conditions = conditions :+ condition)
 
-  def requireTag(tag: Tag.Named[Item]): ProcessingRecipeBuilder =
-    requireCondition(new NotCondition(new TagEmptyCondition(tag.getName)))
+  def requireTag(tag: TagKey[Item]): ProcessingRecipeBuilder =
+    requireCondition(new NotCondition(new TagEmptyCondition(tag.location)))
 
   def build(id: String): FinishedProcessingRecipe = {
     require(input != null, s"Input is empty in recipe $id")

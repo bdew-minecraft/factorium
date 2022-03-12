@@ -15,8 +15,8 @@ class AlloyRecipe(id: ResourceLocation,
                   val output: ItemStack,
                   val speedMod: Float,
                  ) extends BaseMachineRecipe(id) {
-  override def getSerializer: RecipeSerializer[_] = Recipes.alloySerializer.get()
-  override def getType: RecipeType[_] = Recipes.alloyType
+  override def getSerializer: RecipeSerializer[_] = Recipes.alloy.serializer
+  override def getType: RecipeType[_] = Recipes.alloy.recipeType
 
   def test(stack1: ItemStack, stack2: ItemStack): Boolean =
     (input1.test(stack1) && input2.test(stack2)) || (input1.test(stack2) && input2.test(stack1))

@@ -13,6 +13,6 @@ class PulverizerRecipeSerializer extends ProcessingRecipeSerializer[PulverizerRe
 
 class PulverizerRecipe(id: ResourceLocation, input: Ingredient, output: ItemStackWithChance, secondary: ItemStackWithChance, bonus: ItemStackWithChance)
   extends ProcessingRecipe(id, input, output, secondary, bonus) {
-  override def getSerializer: RecipeSerializer[_] = Recipes.pulverizerSerializer.get()
-  override def getType: RecipeType[_] = Recipes.pulverizerType
+  override def getSerializer: RecipeSerializer[_] = Recipes.pulverizer.serializer
+  override def getType: RecipeType[_] = Recipes.pulverizer.recipeType
 }

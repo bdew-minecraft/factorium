@@ -14,9 +14,9 @@ class ExtruderRecipe(id: ResourceLocation,
                      val die: Ingredient,
                      val output: ItemStack,
                     ) extends BaseMachineRecipe(id) {
-  override def getSerializer: RecipeSerializer[_] = Recipes.extruderSerializer.get()
+  override def getSerializer: RecipeSerializer[_] = Recipes.extruder.serializer
 
-  override def getType: RecipeType[_] = Recipes.extruderType
+  override def getType: RecipeType[_] = Recipes.extruder.recipeType
 
   def test(inputStack: ItemStack, dieStack: ItemStack): Boolean =
     input.test(inputStack) && die.test(dieStack)

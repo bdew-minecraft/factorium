@@ -111,25 +111,25 @@ abstract class ProcessingRecipes[T <: ProcessingRecipe](recipeType: MachineRecip
   }
 }
 
-object CrusherRecipes extends ProcessingRecipes(Recipes.crusherType, classOf[CrusherRecipe]) {
+object CrusherRecipes extends ProcessingRecipes(Recipes.crusher.recipeType, classOf[CrusherRecipe]) {
   override def block: Block = Blocks.crusher.block.get()
   override def getRecipes: List[CrusherRecipe] = MachineRecipes.crusher.toList
   override def cfg: WorkerMachineConfig = Config.Machines.Crusher
 }
 
-object GrinderRecipes extends ProcessingRecipes(Recipes.grinderType, classOf[GrinderRecipe]) {
+object GrinderRecipes extends ProcessingRecipes(Recipes.grinder.recipeType, classOf[GrinderRecipe]) {
   override def block: Block = Blocks.grinder.block.get()
   override def getRecipes: List[GrinderRecipe] = MachineRecipes.grinder.toList
   override def cfg: WorkerMachineConfig = Config.Machines.Grinder
 }
 
-object PulverizerRecipes extends ProcessingRecipes(Recipes.pulverizerType, classOf[PulverizerRecipe]) {
+object PulverizerRecipes extends ProcessingRecipes(Recipes.pulverizer.recipeType, classOf[PulverizerRecipe]) {
   override def block: Block = Blocks.pulverizer.block.get()
   override def getRecipes: List[PulverizerRecipe] = MachineRecipes.pulverizer.toList
   override def cfg: WorkerMachineConfig = Config.Machines.Pulverizer
 }
 
-object SmelterRecipes extends ProcessingRecipes(Recipes.smelterType, classOf[SmelterRecipe]) {
+object SmelterRecipes extends ProcessingRecipes(Recipes.smelter.recipeType, classOf[SmelterRecipe]) {
   override def block: Block = Blocks.smelter.block.get()
   override def getRecipes: List[SmelterRecipe] = MachineRecipes.smelter.toList
   override def cfg: WorkerMachineConfig = Config.Machines.Smelter

@@ -1,6 +1,7 @@
 package net.bdew.factorium.worldgen
 
 import net.bdew.lib.config.ConfigSection
+import net.minecraft.core.Holder
 import net.minecraft.world.level.levelgen.placement._
 import net.minecraftforge.common.ForgeConfigSpec
 
@@ -8,7 +9,7 @@ trait WorldgenTemplate[C <: ConfigSection] {
   def id: String
   def filter: BiomeCatFilter
   def makeConfig(spec: ForgeConfigSpec.Builder): C
-  def createFeature(cfg: C): PlacedFeature
+  def createFeature(cfg: C): Holder[PlacedFeature]
   def isEnabled(cfg: C): Boolean
 }
 
@@ -16,9 +17,11 @@ case class WorldgenConfigured[C <: ConfigSection](template: WorldgenTemplate[C],
   def createPlaced(): WorldgenPlaced = WorldgenPlaced(
     id = template.id,
     filter = template.filter,
-    feature = template.createFeature(cfg),
+    featureHolder = template.createFeature(cfg),
     isEnabled = () => template.isEnabled(cfg)
   )
 }
 
-case class WorldgenPlaced(id: String, filter: BiomeCatFilter, feature: PlacedFeature, isEnabled: () => Boolean)
+case class WorldgenPlaced(id: String, filter: BiomeCatFilter, featureHolder: Holder[PlacedFeature], isEnabled: () => Boolean) {
+  def feature = featureHolder.value()
+}

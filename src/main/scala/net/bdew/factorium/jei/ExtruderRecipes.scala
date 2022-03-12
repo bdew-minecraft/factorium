@@ -24,7 +24,7 @@ import scala.jdk.CollectionConverters._
 object ExtruderRecipes extends IRecipeCategory[ExtruderRecipe] {
   val block: Block = Blocks.extruder.block.get()
 
-  override def getUid: ResourceLocation = Recipes.extruderType.registryName
+  override def getUid: ResourceLocation = Recipes.extruder.id
 
   override def getRecipeClass: Class[ExtruderRecipe] = classOf[ExtruderRecipe]
 

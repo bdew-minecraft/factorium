@@ -6,7 +6,7 @@ import net.bdew.factorium.misc.IngredientMulti
 import net.bdew.factorium.registries.Recipes
 import net.minecraft.data.recipes.FinishedRecipe
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.Tag
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.crafting.{Ingredient, RecipeSerializer}
 import net.minecraft.world.item.{Item, ItemStack}
 import net.minecraftforge.common.crafting.CraftingHelper
@@ -34,8 +34,8 @@ case class ExtruderRecipeBuilder(input: IngredientMulti = null,
   def requireCondition(condition: ICondition): ExtruderRecipeBuilder =
     copy(conditions = conditions :+ condition)
 
-  def requireTag(tag: Tag.Named[Item]): ExtruderRecipeBuilder =
-    requireCondition(new NotCondition(new TagEmptyCondition(tag.getName)))
+  def requireTag(tag: TagKey[Item]): ExtruderRecipeBuilder =
+    requireCondition(new NotCondition(new TagEmptyCondition(tag.location)))
 
   def build(id: String): FinishedExtruderRecipe = {
     require(input != null, s"Input is empty in recipe $id")
@@ -47,7 +47,7 @@ case class ExtruderRecipeBuilder(input: IngredientMulti = null,
   class FinishedExtruderRecipe(id: String) extends FinishedRecipe {
     override def getId: ResourceLocation = new ResourceLocation(Factorium.ModId, id)
 
-    override def getType: RecipeSerializer[_] = Recipes.extruderSerializer.get()
+    override def getType: RecipeSerializer[_] = Recipes.extruder.serializer
 
     override def serializeAdvancement(): JsonObject = null
 

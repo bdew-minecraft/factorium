@@ -56,12 +56,12 @@ object MachineRecipes {
 
   def refreshRecipes(manager: RecipeManager): Unit = {
     val (crusherAdapted, smelterAdapted) = makeVanillaAdaptedRecipes(manager)
-    crusher = (Recipes.crusherType.getAllRecipes(manager) ++ crusherAdapted).toSet
-    smelter = (Recipes.smelterType.getAllRecipes(manager) ++ smelterAdapted).toSet
-    grinder = Recipes.grinderType.getAllRecipes(manager).toSet
-    pulverizer = Recipes.pulverizerType.getAllRecipes(manager).toSet
-    alloy = Recipes.alloyType.getAllRecipes(manager).toSet
-    extruder = Recipes.extruderType.getAllRecipes(manager).toSet
+    crusher = (Recipes.crusher.from(manager) ++ crusherAdapted).toSet
+    smelter = (Recipes.smelter.from(manager) ++ smelterAdapted).toSet
+    grinder = Recipes.grinder.from(manager).toSet
+    pulverizer = Recipes.pulverizer.from(manager).toSet
+    alloy = Recipes.alloy.from(manager).toSet
+    extruder = Recipes.extruder.from(manager).toSet
   }
 
   def init(): Unit = {
