@@ -3,16 +3,17 @@ package net.bdew.factorium.jei
 import com.google.common.cache.{CacheBuilder, CacheLoader, LoadingCache}
 import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
-import mezz.jei.api.gui.IRecipeLayout
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.{IDrawable, IDrawableAnimated}
-import mezz.jei.api.ingredients.IIngredients
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView
 import mezz.jei.api.recipe.category.IRecipeCategory
+import mezz.jei.api.recipe.{IFocusGroup, RecipeIngredientRole, RecipeType}
 import mezz.jei.api.registration.{IRecipeCatalystRegistration, IRecipeRegistration}
-import net.bdew.factorium.Config
 import net.bdew.factorium.machines.MachineRecipes
 import net.bdew.factorium.machines.alloy.{AlloyRecipe, AlloyTextures}
 import net.bdew.factorium.misc.IngredientMulti
 import net.bdew.factorium.registries.{Blocks, Recipes}
+import net.bdew.factorium.{Config, Factorium}
 import net.bdew.lib.{Client, Text}
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -25,8 +26,11 @@ import scala.jdk.CollectionConverters._
 object AlloyRecipes extends IRecipeCategory[AlloyRecipe] {
   val block: Block = Blocks.alloySmelter.block.get()
 
-  override def getUid: ResourceLocation = Recipes.alloy.id
-  override def getRecipeClass: Class[AlloyRecipe] = classOf[AlloyRecipe]
+  override val getRecipeType: RecipeType[AlloyRecipe] = RecipeType.create(Factorium.ModId, Recipes.alloy.id.getPath, classOf[AlloyRecipe])
+
+  override def getUid: ResourceLocation = getRecipeType.getUid
+  override def getRecipeClass: Class[_ <: AlloyRecipe] = getRecipeType.getRecipeClass
+
   override def getTitle: Component = block.getName
 
   lazy private val arrowCache: LoadingCache[Integer, IDrawableAnimated] =
@@ -46,9 +50,14 @@ object AlloyRecipes extends IRecipeCategory[AlloyRecipe] {
   override def getIcon: IDrawable =
     JEIPlugin.guiHelper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(block))
 
-  override def setIngredients(recipe: AlloyRecipe, ingredients: IIngredients): Unit = {
-    ingredients.setInputIngredients(List(recipe.input1.ingredient, recipe.input2.ingredient).asJava)
-    ingredients.setOutput[ItemStack](VanillaTypes.ITEM, recipe.output)
+
+  override def setRecipe(builder: IRecipeLayoutBuilder, recipe: AlloyRecipe, focuses: IFocusGroup): Unit = {
+    builder.addSlot(RecipeIngredientRole.INPUT, 28, 21)
+      .addItemStacks(listIngredientMulti(recipe.input1))
+    builder.addSlot(RecipeIngredientRole.INPUT, 46, 21)
+      .addItemStacks(listIngredientMulti(recipe.input2))
+    builder.addSlot(RecipeIngredientRole.OUTPUT, 99, 3)
+      .addItemStack(recipe.output)
   }
 
   private def listIngredientMulti(ingredients: IngredientMulti): util.List[ItemStack] =
@@ -60,26 +69,15 @@ object AlloyRecipes extends IRecipeCategory[AlloyRecipe] {
 
   def workTime(recipe: AlloyRecipe): Float = Config.Machines.AlloySmelter.baseCycleTicks() / recipe.speedMod
 
-  override def setRecipe(recipeLayout: IRecipeLayout, recipe: AlloyRecipe, ingredients: IIngredients): Unit = {
-    val itemStacks = recipeLayout.getItemStacks
-    itemStacks.init(0, true, 27, 20)
-    itemStacks.init(1, true, 45, 20)
-    itemStacks.init(2, false, 98, 2)
-    itemStacks.set(0, listIngredientMulti(recipe.input1))
-    itemStacks.set(1, listIngredientMulti(recipe.input2))
-    itemStacks.set(2, recipe.output)
-  }
-
   def initRecipes(reg: IRecipeRegistration): Unit = {
-    reg.addRecipes(MachineRecipes.alloy.asJava, getUid)
+    reg.addRecipes(getRecipeType, MachineRecipes.alloy.toList.asJava)
   }
 
   def initCatalyst(reg: IRecipeCatalystRegistration): Unit = {
-    reg.addRecipeCatalyst(new ItemStack(block), getUid)
+    reg.addRecipeCatalyst(new ItemStack(block), getRecipeType)
   }
 
-  override def draw(recipe: AlloyRecipe, stack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
-    super.draw(recipe, stack, mouseX, mouseY)
+  override def draw(recipe: AlloyRecipe, recipeSlotsView: IRecipeSlotsView, stack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
     Client.fontRenderer.draw(stack, Text.amount(workTime(recipe) / 20f, "seconds"), 20, 48, 0xFF808080)
     arrowCache.getUnchecked(workTime(recipe).round).draw(stack, 68, 20)
   }
