@@ -2,6 +2,7 @@ package net.bdew.factorium.datagen
 
 import net.bdew.factorium.Factorium
 import net.bdew.factorium.machines.RotatableMachineBlock
+import net.bdew.factorium.machines.pump.PumpBlock
 import net.bdew.factorium.registries.Blocks
 import net.bdew.lib.datagen.BlockStateGenerator
 import net.minecraft.core.Direction
@@ -50,8 +51,20 @@ class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStat
     makeBlockItem(block, model)
   }
 
+  def makeTopBottomBlock(block: Block): Unit = {
+    val name = block.getRegistryName.getPath
+    val model = models().getBuilder(name)
+      .parent(vanillaModel("block/cube_bottom_top"))
+      .texture("top", new ResourceLocation(Factorium.ModId, s"block/$name/top"))
+      .texture("bottom", new ResourceLocation(Factorium.ModId, s"block/$name/bottom"))
+      .texture("side", new ResourceLocation(Factorium.ModId, s"block/$name/side"))
+    genStates(block, _ => model)
+    makeBlockItem(block, model)
+  }
+
   override def registerStatesAndModels(): Unit = {
     Blocks.all.foreach(_.get() match {
+      case x: PumpBlock => makeTopBottomBlock(x)
       case x: RotatableMachineBlock => makeRotatableBlock(x)
       case x if x.getRegistryName.getPath.startsWith("mat_") => makeMaterialBlock(x)
       case x => makeBlock(x)

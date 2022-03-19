@@ -8,6 +8,7 @@ import net.minecraft.nbt.Tag
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.{ItemStack, TooltipFlag}
 import net.minecraft.world.level.Level
+import net.minecraftforge.fluids.FluidStack
 
 import java.util
 
@@ -21,6 +22,12 @@ class BaseMachineItem(block: BaseMachineBlock[_]) extends BlockItemKeepData(bloc
         val power = data.getCompound("power").getFloat("stored")
         if (power > 0)
           tip.add(Text.energy(power).withStyle(ChatFormatting.YELLOW))
+      }
+      if (data.contains("tank", Tag.TAG_COMPOUND)) {
+        val stack = FluidStack.loadFluidStackFromNBT(data.getCompound("tank"))
+        if (!stack.isEmpty) {
+          tip.add(Text.fluid(stack.getAmount).append(" ").append(stack.getDisplayName).withStyle(ChatFormatting.YELLOW))
+        }
       }
       if (data.contains("inv", Tag.TAG_LIST)) {
         val items = data.getList("inv", Tag.TAG_COMPOUND).size()

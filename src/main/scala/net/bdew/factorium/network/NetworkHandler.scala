@@ -12,6 +12,10 @@ object NetworkHandler extends NetChannel(Factorium.ModId, "main", "1") {
   regServerContainerHandler(2, CodecSetItemSidedIO, classOf[SidedItemIOContainer]) { (msg, cont, _) =>
     cont.te.itemIOConfig.set(msg.side, msg.mode)
   }
+
+  regServerContainerHandler(3, CodecClearBuffers, classOf[ClearableContainer]) { (msg, cont, _) =>
+    cont.clearBuffers()
+  }
 }
 
 

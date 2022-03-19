@@ -7,6 +7,7 @@ import net.bdew.factorium.machines.processing.crusher.CrusherEntity
 import net.bdew.factorium.machines.processing.grinder.GrinderEntity
 import net.bdew.factorium.machines.processing.pulverizer.PulverizerEntity
 import net.bdew.factorium.machines.processing.smelter.SmelterEntity
+import net.bdew.factorium.machines.pump.{PumpBlock, PumpEntity}
 import net.bdew.factorium.machines.worker.WorkerMachineBlock
 import net.bdew.factorium.metals._
 import net.bdew.lib.managers.BlockManager
@@ -82,6 +83,12 @@ object Blocks extends BlockManager(Items) {
       .withItem(b => new BaseMachineItem(b))
       .register
 
+  val pump: Def[PumpBlock, PumpEntity, BaseMachineItem] =
+    define("pump", () => new PumpBlock)
+      .withTE(new PumpEntity(_, _, _))
+      .withItem(b => new BaseMachineItem(b))
+      .register
+  
   for (metal <- Metals.all; (block, ref) <- metal.blocks if ref.isOwned) {
     block.group match {
       case MetalItemType.groupStorageBlock =>

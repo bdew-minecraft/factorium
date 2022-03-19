@@ -43,7 +43,7 @@ object Items extends ItemManager(CreativeTab) {
 
   resourceItems(prefix = "craft",
     "coupler", "motor", "coil", "heater", "capacitor",
-    "quartz_pulse", "quartz_clock", "container",
+    "quartz_pulse", "quartz_clock", "container", "tank",
     "core_basic", "core_advanced",
     "crusher", "grinder", "pulverizer", "compressor",
   )

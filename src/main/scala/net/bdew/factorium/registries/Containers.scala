@@ -7,6 +7,7 @@ import net.bdew.factorium.machines.processing.grinder.GrinderContainer
 import net.bdew.factorium.machines.processing.pulverizer.PulverizerContainer
 import net.bdew.factorium.machines.processing.smelter.SmelterContainer
 import net.bdew.factorium.machines.processing.{ProcessingMachineContainer, ProcessingMachineScreen}
+import net.bdew.factorium.machines.pump.{PumpContainer, PumpScreen}
 import net.bdew.lib.managers.ContainerManager
 import net.minecraft.world.inventory.MenuType
 import net.minecraftforge.api.distmarker.{Dist, OnlyIn}
@@ -44,6 +45,10 @@ object Containers extends ContainerManager {
       (id, inv, te) => new ExtruderContainer(te, inv, id)
     }
 
+  val pump: RegistryObject[MenuType[PumpContainer]] =
+    registerPositional("pump", Blocks.pump.teType) {
+      (id, inv, te) => new PumpContainer(te, inv, id)
+    }
 
   @OnlyIn(Dist.CLIENT)
   override def onClientSetup(ev: FMLClientSetupEvent): Unit = {
@@ -53,5 +58,6 @@ object Containers extends ContainerManager {
     registerScreen(smelter) { (c, i, _) => new ProcessingMachineScreen(c, i) }
     registerScreen(alloySmelter) { (c, i, _) => new AlloySmelterScreen(c, i) }
     registerScreen(extruder) { (c, i, _) => new ExtruderScreen(c, i) }
+    registerScreen(pump) { (c, i, _) => new PumpScreen(c, i) }
   }
 }

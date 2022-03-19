@@ -6,6 +6,7 @@ import net.bdew.factorium.machines.processing.crusher.CrusherConfig
 import net.bdew.factorium.machines.processing.grinder.GrinderConfig
 import net.bdew.factorium.machines.processing.pulverizer.PulverizerConfig
 import net.bdew.factorium.machines.processing.smelter.SmelterConfig
+import net.bdew.factorium.machines.pump.PumpConfig
 import net.bdew.lib.config.ConfigSection
 import net.minecraftforge.common.ForgeConfigSpec
 
@@ -16,4 +17,5 @@ class MachinesConfig(spec: ForgeConfigSpec.Builder) extends ConfigSection {
   val Smelter: SmelterConfig = ConfigSection(spec, "Smelter", new SmelterConfig(spec))
   val AlloySmelter: AlloySmelterConfig = ConfigSection(spec, "AlloySmelter", new AlloySmelterConfig(spec))
   val Extruder: ExtruderConfig = ConfigSection(spec, "Extruder", new ExtruderConfig(spec))
+  val Pump: PumpConfig = ConfigSection(spec, "Pump", new PumpConfig(spec))
 }
