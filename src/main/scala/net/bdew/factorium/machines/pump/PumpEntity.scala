@@ -68,9 +68,6 @@ class PumpEntity(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) e
       upgrades.needsUpdate = false
     }
 
-    power.inject(1000, false)
-    //    tank.drain(10, FluidAction.EXECUTE)
-
     if (!canWorkRS || power.stored < powerUse || tank.getCapacity - tank.getFluid.getAmount < 1000) return
 
     pumpState.get match {
