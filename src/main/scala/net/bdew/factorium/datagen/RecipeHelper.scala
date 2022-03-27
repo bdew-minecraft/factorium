@@ -2,10 +2,12 @@ package net.bdew.factorium.datagen
 
 import com.google.gson.JsonObject
 import net.bdew.factorium.misc.ItemStackWithChance
+import net.bdew.lib.recipes.{FluidStackIngredient, GenIngredientSimple, GenIngredientTag}
 import net.minecraft.advancements.critereon.{EntityPredicate, InventoryChangeTrigger, ItemPredicate, MinMaxBounds}
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.{Item, ItemStack}
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.material.Fluid
 
 object RecipeHelper {
   def writeItemStack(v: ItemStack): JsonObject = {
@@ -23,6 +25,17 @@ object RecipeHelper {
       obj.addProperty("count", v.stack.getCount)
     if (v.chance != 1)
       obj.addProperty("chance", v.chance)
+    obj
+  }
+
+  def writeFluidStackIngredient(v: FluidStackIngredient): JsonObject = {
+    val obj = new JsonObject
+    v.fluid match {
+      case x: GenIngredientTag[Fluid] => obj.addProperty("fluidTag", x.v.location.toString)
+      case x: GenIngredientSimple[Fluid] => obj.addProperty("fluid", x.v.getRegistryName.toString)
+      case x => throw new RuntimeException(s"Can't serialize $x")
+    }
+    obj.addProperty("amount", v.amount)
     obj
   }
 

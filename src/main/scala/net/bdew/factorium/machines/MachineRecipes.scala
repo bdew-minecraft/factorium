@@ -2,6 +2,7 @@ package net.bdew.factorium.machines
 
 import net.bdew.factorium.machines.alloy.AlloyRecipe
 import net.bdew.factorium.machines.extruder.ExtruderRecipe
+import net.bdew.factorium.machines.mixer.MixerRecipe
 import net.bdew.factorium.machines.processing.crusher.CrusherRecipe
 import net.bdew.factorium.machines.processing.grinder.GrinderRecipe
 import net.bdew.factorium.machines.processing.pulverizer.PulverizerRecipe
@@ -23,6 +24,7 @@ object MachineRecipes {
   var smelter = Set.empty[SmelterRecipe]
   var alloy = Set.empty[AlloyRecipe]
   var extruder = Set.empty[ExtruderRecipe]
+  var mixer = Set.empty[MixerRecipe]
 
   private def makeVanillaAdaptedRecipes(mgr: RecipeManager): (List[CrusherRecipe], List[SmelterRecipe]) = {
     val (crusher, smelter) =
@@ -62,6 +64,7 @@ object MachineRecipes {
     pulverizer = Recipes.pulverizer.from(manager).toSet
     alloy = Recipes.alloy.from(manager).toSet
     extruder = Recipes.extruder.from(manager).toSet
+    mixer = Recipes.mixer.from(manager).toSet
   }
 
   def init(): Unit = {

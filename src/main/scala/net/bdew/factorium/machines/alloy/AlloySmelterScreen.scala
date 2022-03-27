@@ -1,7 +1,6 @@
 package net.bdew.factorium.machines.alloy
 
 import net.bdew.factorium.gui.WidgetMode
-import net.bdew.factorium.machines.processing.ProcessingTextures
 import net.bdew.factorium.machines.sided.{SidedItemIOContainer, SidedItemIOScreen}
 import net.bdew.factorium.machines.upgradable.{UpgradableScreen, UpgradeableContainer}
 import net.bdew.factorium.network.MsgSetRsMode
@@ -23,19 +22,19 @@ class AlloySmelterScreen(container: AlloySmelterContainer, playerInv: Inventory)
     addMode(SwitchableContainer.NormalMode, AlloyTextures.screen) { sub =>
       sub.add(new WidgetLabel(title, 8, 6, Color.darkGray))
 
-      sub.add(new WidgetPowerGauge(Rect(10, 18, 12, 52), ProcessingTextures.powerFill, container.te.power))
+      sub.add(new WidgetPowerGauge(Rect(10, 18, 12, 52), AlloyTextures.powerFill, container.te.power))
 
-      sub.add(new WidgetProgressBar(Rect(75, 35, 24, 16), ProcessingTextures.arrow, container.te.progress))
+      sub.add(new WidgetProgressBar(Rect(75, 35, 24, 16), AlloyTextures.arrow, container.te.progress))
 
-      sub.add(new WidgetButtonIcon(Point(152, 18), openUpgrades, ProcessingTextures.buttonBase, ProcessingTextures.buttonHover) {
-        override def icon: Texture = ProcessingTextures.upgrades
+      sub.add(new WidgetButtonIcon(Point(152, 18), openUpgrades, AlloyTextures.buttonBase, AlloyTextures.buttonHover) {
+        override def icon: Texture = AlloyTextures.upgrades
         override def hover: Component = Text.translate("factorium.gui.upgrades")
       })
 
-      sub.add(WidgetMode(Point(152, 36), container.te.rsMode, ProcessingTextures.rsMode, MsgSetRsMode, "bdlib.rsmode"))
+      sub.add(WidgetMode(Point(152, 36), container.te.rsMode, AlloyTextures.rsMode, MsgSetRsMode, "bdlib.rsmode"))
 
-      sub.add(new WidgetButtonIcon(Point(152, 54), openSides, ProcessingTextures.buttonBase, ProcessingTextures.buttonHover) {
-        override def icon: Texture = ProcessingTextures.ioConfig
+      sub.add(new WidgetButtonIcon(Point(152, 54), openSides, AlloyTextures.buttonBase, AlloyTextures.buttonHover) {
+        override def icon: Texture = AlloyTextures.ioConfig
         override def hover: Component = Text.translate("factorium.gui.sidecfg")
       })
     }

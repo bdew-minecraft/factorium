@@ -2,6 +2,7 @@ package net.bdew.factorium.registries
 
 import net.bdew.factorium.machines.alloy.{AlloySmelterContainer, AlloySmelterScreen}
 import net.bdew.factorium.machines.extruder.{ExtruderContainer, ExtruderScreen}
+import net.bdew.factorium.machines.mixer.{MixerContainer, MixerScreen}
 import net.bdew.factorium.machines.processing.crusher.CrusherContainer
 import net.bdew.factorium.machines.processing.grinder.GrinderContainer
 import net.bdew.factorium.machines.processing.pulverizer.PulverizerContainer
@@ -50,6 +51,11 @@ object Containers extends ContainerManager {
       (id, inv, te) => new PumpContainer(te, inv, id)
     }
 
+  val mixer: RegistryObject[MenuType[MixerContainer]] =
+    registerPositional("mixer", Blocks.mixer.teType) {
+      (id, inv, te) => new MixerContainer(te, inv, id)
+    }
+
   @OnlyIn(Dist.CLIENT)
   override def onClientSetup(ev: FMLClientSetupEvent): Unit = {
     registerScreen(crusher) { (c, i, _) => new ProcessingMachineScreen(c, i) }
@@ -59,5 +65,6 @@ object Containers extends ContainerManager {
     registerScreen(alloySmelter) { (c, i, _) => new AlloySmelterScreen(c, i) }
     registerScreen(extruder) { (c, i, _) => new ExtruderScreen(c, i) }
     registerScreen(pump) { (c, i, _) => new PumpScreen(c, i) }
+    registerScreen(mixer) { (c, i, _) => new MixerScreen(c, i) }
   }
 }

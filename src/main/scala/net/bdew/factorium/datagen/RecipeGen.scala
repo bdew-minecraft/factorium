@@ -15,5 +15,7 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
       if (metal.haveItem(MetalItemType.Ingot) && MetalItemType.smeltables.exists(metal.ownItem))
         RecipeGenSmelting.addSmeltingRecipes(metal, consumer)
     }
+
+    RecipeGenMixer.addConcreteRecipes(consumer)
   }
 }

@@ -2,6 +2,7 @@ package net.bdew.factorium.registries
 
 import net.bdew.factorium.machines.alloy.{AlloyRecipe, AlloyRecipeSerializer}
 import net.bdew.factorium.machines.extruder.{ExtruderRecipe, ExtruderRecipeSerializer}
+import net.bdew.factorium.machines.mixer.{MixerRecipe, MixerRecipeSerializer}
 import net.bdew.factorium.machines.processing.crusher.{CrusherRecipe, CrusherRecipeSerializer}
 import net.bdew.factorium.machines.processing.grinder.{GrinderRecipe, GrinderRecipeSerializer}
 import net.bdew.factorium.machines.processing.pulverizer.{PulverizerRecipe, PulverizerRecipeSerializer}
@@ -26,4 +27,7 @@ object Recipes extends RecipeManager {
 
   val extruder: MachineRecipeDef[ExtruderRecipe, ExtruderRecipeSerializer] =
     registerMachine("extruder", () => new ExtruderRecipeSerializer)
+
+  val mixer: MachineRecipeDef[MixerRecipe, MixerRecipeSerializer] =
+    registerMachine("mixer", () => new MixerRecipeSerializer)
 }

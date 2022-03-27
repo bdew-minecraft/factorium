@@ -14,7 +14,7 @@ object NetworkHandler extends NetChannel(Factorium.ModId, "main", "1") {
   }
 
   regServerContainerHandler(3, CodecClearBuffers, classOf[ClearableContainer]) { (msg, cont, _) =>
-    cont.clearBuffers()
+    cont.clearBuffers(msg.slot)
   }
 }
 

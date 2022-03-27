@@ -44,7 +44,7 @@ class PumpScreen(container: PumpContainer, playerInv: Inventory) extends BaseScr
   }
 
   def clearBuffers(b: WidgetButtonIcon): Unit = {
-    NetworkHandler.sendToServer(MsgClearBuffers())
+    NetworkHandler.sendToServer(MsgClearBuffers(0))
   }
 
   def openUpgrades(b: WidgetButtonIcon): Unit = {

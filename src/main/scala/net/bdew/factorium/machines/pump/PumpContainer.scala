@@ -22,7 +22,7 @@ class PumpContainer(val te: PumpEntity, playerInventory: Inventory, id: Int)
     te.rsMode := mode
   }
 
-  override def clearBuffers(): Unit = {
+  override def clearBuffers(slot: Int): Unit = {
     te.tank.drain(Int.MaxValue, FluidAction.EXECUTE)
     te.pumpState.change(PumpState.Lowering(1))
   }

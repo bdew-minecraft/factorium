@@ -11,7 +11,6 @@ import mezz.jei.api.recipe.{IFocusGroup, RecipeIngredientRole, RecipeType}
 import mezz.jei.api.registration.{IRecipeCatalystRegistration, IRecipeRegistration}
 import net.bdew.factorium.machines.MachineRecipes
 import net.bdew.factorium.machines.alloy.{AlloyRecipe, AlloyTextures}
-import net.bdew.factorium.misc.IngredientMulti
 import net.bdew.factorium.registries.{Blocks, Recipes}
 import net.bdew.factorium.{Config, Factorium}
 import net.bdew.lib.{Client, Text}
@@ -20,7 +19,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 
-import java.util
 import scala.jdk.CollectionConverters._
 
 object AlloyRecipes extends IRecipeCategory[AlloyRecipe] {
@@ -53,19 +51,12 @@ object AlloyRecipes extends IRecipeCategory[AlloyRecipe] {
 
   override def setRecipe(builder: IRecipeLayoutBuilder, recipe: AlloyRecipe, focuses: IFocusGroup): Unit = {
     builder.addSlot(RecipeIngredientRole.INPUT, 28, 21)
-      .addItemStacks(listIngredientMulti(recipe.input1))
+      .addItemStacks(JeiUtils.listIngredientMulti(recipe.input1))
     builder.addSlot(RecipeIngredientRole.INPUT, 46, 21)
-      .addItemStacks(listIngredientMulti(recipe.input2))
+      .addItemStacks(JeiUtils.listIngredientMulti(recipe.input2))
     builder.addSlot(RecipeIngredientRole.OUTPUT, 99, 3)
       .addItemStack(recipe.output)
   }
-
-  private def listIngredientMulti(ingredients: IngredientMulti): util.List[ItemStack] =
-    util.Arrays.asList(ingredients.ingredient.getItems.map(x => {
-      val copy = x.copy()
-      copy.setCount(ingredients.count)
-      copy
-    }): _*)
 
   def workTime(recipe: AlloyRecipe): Float = Config.Machines.AlloySmelter.baseCycleTicks() / recipe.speedMod
 

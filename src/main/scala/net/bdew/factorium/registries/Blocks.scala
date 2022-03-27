@@ -3,6 +3,7 @@ package net.bdew.factorium.registries
 import net.bdew.factorium.machines.BaseMachineItem
 import net.bdew.factorium.machines.alloy.AlloySmelterEntity
 import net.bdew.factorium.machines.extruder.ExtruderEntity
+import net.bdew.factorium.machines.mixer.{MixerBlock, MixerEntity}
 import net.bdew.factorium.machines.processing.crusher.CrusherEntity
 import net.bdew.factorium.machines.processing.grinder.GrinderEntity
 import net.bdew.factorium.machines.processing.pulverizer.PulverizerEntity
@@ -88,7 +89,13 @@ object Blocks extends BlockManager(Items) {
       .withTE(new PumpEntity(_, _, _))
       .withItem(b => new BaseMachineItem(b))
       .register
-  
+
+  val mixer: Def[MixerBlock, MixerEntity, BaseMachineItem] =
+    define("mixer", () => new MixerBlock)
+      .withTE(new MixerEntity(_, _, _))
+      .withItem(b => new BaseMachineItem(b))
+      .register
+
   for (metal <- Metals.all; (block, ref) <- metal.blocks if ref.isOwned) {
     block.group match {
       case MetalItemType.groupStorageBlock =>

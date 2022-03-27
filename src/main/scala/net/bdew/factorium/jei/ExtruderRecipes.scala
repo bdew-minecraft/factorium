@@ -10,7 +10,6 @@ import mezz.jei.api.recipe.{IFocusGroup, RecipeIngredientRole, RecipeType}
 import mezz.jei.api.registration.{IRecipeCatalystRegistration, IRecipeRegistration}
 import net.bdew.factorium.machines.MachineRecipes
 import net.bdew.factorium.machines.extruder.{ExtruderRecipe, ExtruderTextures}
-import net.bdew.factorium.misc.IngredientMulti
 import net.bdew.factorium.registries.{Blocks, Recipes}
 import net.bdew.factorium.{Config, Factorium}
 import net.bdew.lib.Text
@@ -50,17 +49,10 @@ object ExtruderRecipes extends IRecipeCategory[ExtruderRecipe] {
     builder.addSlot(RecipeIngredientRole.INPUT, 37, 3)
       .addIngredients(recipe.die)
     builder.addSlot(RecipeIngredientRole.INPUT, 37, 39)
-      .addItemStacks(listIngredientMulti(recipe.input))
+      .addItemStacks(JeiUtils.listIngredientMulti(recipe.input))
     builder.addSlot(RecipeIngredientRole.OUTPUT, 99, 3)
       .addItemStack(recipe.output)
   }
-
-  private def listIngredientMulti(ingredients: IngredientMulti): util.List[ItemStack] =
-    util.Arrays.asList(ingredients.ingredient.getItems.map(x => {
-      val copy = x.copy()
-      copy.setCount(ingredients.count)
-      copy
-    }): _*)
 
   def initRecipes(reg: IRecipeRegistration): Unit = {
     reg.addRecipes(getRecipeType, MachineRecipes.extruder.toList.asJava)
