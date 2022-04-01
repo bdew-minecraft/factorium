@@ -7,7 +7,7 @@ import net.minecraft.data.DataGenerator
 import net.minecraft.data.tags.ItemTagsProvider
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.{ItemTags, TagKey}
-import net.minecraft.world.item.Item
+import net.minecraft.world.item.{Item, Items => MCItems}
 import net.minecraftforge.common.Tags
 import net.minecraftforge.common.data.ExistingFileHelper
 
@@ -67,5 +67,22 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
       tag(Tags.Items.DUSTS).add(item)
       tag(CustomTags.dusts(name)).add(item)
     }
+
+    for ((name, regObj) <- Items.extraChunks; item = regObj.get()) {
+      tag(CustomTags.chunks).add(item)
+      tag(CustomTags.chunks(name)).add(item)
+    }
+
+    tag(CustomTags.flowers("white")).add(MCItems.LILY_OF_THE_VALLEY)
+    tag(CustomTags.flowers("orange")).add(MCItems.ORANGE_TULIP)
+    tag(CustomTags.flowers("magenta")).add(MCItems.ALLIUM, MCItems.LILAC)
+    tag(CustomTags.flowers("light_blue")).add(MCItems.BLUE_ORCHID)
+    tag(CustomTags.flowers("yellow")).add(MCItems.DANDELION, MCItems.SUNFLOWER)
+    tag(CustomTags.flowers("pink")).add(MCItems.PINK_TULIP, MCItems.PEONY)
+    tag(CustomTags.flowers("light_gray")).add(MCItems.OXEYE_DAISY, MCItems.WHITE_TULIP, MCItems.AZURE_BLUET)
+    tag(CustomTags.flowers("blue")).add(MCItems.CORNFLOWER)
+    tag(CustomTags.flowers("brown")).add(MCItems.COCOA_BEANS)
+    tag(CustomTags.flowers("red")).add(MCItems.ROSE_BUSH, MCItems.RED_TULIP, MCItems.POPPY)
+    tag(CustomTags.flowers("black")).add(MCItems.WITHER_ROSE)
   }
 }

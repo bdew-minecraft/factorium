@@ -4,10 +4,12 @@ import com.google.gson.JsonObject
 import net.bdew.factorium.misc.ItemStackWithChance
 import net.bdew.lib.recipes.{FluidStackIngredient, GenIngredientSimple, GenIngredientTag}
 import net.minecraft.advancements.critereon.{EntityPredicate, InventoryChangeTrigger, ItemPredicate, MinMaxBounds}
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.{Item, ItemStack}
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
+import net.minecraftforge.registries.ForgeRegistries
 
 object RecipeHelper {
   def writeItemStack(v: ItemStack): JsonObject = {
@@ -50,4 +52,7 @@ object RecipeHelper {
   def has(item: ItemLike): InventoryChangeTrigger.TriggerInstance = {
     inventoryTrigger(ItemPredicate.Builder.item.of(item).build)
   }
+
+  def mcItem(name: String): Item =
+    ForgeRegistries.ITEMS.getValue(new ResourceLocation("minecraft", name))
 }

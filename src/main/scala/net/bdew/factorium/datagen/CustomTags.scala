@@ -53,4 +53,6 @@ object CustomTags {
   def smeltable(name: String): TagKey[Item] = tagItem(Factorium.ModId, "smeltable", name)
 
   def rawMaterials(name: String): TagKey[Item] = tagItem("forge", "raw_materials", name)
+
+  def flowers(name: String): TagKey[Item] = tagItem("minecraft", "flowers", name)
 }

@@ -118,5 +118,8 @@
   "item.factorium.mat_extra_dust_diamond": "Ground Diamond",
   "item.factorium.mat_extra_dust_emerald": "Ground Emerald",
   "item.factorium.mat_extra_dust_ender_pearl": "Ground Ender Pearl",
-  "item.factorium.mat_extra_dust_obsidian": "Ground Obsidian"
+  "item.factorium.mat_extra_dust_quicklime": "Quicklime",
+  "item.factorium.mat_extra_dust_sand": "Fine Sand Dust",
+  "item.factorium.mat_extra_dust_silica": "Pure Silica Dust",
+  "item.factorium.mat_extra_chunks_calcite": "Calcite Chunks"
 }

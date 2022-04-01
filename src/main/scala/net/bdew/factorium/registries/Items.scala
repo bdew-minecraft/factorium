@@ -38,7 +38,15 @@ object Items extends ItemManager(CreativeTab) {
       "diamond",
       "emerald",
       "ender_pearl",
-      "obsidian"
+      "obsidian",
+      "sand",
+      "quicklime",
+      "silica"
+    )
+
+  val extraChunks: Map[String, RegistryObject[Item]] =
+    resourceItems(prefix = "mat_extra_chunks",
+      "calcite"
     )
 
   resourceItems(prefix = "craft",

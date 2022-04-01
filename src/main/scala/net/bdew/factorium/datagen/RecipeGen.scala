@@ -16,6 +16,6 @@ class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
         RecipeGenSmelting.addSmeltingRecipes(metal, consumer)
     }
 
-    RecipeGenMixer.addConcreteRecipes(consumer)
+    RecipeGenColored.makeColoredRecipes(consumer)
   }
 }
