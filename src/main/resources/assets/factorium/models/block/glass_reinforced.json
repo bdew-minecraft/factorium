@@ -1,0 +1,10 @@
+{
+  "loader": "factorium:connected_model",
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "factorium:block/glass/reinforced"
+  },
+  "extraTex": {
+    "frame": "factorium:block/glass/reinforced-frame"
+  }
+}

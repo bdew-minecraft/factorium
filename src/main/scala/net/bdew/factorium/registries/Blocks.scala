@@ -1,5 +1,6 @@
 package net.bdew.factorium.registries
 
+import net.bdew.factorium.blocks.{GlassBlock, GlassBlockDark}
 import net.bdew.factorium.machines.BaseMachineItem
 import net.bdew.factorium.machines.alloy.AlloySmelterEntity
 import net.bdew.factorium.machines.extruder.ExtruderEntity
@@ -13,41 +14,10 @@ import net.bdew.factorium.machines.worker.WorkerMachineBlock
 import net.bdew.factorium.metals._
 import net.bdew.lib.managers.BlockManager
 import net.minecraft.world.item.BlockItem
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties
-import net.minecraft.world.level.block.{OreBlock, SoundType}
-import net.minecraft.world.level.material.{Material, MaterialColor}
+import net.minecraft.world.level.block.OreBlock
+import net.minecraft.world.level.material.Material
 
 object Blocks extends BlockManager(Items) {
-  def normalOreProps: Properties = props(Material.STONE)
-    .requiresCorrectToolForDrops()
-    .strength(3, 3)
-
-  def deepOreProps: Properties = props(Material.STONE)
-    .requiresCorrectToolForDrops()
-    .strength(4.5f, 3)
-    .color(MaterialColor.DEEPSLATE)
-    .sound(SoundType.DEEPSLATE)
-
-  def netherOreProps: Properties = props(Material.STONE)
-    .requiresCorrectToolForDrops()
-    .strength(3, 3)
-    .color(MaterialColor.NETHER)
-    .sound(SoundType.NETHER_GOLD_ORE)
-
-  def endOreProps: Properties = props(Material.STONE)
-    .requiresCorrectToolForDrops()
-    .strength(3, 9)
-    .color(MaterialColor.SAND)
-
-  def storageProps: Properties = props(Material.METAL)
-    .requiresCorrectToolForDrops()
-    .strength(5, 6)
-    .sound(SoundType.METAL)
-
-  def machineProps: Properties = props(Material.STONE)
-    .sound(SoundType.STONE)
-    .strength(2, 8)
-
   val crusher: Def[WorkerMachineBlock[CrusherEntity], CrusherEntity, BaseMachineItem] =
     define("crusher", () => new WorkerMachineBlock[CrusherEntity])
       .withTE(new CrusherEntity(_, _, _))
@@ -99,15 +69,15 @@ object Blocks extends BlockManager(Items) {
   for (metal <- Metals.all; (block, ref) <- metal.blocks if ref.isOwned) {
     block.group match {
       case MetalItemType.groupStorageBlock =>
-        define(metal.registryName(block), () => MetalBlock(storageProps, block, metal)).withItem(MetalBlockItem(_, defaultItemProps)).register
+        define(metal.registryName(block), () => MetalBlock(BlockProps.storageProps, block, metal)).withItem(MetalBlockItem(_, defaultItemProps)).register
       case MetalItemType.groupOreNormal =>
-        define(metal.registryName(block), () => MetalOreBlock(normalOreProps, block, metal)).withItem(MetalBlockItem(_, defaultItemProps)).register
+        define(metal.registryName(block), () => MetalOreBlock(BlockProps.normalOreProps, block, metal)).withItem(MetalBlockItem(_, defaultItemProps)).register
       case MetalItemType.groupOreDeep =>
-        define(metal.registryName(block), () => MetalOreBlock(deepOreProps, block, metal)).withItem(MetalBlockItem(_, defaultItemProps)).register
+        define(metal.registryName(block), () => MetalOreBlock(BlockProps.deepOreProps, block, metal)).withItem(MetalBlockItem(_, defaultItemProps)).register
       case MetalItemType.groupOreNether =>
-        define(metal.registryName(block), () => MetalOreBlock(netherOreProps, block, metal)).withItem(MetalBlockItem(_, defaultItemProps)).register
+        define(metal.registryName(block), () => MetalOreBlock(BlockProps.netherOreProps, block, metal)).withItem(MetalBlockItem(_, defaultItemProps)).register
       case MetalItemType.groupOreEnd =>
-        define(metal.registryName(block), () => MetalOreBlock(endOreProps, block, metal)).withItem(MetalBlockItem(_, defaultItemProps)).register
+        define(metal.registryName(block), () => MetalOreBlock(BlockProps.endOreProps, block, metal)).withItem(MetalBlockItem(_, defaultItemProps)).register
       case _ => // pass
     }
   }
@@ -118,4 +88,21 @@ object Blocks extends BlockManager(Items) {
         .requiresCorrectToolForDrops()
         .strength(5, 3))
     ).withDefaultItem.register
+
+  val crystalGlass: Blocks.DefBI[GlassBlock, BlockItem] = define("glass_crystal", () => new GlassBlock(BlockProps.glassCrystalProps))
+    .withDefaultItem
+    .register
+
+  val reinforcedGlass: Blocks.DefBI[GlassBlock, BlockItem] = define("glass_reinforced", () => new GlassBlock(BlockProps.reinforcedGlassProps))
+    .withDefaultItem
+    .register
+
+  val darkGlass: Blocks.DefBI[GlassBlockDark, BlockItem] = define("glass_dark", () => new GlassBlockDark())
+    .withDefaultItem
+    .register
+
+  val glowGlass: Blocks.DefBI[GlassBlock, BlockItem] = define("glass_glow", () => new GlassBlock(BlockProps.glassGlowProps))
+    .withDefaultItem
+    .register
+
 }

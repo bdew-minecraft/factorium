@@ -61,5 +61,12 @@ class BlockTagsGen(gen: DataGenerator, efh: ExistingFileHelper) extends BlockTag
 
     tag(OreGenMeteorite.replaceables).addTag(BlockTags.STONE_ORE_REPLACEABLES)
       .add(MCBlocks.SAND, MCBlocks.DIRT, MCBlocks.SANDSTONE, MCBlocks.GRAVEL)
+
+    val reinforcedGlass = Blocks.reinforcedGlass.block.get()
+
+    tag(BlockTags.DRAGON_IMMUNE).add(reinforcedGlass)
+    tag(BlockTags.WITHER_IMMUNE).add(reinforcedGlass)
+    tag(BlockTags.MINEABLE_WITH_PICKAXE).add(reinforcedGlass)
+    tag(BlockTags.NEEDS_DIAMOND_TOOL).add(reinforcedGlass)
   }
 }
