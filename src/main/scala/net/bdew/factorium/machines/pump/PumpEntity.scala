@@ -224,7 +224,7 @@ class PumpEntity(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) e
   }
 
   override def getRenderBoundingBox: AABB = {
-    new AABB(pos, pos.below(hoseLength): BlockPos)
+    new AABB(pos, pos.offset(1, -hoseLength, 1): BlockPos)
   }
 
   def hoseLength: Int = pumpState.get match {
