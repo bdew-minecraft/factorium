@@ -51,7 +51,6 @@ object RecipeGenProcessing {
     var builder = ProcessingRecipeBuilder(Recipes.crusher.serializer)
       .withInput(Ingredient.of(input))
       .withOutput(output, count = 2)
-      .requireTag(input)
 
     if (gravel) builder = builder.withSecondary(Items.GRAVEL, chance = 0.1f)
 
@@ -63,7 +62,6 @@ object RecipeGenProcessing {
       .withInput(Ingredient.of(input))
       .withOutput(output)
       .withBonus(output, chance = 0.25f)
-      .requireTag(input)
       .build(id)
       .save(consumer)
   }
@@ -73,7 +71,6 @@ object RecipeGenProcessing {
       .withInput(Ingredient.of(input))
       .withOutput(output)
       .withBonus(output, chance = 0.25f)
-      .requireTag(input)
       .build(id)
       .save(consumer)
   }

@@ -1,14 +1,5 @@
 {
   "type": "factorium:grinder",
-  "conditions": [
-    {
-      "value": {
-        "tag": "forge:gems/diamond",
-        "type": "forge:tag_empty"
-      },
-      "type": "forge:not"
-    }
-  ],
   "input": {
     "tag": "forge:gems/diamond"
   },

@@ -23,7 +23,6 @@ object RecipeGenExtruder {
       .withInput(Ingredient.of(ingotTag), inputCount)
       .withDie(Ingredient.of(Items.dies(output.kind).get()))
       .withOutput(metal.item(output), outputCount)
-      .requireTag(ingotTag)
       .build(s"metals/${metal.name}/${output.kind}_from_extruder")
       .save(consumer)
   }
