@@ -19,5 +19,5 @@ class MachinesConfig(spec: ForgeConfigSpec.Builder) extends ConfigSection {
   val AlloySmelter: AlloySmelterConfig = ConfigSection(spec, "AlloySmelter", new AlloySmelterConfig(spec))
   val Extruder: ExtruderConfig = ConfigSection(spec, "Extruder", new ExtruderConfig(spec))
   val Pump: PumpConfig = ConfigSection(spec, "Pump", new PumpConfig(spec))
-  val Mixer: MixerConfig = ConfigSection(spec, "Pump", new MixerConfig(spec))
+  val Mixer: MixerConfig = ConfigSection(spec, "Mixer", new MixerConfig(spec))
 }
