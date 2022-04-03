@@ -55,4 +55,6 @@ object CustomTags {
   def rawMaterials(name: String): TagKey[Item] = tagItem("forge", "raw_materials", name)
 
   def flowers(name: String): TagKey[Item] = tagItem("minecraft", "flowers", name)
+
+  def dyes(color: String): TagKey[Item] = tagItem("forge", "dyes", color)
 }

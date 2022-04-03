@@ -84,5 +84,7 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
     tag(CustomTags.flowers("brown")).add(MCItems.COCOA_BEANS)
     tag(CustomTags.flowers("red")).add(MCItems.ROSE_BUSH, MCItems.RED_TULIP, MCItems.POPPY)
     tag(CustomTags.flowers("black")).add(MCItems.WITHER_ROSE)
+
+    tag(Tags.Items.SLIMEBALLS).add(Items.resin.get())
   }
 }

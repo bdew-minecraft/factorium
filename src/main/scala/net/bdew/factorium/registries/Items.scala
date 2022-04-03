@@ -1,6 +1,6 @@
 package net.bdew.factorium.registries
 
-import net.bdew.factorium.items.WrenchItem
+import net.bdew.factorium.items.{FuelItem, WrenchItem}
 import net.bdew.factorium.metals.{MetalItem, MetalItemType, Metals}
 import net.bdew.factorium.upgrades.UpgradeItems
 import net.bdew.lib.managers.ItemManager
@@ -32,9 +32,6 @@ object Items extends ItemManager(CreativeTab) {
 
   val extraDusts: Map[String, RegistryObject[Item]] =
     resourceItems(prefix = "mat_extra_dust",
-      "coal",
-      "charcoal",
-      "carbon",
       "diamond",
       "emerald",
       "ender_pearl",
@@ -42,6 +39,10 @@ object Items extends ItemManager(CreativeTab) {
       "sand",
       "quicklime",
       "silica"
+    ) ++ Map(
+      "coal" -> register("mat_extra_dust_coal", () => new FuelItem(1600)),
+      "charcoal" -> register("mat_extra_dust_charcoal", () => new FuelItem(1600)),
+      "carbon" -> register("mat_carbon_dust", () => new FuelItem(3200)),
     )
 
   val extraChunks: Map[String, RegistryObject[Item]] =
@@ -49,11 +50,21 @@ object Items extends ItemManager(CreativeTab) {
       "calcite"
     )
 
+  val resin: RegistryObject[Item] = simple("mat_resin", resourceProps)
+
+  simple("mat_wood_pulp", resourceProps)
+  simple("mat_carbon_wet", resourceProps)
+  simple("mat_carbon_electrode", resourceProps)
+  simple("mat_carbon_fiber", resourceProps)
+
+  register("mat_wood_chips", () => new FuelItem(1600))
+
   resourceItems(prefix = "craft",
     "coupler", "motor", "coil", "heater", "capacitor",
     "quartz_pulse", "quartz_clock", "container", "tank",
     "core_basic", "core_advanced",
     "crusher", "grinder", "pulverizer", "compressor",
+    "mesh_carbon", "mesh_reinforced",
   )
 
   val dies: Map[String, RegistryObject[Item]] = resourceItems(prefix = "die",
