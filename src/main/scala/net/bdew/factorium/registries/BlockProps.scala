@@ -56,9 +56,28 @@ object BlockProps {
       .strength(0.3F)
 
   def reinforcedGlassProps: Properties =
-    BlockProps.baseGlassprops(DyeColor.BLACK.getMaterialColor)
+    baseGlassprops(DyeColor.BLACK.getMaterialColor)
       .strength(10.0F, 1200.0F)
       .requiresCorrectToolForDrops()
+
+  def reinforcedConcreteProps(color: DyeColor): Properties =
+    BlockBehaviour.Properties.of(Material.STONE, color)
+      .strength(10.0F, 1200.0F)
+      .requiresCorrectToolForDrops()
+
+  def glowingConcreteProps(color: DyeColor): Properties =
+    BlockBehaviour.Properties.of(Material.STONE, color)
+      .strength(1.8F)
+      .requiresCorrectToolForDrops()
+      .lightLevel(_ => 15)
+
+  def concretePowderProps(color: DyeColor): Properties =
+    BlockBehaviour.Properties.of(Material.SAND, color)
+      .strength(0.5F)
+      .sound(SoundType.SAND)
+
+  def glowingConcretePowderProps(color: DyeColor): Properties =
+    concretePowderProps(color).lightLevel(_ => 15)
 
   def glassGlowProps: Properties =
     baseGlassprops(DyeColor.YELLOW.getMaterialColor)

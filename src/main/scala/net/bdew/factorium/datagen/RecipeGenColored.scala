@@ -1,7 +1,7 @@
 package net.bdew.factorium.datagen
 
 import net.bdew.factorium.Factorium
-import net.bdew.factorium.registries.{Items, Recipes}
+import net.bdew.factorium.registries.{Blocks, Items, Recipes}
 import net.minecraft.data.recipes.{FinishedRecipe, RecipeBuilder, ShapelessRecipeBuilder}
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.FluidTags
@@ -9,23 +9,28 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.{DyeColor, Item, Items => MCItems}
 import net.minecraftforge.common.Tags
 
-import java.util.Locale
 import java.util.function.Consumer
 
 object RecipeGenColored {
   def makeColoredRecipes(consumer: Consumer[FinishedRecipe]): Unit = {
-    DyeColor.values().foreach(x => makeColoredRecipesFor(x.name().toLowerCase(Locale.US), consumer))
+    DyeColor.values().foreach(x => makeColoredRecipesFor(x, consumer))
   }
 
-  def makeColoredRecipesFor(color: String, consumer: Consumer[FinishedRecipe]): Unit = {
+  def makeColoredRecipesFor(color: DyeColor, consumer: Consumer[FinishedRecipe]): Unit = {
 
-    makeDyeRecipe(color, consumer)
+    makeDyeRecipe(color.getName, consumer)
 
     val concretePowder = RecipeHelper.mcItem(s"${color}_concrete_powder")
-    makeConcretePowderRecipe(color, concretePowder, consumer)
+    makeConcretePowderRecipe(color.getName, concretePowder, consumer)
     makeConcreteMixerRecipe(concretePowder, RecipeHelper.mcItem(s"${color}_concrete"), consumer)
 
-    makeWoolToStringRecipe(color, consumer)
+    makeConcreteGlowPowderRecipe(color, concretePowder, consumer)
+    makeConcreteReinforcedPowderRecipe(color, concretePowder, consumer)
+
+    makeConcreteMixerRecipe(Blocks.reinforcedConcretePowder(color).get().asItem(), Blocks.reinforcedConcrete(color).get().asItem(), consumer)
+    makeConcreteMixerRecipe(Blocks.glowingConcretePowder(color).get().asItem(), Blocks.glowingConcrete(color).get().asItem(), consumer)
+
+    makeWoolToStringRecipe(color.getName, consumer)
   }
 
   def makeDyeRecipe(color: String, consumer: Consumer[FinishedRecipe]): Unit = {
@@ -50,8 +55,33 @@ object RecipeGenColored {
       .unlockedBy("has_gravel", RecipeHelper.has(Tags.Items.GRAVEL))
       .unlockedBy("has_quicklime", RecipeHelper.has(CustomTags.dusts("quicklime")))
       .group("concrete_powder")
-      .save(consumer, new ResourceLocation(Factorium.ModId, s"concrete/powder/${powder.getRegistryName.getPath}"))
+      .save(consumer, new ResourceLocation(Factorium.ModId, s"concrete/powder/normal/${color}"))
   }
+
+
+  def makeConcreteGlowPowderRecipe(color: DyeColor, powder: Item, consumer: Consumer[FinishedRecipe]): Unit = {
+    ShapelessRecipeBuilder.shapeless(Blocks.glowingConcretePowder(color).get(), 4)
+      .requires(Ingredient.of(powder), 4)
+      .requires(Ingredient.of(CustomTags.dusts("glowstone")))
+      .asInstanceOf[RecipeBuilder]
+      .unlockedBy("has_glowstone", RecipeHelper.has(CustomTags.dusts("glowstone")))
+      .unlockedBy("has_powder", RecipeHelper.has(powder))
+      .group("concrete_powder")
+      .save(consumer, new ResourceLocation(Factorium.ModId, s"concrete/powder/glowing/${color.getName}"))
+  }
+
+  def makeConcreteReinforcedPowderRecipe(color: DyeColor, powder: Item, consumer: Consumer[FinishedRecipe]): Unit = {
+    val mesh = Items.craftItems("mesh_reinforced").get
+    ShapelessRecipeBuilder.shapeless(Blocks.reinforcedConcretePowder(color).get())
+      .requires(Ingredient.of(powder))
+      .requires(Ingredient.of(mesh))
+      .asInstanceOf[RecipeBuilder]
+      .unlockedBy("has_mesh", RecipeHelper.has(mesh))
+      .unlockedBy("has_powder", RecipeHelper.has(powder))
+      .group("concrete_powder")
+      .save(consumer, new ResourceLocation(Factorium.ModId, s"concrete/powder/reinforced/${color.getName}"))
+  }
+
 
   def makeConcreteMixerRecipe(powder: Item, block: Item, consumer: Consumer[FinishedRecipe]): Unit = {
     MixerRecipeBuilder()

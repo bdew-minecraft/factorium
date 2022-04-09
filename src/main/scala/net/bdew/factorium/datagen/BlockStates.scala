@@ -18,6 +18,9 @@ class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStat
   def matTex(obj: ForgeRegistryEntry[_]): String =
     "materials/" + obj.getRegistryName.getPath.substring(4).split("_", 2).mkString("/")
 
+  def concreteTex(obj: ForgeRegistryEntry[_]): String =
+    "block/" + obj.getRegistryName.getPath.split("_", 4).mkString("/")
+
   def makeRotatableBlock(block: RotatableMachineBlock): Unit = {
     val model = models().getBuilder(block.getRegistryName.getPath)
       .parent(new ExistingModelFile(new ResourceLocation(Factorium.ModId, "block/machine_rotatable"), efh))
@@ -51,6 +54,14 @@ class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStat
     makeBlockItem(block, model)
   }
 
+  def makeConcreteBlock(block: Block): Unit = {
+    val model = models().getBuilder(block.getRegistryName.getPath)
+      .parent(vanillaModel("block/cube_all"))
+      .texture("all", new ResourceLocation(Factorium.ModId, concreteTex(block)))
+    genStates(block, _ => model)
+    makeBlockItem(block, model)
+  }
+
   def makeTopBottomBlock(block: Block): Unit = {
     val name = block.getRegistryName.getPath
     val model = models().getBuilder(name)
@@ -67,6 +78,7 @@ class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStat
       case x: PumpBlock => makeTopBottomBlock(x)
       case x: RotatableMachineBlock => makeRotatableBlock(x)
       case x if x.getRegistryName.getPath.startsWith("mat_") => makeMaterialBlock(x)
+      case x if x.getRegistryName.getPath.startsWith("concrete_") => makeConcreteBlock(x)
       case x => makeBlock(x)
     })
   }

@@ -1,6 +1,6 @@
 package net.bdew.factorium.registries
 
-import net.bdew.factorium.blocks.{GlassBlock, GlassBlockDark}
+import net.bdew.factorium.blocks._
 import net.bdew.factorium.machines.BaseMachineItem
 import net.bdew.factorium.machines.alloy.AlloySmelterEntity
 import net.bdew.factorium.machines.extruder.ExtruderEntity
@@ -13,9 +13,10 @@ import net.bdew.factorium.machines.pump.{PumpBlock, PumpEntity}
 import net.bdew.factorium.machines.worker.WorkerMachineBlock
 import net.bdew.factorium.metals._
 import net.bdew.lib.managers.BlockManager
-import net.minecraft.world.item.BlockItem
+import net.minecraft.world.item.{BlockItem, DyeColor}
 import net.minecraft.world.level.block.OreBlock
 import net.minecraft.world.level.material.Material
+import net.minecraftforge.registries.RegistryObject
 
 object Blocks extends BlockManager(Items) {
   val crusher: Def[WorkerMachineBlock[CrusherEntity], CrusherEntity, BaseMachineItem] =
@@ -104,5 +105,30 @@ object Blocks extends BlockManager(Items) {
   val glowGlass: Blocks.DefBI[GlassBlock, BlockItem] = define("glass_glow", () => new GlassBlock(BlockProps.glassGlowProps))
     .withDefaultItem
     .register
+
+  val reinforcedConcrete: Map[DyeColor, RegistryObject[ReinforcedConcreteBlock]] =
+    DyeColor.values().map(c => c ->
+      define(s"concrete_solid_reinforced_${c.getName}", () => new ReinforcedConcreteBlock(c))
+        .withItem(DyedBlockItem).register.block
+    ).toMap
+
+  val reinforcedConcretePowder: Map[DyeColor, RegistryObject[ReinforcedConcretePowderBlock]] =
+    DyeColor.values().map(c => c ->
+      define(s"concrete_powder_reinforced_${c.getName}", () => new ReinforcedConcretePowderBlock(c, reinforcedConcrete(c).get()))
+        .withItem(DyedBlockItem).register.block
+    ).toMap
+
+
+  val glowingConcrete: Map[DyeColor, RegistryObject[GlowingConcreteBlock]] =
+    DyeColor.values().map(c => c ->
+      define(s"concrete_solid_glowing_${c.getName}", () => new GlowingConcreteBlock(c))
+        .withItem(DyedBlockItem).register.block
+    ).toMap
+
+  val glowingConcretePowder: Map[DyeColor, RegistryObject[GlowingConcretePowderBlock]] =
+    DyeColor.values().map(c => c ->
+      define(s"concrete_powder_glowing_${c.getName}", () => new GlowingConcretePowderBlock(c, glowingConcrete(c).get()))
+        .withItem(DyedBlockItem).register.block
+    ).toMap
 
 }

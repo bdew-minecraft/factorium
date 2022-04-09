@@ -59,7 +59,7 @@ object Items extends ItemManager(CreativeTab) {
 
   register("mat_wood_chips", () => new FuelItem(1600))
 
-  resourceItems(prefix = "craft",
+  val craftItems = resourceItems(prefix = "craft",
     "coupler", "motor", "coil", "heater", "capacitor",
     "quartz_pulse", "quartz_clock", "container", "tank",
     "core_basic", "core_advanced",

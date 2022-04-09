@@ -62,11 +62,25 @@ class BlockTagsGen(gen: DataGenerator, efh: ExistingFileHelper) extends BlockTag
     tag(OreGenMeteorite.replaceables).addTag(BlockTags.STONE_ORE_REPLACEABLES)
       .add(MCBlocks.SAND, MCBlocks.DIRT, MCBlocks.SANDSTONE, MCBlocks.GRAVEL)
 
-    val reinforcedGlass = Blocks.reinforcedGlass.block.get()
+    val reinforced = List(Blocks.reinforcedGlass.block.get()) ++ Blocks.reinforcedConcrete.values.map(_.get())
 
-    tag(BlockTags.DRAGON_IMMUNE).add(reinforcedGlass)
-    tag(BlockTags.WITHER_IMMUNE).add(reinforcedGlass)
-    tag(BlockTags.MINEABLE_WITH_PICKAXE).add(reinforcedGlass)
-    tag(BlockTags.NEEDS_DIAMOND_TOOL).add(reinforcedGlass)
+    reinforced foreach { block =>
+      tag(BlockTags.DRAGON_IMMUNE).add(block)
+      tag(BlockTags.WITHER_IMMUNE).add(block)
+      tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block)
+      tag(BlockTags.NEEDS_DIAMOND_TOOL).add(block)
+    }
+
+    Blocks.glowingConcrete.map(_._2.get()) foreach {block =>
+      tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block)
+    }
+
+    Blocks.glowingConcretePowder.map(_._2.get()) foreach {block =>
+      tag(BlockTags.MINEABLE_WITH_SHOVEL).add(block)
+    }
+
+    Blocks.reinforcedConcretePowder.map(_._2.get()) foreach {block =>
+      tag(BlockTags.MINEABLE_WITH_SHOVEL).add(block)
+    }
   }
 }
