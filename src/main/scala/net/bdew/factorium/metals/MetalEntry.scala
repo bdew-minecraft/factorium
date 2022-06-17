@@ -3,7 +3,6 @@ package net.bdew.factorium.metals
 import net.bdew.factorium.Factorium
 import net.bdew.factorium.worldgen.WorldgenTemplate
 import net.bdew.lib.Text
-import net.bdew.lib.config.ConfigSection
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
@@ -33,7 +32,7 @@ case class External[+T](getter: () => T) extends Reference[T] {
 case class MetalEntry(name: String) {
   var items: Map[MetalItemType, Reference[Item]] = Map.empty
   var blocks: Map[MetalItemType, Reference[Block]] = Map.empty
-  var oreGen: List[WorldgenTemplate[_ <: ConfigSection]] = List.empty
+  var oreGen: List[WorldgenTemplate] = List.empty
   var meteoriteWeight = 0
 
   def addItem(kind: MetalItemType, ref: Reference[Item]): MetalEntry = {
@@ -66,7 +65,7 @@ case class MetalEntry(name: String) {
     }
   }
 
-  def addOreGen(factory: MetalEntry => WorldgenTemplate[_ <: ConfigSection]): MetalEntry = {
+  def addOreGen(factory: MetalEntry => WorldgenTemplate): MetalEntry = {
     oreGen :+= factory(this)
     this
   }

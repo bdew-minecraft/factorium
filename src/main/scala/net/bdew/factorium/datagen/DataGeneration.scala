@@ -13,5 +13,11 @@ object DataGeneration {
     dataGenerator.addProvider(ev.includeServer, blockTags)
     dataGenerator.addProvider(ev.includeServer, new ItemTagsGen(dataGenerator, efh, blockTags))
     dataGenerator.addProvider(ev.includeServer, new RecipeGen(dataGenerator))
+
+    val worldGen = new WorldGenProviders(dataGenerator, efh)
+
+    dataGenerator.addProvider(ev.includeServer, worldGen.configuredFeatureProvider)
+    dataGenerator.addProvider(ev.includeServer, worldGen.placedFeatureProvider)
+    dataGenerator.addProvider(ev.includeServer, worldGen.biomeModifiersProvider)
   }
 }

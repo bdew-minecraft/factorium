@@ -1,6 +1,6 @@
 package net.bdew.factorium.metals
 
-import net.bdew.factorium.worldgen.ores
+import net.bdew.factorium.worldgen.ores.{OreGenEnd, OreGenNether, OreGenOverworld}
 import net.minecraft.world.item.{Items => MCItems}
 import net.minecraft.world.level.block.{Blocks => MCBlocks}
 import org.apache.logging.log4j.LogManager
@@ -59,7 +59,7 @@ object Metals {
     .addGear()
     .addRod()
     .withMeteoriteWeight(10)
-    .addOreGen(ores.OreGenOverworld("tin_overworld", _,
+    .addOreGen(OreGenOverworld("tin_overworld", _,
       defaultCount = 12,
       defaultMinY = -64,
       defaultMaxY = 100,
@@ -71,7 +71,7 @@ object Metals {
     .addProcessing()
     .addPlate()
     .withMeteoriteWeight(10)
-    .addOreGen(ores.OreGenOverworld("lead_overworld", _,
+    .addOreGen(OreGenOverworld("lead_overworld", _,
       defaultCount = 8,
       defaultMinY = -64,
       defaultMaxY = 32,
@@ -84,7 +84,7 @@ object Metals {
     .addProcessing()
     .addPlate()
     .withMeteoriteWeight(50)
-    .addOreGen(ores.OreGenOverworld("nickel_overworld", _,
+    .addOreGen(OreGenOverworld("nickel_overworld", _,
       defaultCount = 15,
       defaultMinY = -64,
       defaultMaxY = 64,
@@ -96,7 +96,7 @@ object Metals {
     .addProcessing()
     .addPlate()
     .withMeteoriteWeight(10)
-    .addOreGen(ores.OreGenOverworld("zinc_overworld", _,
+    .addOreGen(OreGenOverworld("zinc_overworld", _,
       defaultCount = 10,
       defaultMinY = -64,
       defaultMaxY = 128,
@@ -107,13 +107,13 @@ object Metals {
     .addResource()
     .addProcessing()
     .withMeteoriteWeight(10)
-    .addOreGen(ores.OreGenOverworld("silver_overworld", _,
+    .addOreGen(OreGenOverworld("silver_overworld", _,
       defaultCount = 10,
       defaultMinY = -64,
       defaultMaxY = 32,
       defaultSize = 4,
       defaultAirExposure = 0.5f))
-    .addOreGen(ores.OreGenEnd("silver_end", _,
+    .addOreGen(OreGenEnd("silver_end", _,
       defaultCount = 4,
       defaultMinY = 0,
       defaultMaxY = 255,
@@ -126,19 +126,19 @@ object Metals {
     .addPlate()
     .addWire()
     .withMeteoriteWeight(10)
-    .addOreGen(ores.OreGenOverworld("platinum_overworld", _,
+    .addOreGen(OreGenOverworld("platinum_overworld", _,
       defaultCount = 5,
       defaultMinY = -64,
       defaultMaxY = 20,
       defaultSize = 5,
       defaultAirExposure = 0.8f))
-    .addOreGen(ores.OreGenNether("platinum_nether", _,
+    .addOreGen(OreGenNether("platinum_nether", _,
       defaultCount = 6,
       defaultMinY = 0,
       defaultMaxY = 255,
       defaultSize = 8,
       defaultAirExposure = 0.5f))
-    .addOreGen(ores.OreGenEnd("platinum_end", _,
+    .addOreGen(OreGenEnd("platinum_end", _,
       defaultCount = 6,
       defaultMinY = 0,
       defaultMaxY = 255,
