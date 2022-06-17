@@ -14,7 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries
 object RecipeHelper {
   def writeItemStack(v: ItemStack): JsonObject = {
     val obj = new JsonObject
-    obj.addProperty("item", v.getItem.getRegistryName.toString)
+    obj.addProperty("item", ForgeRegistries.ITEMS.getKey(v.getItem).toString)
     if (v.getCount > 1)
       obj.addProperty("count", v.getCount)
     obj
@@ -22,7 +22,7 @@ object RecipeHelper {
 
   def writeItemStackWithChance(v: ItemStackWithChance): JsonObject = {
     val obj = new JsonObject
-    obj.addProperty("item", v.stack.getItem.getRegistryName.toString)
+    obj.addProperty("item", ForgeRegistries.ITEMS.getKey(v.stack.getItem).toString)
     if (v.stack.getCount > 1)
       obj.addProperty("count", v.stack.getCount)
     if (v.chance != 1)
@@ -34,7 +34,7 @@ object RecipeHelper {
     val obj = new JsonObject
     v.fluid match {
       case x: GenIngredientTag[Fluid] => obj.addProperty("fluidTag", x.v.location.toString)
-      case x: GenIngredientSimple[Fluid] => obj.addProperty("fluid", x.v.getRegistryName.toString)
+      case x: GenIngredientSimple[Fluid] => obj.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(x.v).toString)
       case x => throw new RuntimeException(s"Can't serialize $x")
     }
     obj.addProperty("amount", v.amount)

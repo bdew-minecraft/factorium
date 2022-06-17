@@ -14,7 +14,6 @@ import net.bdew.factorium.registries.{Blocks, Recipes}
 import net.bdew.factorium.{Config, Factorium}
 import net.bdew.lib.Text
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 
@@ -26,9 +25,6 @@ object ExtruderRecipes extends IRecipeCategory[ExtruderRecipe] {
   val block: Block = Blocks.extruder.block.get()
 
   override val getRecipeType: RecipeType[ExtruderRecipe] = RecipeType.create(Factorium.ModId, Recipes.extruder.id.getPath, classOf[ExtruderRecipe])
-
-  override def getUid: ResourceLocation = getRecipeType.getUid
-  override def getRecipeClass: Class[_ <: ExtruderRecipe] = getRecipeType.getRecipeClass
 
   override def getTitle: Component = block.getName
 
@@ -43,7 +39,7 @@ object ExtruderRecipes extends IRecipeCategory[ExtruderRecipe] {
     ).build()
 
   override def getIcon: IDrawable =
-    JEIPlugin.guiHelper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(block))
+    JEIPlugin.guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(block))
 
   override def setRecipe(builder: IRecipeLayoutBuilder, recipe: ExtruderRecipe, focuses: IFocusGroup): Unit = {
     builder.addSlot(RecipeIngredientRole.INPUT, 37, 3)

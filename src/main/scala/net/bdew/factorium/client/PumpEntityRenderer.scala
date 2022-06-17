@@ -32,7 +32,7 @@ class PumpEntityRenderer(ctx: BlockEntityRendererProvider.Context) extends Block
     val pv2 = v1 + (v2 - v1) * 7f / 8f
 
     for (y <- 0 until hl) {
-      addSection(buffer, pose, normal, -y, -y + 1, 0.15f, u1, u2, pv1, pv2, light, overlay)
+      addSection(buffer, pose, normal, -y, -y + 1f, 0.15f, u1, u2, pv1, pv2, light, overlay)
     }
 
     addSection(buffer, pose, normal, -hl + 0.5f, -hl + 1, 0.15f, u1, u2, v1, pv2, light, overlay)

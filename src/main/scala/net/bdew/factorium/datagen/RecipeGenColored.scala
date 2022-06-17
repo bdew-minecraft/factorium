@@ -8,6 +8,7 @@ import net.minecraft.tags.FluidTags
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.{DyeColor, Item, Items => MCItems}
 import net.minecraftforge.common.Tags
+import net.minecraftforge.registries.ForgeRegistries
 
 import java.util.function.Consumer
 
@@ -82,13 +83,12 @@ object RecipeGenColored {
       .save(consumer, new ResourceLocation(Factorium.ModId, s"concrete/powder/reinforced/${color.getName}"))
   }
 
-
-  def makeConcreteMixerRecipe(powder: Item, block: Item, consumer: Consumer[FinishedRecipe]): Unit = {
+  def makeConcreteMixerRecipe(powder: Item, item: Item, consumer: Consumer[FinishedRecipe]): Unit = {
     MixerRecipeBuilder()
       .withInputItem(Ingredient.of(powder))
       .withInputFluid(FluidTags.WATER, 250)
-      .withOutputItem(block)
-      .build(s"concrete/mixer/${block.getRegistryName.getPath}")
+      .withOutputItem(item)
+      .build(s"concrete/mixer/${ForgeRegistries.ITEMS.getKey(item).getPath}")
       .save(consumer)
   }
 

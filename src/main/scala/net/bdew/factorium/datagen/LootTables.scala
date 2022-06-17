@@ -7,13 +7,12 @@ import net.bdew.factorium.registries.Blocks
 import net.bdew.lib.datagen.LootTableGenerator
 import net.minecraft.data.DataGenerator
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.level.block.OreBlock
 import net.minecraft.world.level.storage.loot.LootTable
 
 class LootTables(gen: DataGenerator) extends LootTableGenerator(gen, Factorium.ModId) {
   override def makeTables(): Map[ResourceLocation, LootTable] = {
     Blocks.all.map(_.get() match {
-      case block: OreBlock if block.getRegistryName.getPath == "mat_meteorite_ore" =>
+      case block if block == Blocks.meteoriteOre.block.get() =>
         makeBlockEntry(block, LootTableHelper.makeMeteoriteDropTable(block,
           Metals.all.filter(m => m.haveItem(MetalItemType.RawDrop) && m.meteoriteWeight > 0)
             .map(m => (m.item(MetalItemType.RawDrop), Int.box(m.meteoriteWeight)))

@@ -4,11 +4,9 @@ import net.bdew.factorium.worldgen.WorldGeneration
 import net.bdew.factorium.{Config, Factorium}
 import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.nbt.NBT
-import net.minecraft.core.{BlockPos, Holder}
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.chunk.ChunkStatus
 import net.minecraft.world.level.{ChunkPos, Level}
 import net.minecraftforge.common.MinecraftForge
@@ -19,7 +17,6 @@ import net.minecraftforge.event.world.ChunkDataEvent
 import net.minecraftforge.fml.LogicalSide
 import org.apache.logging.log4j.LogManager
 
-import java.util.Random
 import scala.collection.mutable
 
 case class ChunkRef(pos: ChunkPos, features: Set[String])
@@ -89,25 +86,26 @@ object RetrogenTracker {
 
   def onWorldTick(ev: TickEvent.WorldTickEvent): Unit = {
     if (!Config.WorldGen.retrogenEnabled() || ev.side != LogicalSide.SERVER || ev.phase != Phase.END) return
-    (next(ev.world), ev.world) match {
-      case (Some((pos, features)), world: ServerLevel) if ev.world.hasChunk(pos.x, pos.z) =>
-        val chunk = world.getChunk(pos.x, pos.z, ChunkStatus.FULL, false)
-        val biomes = mutable.ListBuffer.empty[Holder[Biome]]
-        chunk.getSections.foreach(_.getBiomes.getAll(x=>biomes.addOne(x)))
-        val rng = new Random(world.getSeed)
-        val xSeed = rng.nextLong >> 3
-        val zSeed = rng.nextLong >> 3
-        val genLevel = new RetrogenLevel(world)
-        rng.setSeed(xSeed * pos.x + zSeed * pos.z ^ world.getSeed)
-        for (entry <- WorldGeneration.features if entry.isEnabled() && !features.contains(entry.id) && biomes.exists(x => entry.filter.matches(Biome.getBiomeCategory(x)))) {
-          log.info(s"Generating ${entry.id} in chunk $pos (${world.dimension().location()})")
-          entry.feature.placeWithBiomeCheck(genLevel, world.getChunkSource.getGenerator, rng, new BlockPos(pos.x << 4, 0, pos.z << 4))
-        }
-        chunk.setUnsaved(true)
-        totalCounter += 1
-        log.info(s"Applied retrogen to $totalCounter chunks so far, $remaining chunks left")
-      case _ => // nothing
-    }
+    // fixme
+//    (next(ev.world), ev.world) match {
+//      case (Some((pos, features)), world: ServerLevel) if ev.world.hasChunk(pos.x, pos.z) =>
+//        val chunk = world.getChunk(pos.x, pos.z, ChunkStatus.FULL, false)
+//        val biomes = mutable.ListBuffer.empty[Holder[Biome]]
+//        chunk.getSections.foreach(_.getBiomes.getAll(x=>biomes.addOne(x)))
+//        val rng = new Random(world.getSeed)
+//        val xSeed = rng.nextLong >> 3
+//        val zSeed = rng.nextLong >> 3
+//        val genLevel = new RetrogenLevel(world)
+//        rng.setSeed(xSeed * pos.x + zSeed * pos.z ^ world.getSeed)
+//        for (entry <- WorldGeneration.features if entry.isEnabled() && !features.contains(entry.id) && biomes.exists(x => entry.filter.matches(Biome.getBiomeCategory(x)))) {
+//          log.info(s"Generating ${entry.id} in chunk $pos (${world.dimension().location()})")
+//          entry.feature.placeWithBiomeCheck(genLevel, world.getChunkSource.getGenerator, rng, new BlockPos(pos.x << 4, 0, pos.z << 4))
+//        }
+//        chunk.setUnsaved(true)
+//        totalCounter += 1
+//        log.info(s"Applied retrogen to $totalCounter chunks so far, $remaining chunks left")
+//      case _ => // nothing
+//    }
   }
 
   def onServerStopped(ev: ServerStoppedEvent): Unit = {

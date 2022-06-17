@@ -21,7 +21,6 @@ import net.bdew.lib.recipes.MachineRecipeType
 import net.bdew.lib.{DecFormat, Text}
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 
@@ -36,9 +35,6 @@ abstract class ProcessingRecipes[T <: ProcessingRecipe](recipeType: MachineRecip
 
   override val getRecipeType: RecipeType[T] = RecipeType.create(Factorium.ModId, recipeType.registryName.getPath, cls)
 
-  override def getUid: ResourceLocation = getRecipeType.getUid
-  override def getRecipeClass: Class[_ <: T] = getRecipeType.getRecipeClass
-
   override def getTitle: Component = block.getName
 
   override def getBackground: IDrawable =
@@ -52,7 +48,7 @@ abstract class ProcessingRecipes[T <: ProcessingRecipe](recipeType: MachineRecip
     .buildAnimated(cfg.baseCycleTicks().round, IDrawableAnimated.StartDirection.LEFT, false)
 
   override def getIcon: IDrawable =
-    JEIPlugin.guiHelper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(block))
+    JEIPlugin.guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(block))
 
   override def setRecipe(builder: IRecipeLayoutBuilder, recipe: T, focuses: IFocusGroup): Unit = {
     builder.addSlot(RecipeIngredientRole.INPUT, 28, 3).addIngredients(recipe.input)
@@ -83,7 +79,6 @@ abstract class ProcessingRecipes[T <: ProcessingRecipe](recipeType: MachineRecip
   }
 
   override def getTooltipStrings(recipe: T, recipeSlotsView: IRecipeSlotsView, mouseX: Double, mouseY: Double): util.List[Component] = {
-    var res = super.getTooltipStrings(recipe, mouseX, mouseY).asScala
     if (mouseX >= 68 && mouseX <= 92 && mouseY >= 20 && mouseY <= 36)
       Collections.singletonList(Text.amount(cfg.baseCycleTicks() / 20f, "seconds"))
     else

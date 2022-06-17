@@ -3,7 +3,7 @@ package net.bdew.factorium.worldgen.ores
 import net.bdew.factorium.Factorium
 import net.bdew.factorium.registries.Blocks
 import net.bdew.factorium.worldgen.features.{BelowSurfacePlacementConfig, CountPlacementConfig}
-import net.bdew.factorium.worldgen.{BiomeCatFilter, Features, WorldgenTemplate}
+import net.bdew.factorium.worldgen.{Features, WorldgenTemplate}
 import net.bdew.lib.config.ConfigSection
 import net.minecraft.core.Holder
 import net.minecraft.data.BuiltinRegistries
@@ -20,7 +20,6 @@ import scala.jdk.CollectionConverters._
 
 object OreGenMeteorite extends WorldgenTemplate[DepthOreGenConfigSection] {
   override def id: String = "meteorite_overworld"
-  override val filter: BiomeCatFilter = BiomeCatFilter.normal
 
   val replaceables: TagKey[Block] =
     BlockTags.create(new ResourceLocation(Factorium.ModId, "meteorite_ore_replaceables"))

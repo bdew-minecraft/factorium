@@ -2,6 +2,7 @@ package net.bdew.factorium.jei
 
 import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
+import mezz.jei.api.forge.ForgeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.{IDrawable, IDrawableAnimated, IDrawableStatic}
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView
@@ -14,7 +15,6 @@ import net.bdew.factorium.registries.{Blocks, Recipes}
 import net.bdew.factorium.{Config, Factorium}
 import net.bdew.lib.Text
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 
@@ -27,9 +27,6 @@ object MixerRecipes extends IRecipeCategory[MixerRecipe] {
   val config: MixerConfig = Config.Machines.Mixer
 
   override val getRecipeType: RecipeType[MixerRecipe] = RecipeType.create(Factorium.ModId, Recipes.mixer.id.getPath, classOf[MixerRecipe])
-
-  override def getUid: ResourceLocation = getRecipeType.getUid
-  override def getRecipeClass: Class[_ <: MixerRecipe] = getRecipeType.getRecipeClass
 
   override def getTitle: Component = block.getName
 
@@ -48,24 +45,24 @@ object MixerRecipes extends IRecipeCategory[MixerRecipe] {
     ).build()
 
   override def getIcon: IDrawable =
-    JEIPlugin.guiHelper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(block))
+    JEIPlugin.guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(block))
 
   override def setRecipe(builder: IRecipeLayoutBuilder, recipe: MixerRecipe, focuses: IFocusGroup): Unit = {
     builder.addSlot(RecipeIngredientRole.INPUT, 46, 21)
-      .addIngredients(VanillaTypes.ITEM, JeiUtils.listIngredientMulti(recipe.inputItem))
+      .addIngredients(VanillaTypes.ITEM_STACK, JeiUtils.listIngredientMulti(recipe.inputItem))
 
     builder.addSlot(RecipeIngredientRole.INPUT, 24, 9)
-      .addIngredients(VanillaTypes.FLUID, JeiUtils.listFluidStackIngredient(recipe.inputFluid))
+      .addIngredients(ForgeTypes.FLUID_STACK, JeiUtils.listFluidStackIngredient(recipe.inputFluid))
       .setFluidRenderer(config.tankCapacity(), false, 16, 39)
       .setOverlay(fluidOverlay, 0, 0)
 
     if (!recipe.outputItem.isEmpty)
       builder.addSlot(RecipeIngredientRole.OUTPUT, 99, 21)
-        .addIngredient(VanillaTypes.ITEM, recipe.outputItem)
+        .addIngredient(VanillaTypes.ITEM_STACK, recipe.outputItem)
 
     if (!recipe.outputFluid.isEmpty)
       builder.addSlot(RecipeIngredientRole.OUTPUT, 121, 9)
-        .addIngredient(VanillaTypes.FLUID, recipe.outputFluid.toStack)
+        .addIngredient(ForgeTypes.FLUID_STACK, recipe.outputFluid.toStack)
         .setFluidRenderer(config.tankCapacity(), false, 16, 39)
         .setOverlay(fluidOverlay, 0, 0)
 

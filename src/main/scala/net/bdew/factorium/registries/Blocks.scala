@@ -14,7 +14,7 @@ import net.bdew.factorium.machines.worker.WorkerMachineBlock
 import net.bdew.factorium.metals._
 import net.bdew.lib.managers.BlockManager
 import net.minecraft.world.item.{BlockItem, DyeColor}
-import net.minecraft.world.level.block.OreBlock
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Material
 import net.minecraftforge.registries.RegistryObject
 
@@ -83,9 +83,9 @@ object Blocks extends BlockManager(Items) {
     }
   }
 
-  val meteoriteOre: Blocks.DefBI[OreBlock, BlockItem] =
+  val meteoriteOre: Blocks.DefBI[Block, BlockItem] =
     define("mat_meteorite_ore",
-      () => new OreBlock(props(Material.STONE)
+      () => new Block(props(Material.STONE)
         .requiresCorrectToolForDrops()
         .strength(5, 3))
     ).withDefaultItem.register

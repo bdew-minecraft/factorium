@@ -5,6 +5,7 @@ import net.minecraft.core.{BlockPos, Direction, Holder, RegistryAccess}
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.{SoundEvent, SoundSource}
+import net.minecraft.util.RandomSource
 import net.minecraft.world.DifficultyInstance
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Player
@@ -22,15 +23,13 @@ import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.level.lighting.LevelLightEngine
 import net.minecraft.world.level.material.{Fluid, FluidState}
 import net.minecraft.world.level.storage.LevelData
-import net.minecraft.world.phys.AABB
+import net.minecraft.world.phys.{AABB, Vec3}
 import net.minecraft.world.ticks.LevelTickAccess
 
 import java.util
-import java.util.Random
 import java.util.function.Predicate
 
 class RetrogenLevel(base: ServerLevel) extends WorldGenLevel {
-
   override def getSeed: Long = base.getSeed
   override def getLevel: ServerLevel = base
   override def nextSubTickCount(): Long = base.nextSubTickCount()
@@ -40,11 +39,12 @@ class RetrogenLevel(base: ServerLevel) extends WorldGenLevel {
   override def getCurrentDifficultyAt(pos: BlockPos): DifficultyInstance = base.getCurrentDifficultyAt(pos)
   override def getServer: MinecraftServer = base.getServer
   override def getChunkSource: ChunkSource = base.getChunkSource
-  override def getRandom: Random = base.getRandom
+  override def getRandom: RandomSource = base.getRandom
   override def playSound(player: Player, pos: BlockPos, event: SoundEvent, source: SoundSource, volume: Float, pitch: Float): Unit = base.playSound(player, pos, event, source, volume, pitch)
   override def addParticle(options: ParticleOptions, d1: Double, d2: Double, d3: Double, d4: Double, d5: Double, d6: Double): Unit = base.addParticle(options, d1, d2, d3, d4, d5, d6)
   override def levelEvent(player: Player, i1: Int, pos: BlockPos, i2: Int): Unit = base.levelEvent(player, i1, pos, i2)
   override def gameEvent(ent: Entity, event: GameEvent, pos: BlockPos): Unit = base.gameEvent(ent, event, pos)
+  override def gameEvent(ev: GameEvent, pos: Vec3, ctx: GameEvent.Context): Unit = base.gameEvent(ev, pos, ctx)
   override def registryAccess(): RegistryAccess = base.registryAccess()
   override def getChunk(x: Int, z: Int, status: ChunkStatus, flag: Boolean): ChunkAccess = base.getChunk(x, z, status, flag)
   override def getHeight(kind: Heightmap.Types, x: Int, z: Int): Int = base.getHeight(kind, x, z)

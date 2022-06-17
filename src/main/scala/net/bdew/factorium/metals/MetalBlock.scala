@@ -3,8 +3,8 @@ package net.bdew.factorium.metals
 import net.bdew.factorium.Factorium
 import net.bdew.lib.Text
 import net.minecraft.network.chat.MutableComponent
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockBehaviour
-import net.minecraft.world.level.block.{Block, OreBlock}
 
 trait NamedBlock extends Block {
   def itemType: MetalItemType
@@ -14,4 +14,4 @@ trait NamedBlock extends Block {
 }
 
 case class MetalBlock(props: BlockBehaviour.Properties, itemType: MetalItemType, metal: MetalEntry) extends Block(props) with NamedBlock
-case class MetalOreBlock(props: BlockBehaviour.Properties, itemType: MetalItemType, metal: MetalEntry) extends OreBlock(props) with NamedBlock
+case class MetalOreBlock(props: BlockBehaviour.Properties, itemType: MetalItemType, metal: MetalEntry) extends Block(props) with NamedBlock

@@ -7,7 +7,6 @@ import net.minecraftforge.common.ForgeConfigSpec
 
 trait WorldgenTemplate[C <: ConfigSection] {
   def id: String
-  def filter: BiomeCatFilter
   def makeConfig(spec: ForgeConfigSpec.Builder): C
   def createFeature(cfg: C): Holder[PlacedFeature]
   def isEnabled(cfg: C): Boolean
@@ -16,12 +15,11 @@ trait WorldgenTemplate[C <: ConfigSection] {
 case class WorldgenConfigured[C <: ConfigSection](template: WorldgenTemplate[C], cfg: C) {
   def createPlaced(): WorldgenPlaced = WorldgenPlaced(
     id = template.id,
-    filter = template.filter,
     featureHolder = template.createFeature(cfg),
     isEnabled = () => template.isEnabled(cfg)
   )
 }
 
-case class WorldgenPlaced(id: String, filter: BiomeCatFilter, featureHolder: Holder[PlacedFeature], isEnabled: () => Boolean) {
+case class WorldgenPlaced(id: String, featureHolder: Holder[PlacedFeature], isEnabled: () => Boolean) {
   def feature = featureHolder.value()
 }

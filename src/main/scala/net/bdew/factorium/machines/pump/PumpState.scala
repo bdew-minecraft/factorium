@@ -42,14 +42,14 @@ class DataSlotPumpState(val name: String, val parent: DataSlotContainer) extends
         NBT(
           "st" -> "scanning",
           "d" -> d,
-          "f" -> f.getRegistryName.toString,
+          "f" -> ForgeRegistries.FLUIDS.getKey(f).toString,
         )
       case PumpState.Pumping(d, i, f) =>
         NBT(
           "st" -> "pumping",
           "d" -> d,
           "i" -> (if (i) 1.toByte else 0.toByte),
-          "f" -> f.getRegistryName.toString,
+          "f" -> ForgeRegistries.FLUIDS.getKey(f).toString,
         )
     })
   }

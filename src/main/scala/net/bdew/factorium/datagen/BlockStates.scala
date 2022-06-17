@@ -5,6 +5,7 @@ import net.bdew.factorium.machines.RotatableMachineBlock
 import net.bdew.factorium.machines.pump.PumpBlock
 import net.bdew.factorium.registries.Blocks
 import net.bdew.lib.datagen.BlockStateGenerator
+import net.bdew.lib.misc.Taggable
 import net.minecraft.core.Direction
 import net.minecraft.data.DataGenerator
 import net.minecraft.resources.ResourceLocation
@@ -12,20 +13,20 @@ import net.minecraft.world.level.block.Block
 import net.minecraftforge.client.model.generators.ConfiguredModel
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile
 import net.minecraftforge.common.data.ExistingFileHelper
-import net.minecraftforge.registries.ForgeRegistryEntry
+import net.minecraftforge.registries.ForgeRegistries
 
 class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStateGenerator(gen, Factorium.ModId, efh) {
-  def matTex(obj: ForgeRegistryEntry[_]): String =
-    "materials/" + obj.getRegistryName.getPath.substring(4).split("_", 2).mkString("/")
+  def matTex[T: Taggable](obj: T): String =
+    "materials/" + Taggable[T].registry.getKey(obj).getPath.substring(4).split("_", 2).mkString("/")
 
-  def concreteTex(obj: ForgeRegistryEntry[_]): String =
-    "block/" + obj.getRegistryName.getPath.split("_", 4).mkString("/")
+  def concreteTex[T: Taggable](obj: T): String =
+    "block/" + Taggable[T].registry.getKey(obj).getPath.split("_", 4).mkString("/")
 
   def makeRotatableBlock(block: RotatableMachineBlock): Unit = {
-    val model = models().getBuilder(block.getRegistryName.getPath)
+    val model = models().getBuilder(ForgeRegistries.BLOCKS.getKey(block).getPath)
       .parent(new ExistingModelFile(new ResourceLocation(Factorium.ModId, "block/machine_rotatable"), efh))
       .texture("top", new ResourceLocation(Factorium.ModId, "block/top"))
-      .texture("front", new ResourceLocation(Factorium.ModId, s"block/${block.getRegistryName.getPath}"))
+      .texture("front", new ResourceLocation(Factorium.ModId, s"block/${ForgeRegistries.BLOCKS.getKey(block).getPath}"))
       .texture("base", new ResourceLocation(Factorium.ModId, "block/base"))
 
     getVariantBuilder(block).forAllStates(state => {
@@ -47,7 +48,7 @@ class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStat
   }
 
   def makeMaterialBlock(block: Block): Unit = {
-    val model = models().getBuilder(block.getRegistryName.getPath)
+    val model = models().getBuilder(ForgeRegistries.BLOCKS.getKey(block).getPath)
       .parent(vanillaModel("block/cube_all"))
       .texture("all", new ResourceLocation(Factorium.ModId, matTex(block)))
     genStates(block, _ => model)
@@ -55,7 +56,7 @@ class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStat
   }
 
   def makeConcreteBlock(block: Block): Unit = {
-    val model = models().getBuilder(block.getRegistryName.getPath)
+    val model = models().getBuilder(ForgeRegistries.BLOCKS.getKey(block).getPath)
       .parent(vanillaModel("block/cube_all"))
       .texture("all", new ResourceLocation(Factorium.ModId, concreteTex(block)))
     genStates(block, _ => model)
@@ -63,7 +64,7 @@ class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStat
   }
 
   def makeTopBottomBlock(block: Block): Unit = {
-    val name = block.getRegistryName.getPath
+    val name = ForgeRegistries.BLOCKS.getKey(block).getPath
     val model = models().getBuilder(name)
       .parent(vanillaModel("block/cube_bottom_top"))
       .texture("top", new ResourceLocation(Factorium.ModId, s"block/$name/top"))
@@ -77,8 +78,8 @@ class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStat
     Blocks.all.foreach(_.get() match {
       case x: PumpBlock => makeTopBottomBlock(x)
       case x: RotatableMachineBlock => makeRotatableBlock(x)
-      case x if x.getRegistryName.getPath.startsWith("mat_") => makeMaterialBlock(x)
-      case x if x.getRegistryName.getPath.startsWith("concrete_") => makeConcreteBlock(x)
+      case x if ForgeRegistries.BLOCKS.getKey(x).getPath.startsWith("mat_") => makeMaterialBlock(x)
+      case x if ForgeRegistries.BLOCKS.getKey(x).getPath.startsWith("concrete_") => makeConcreteBlock(x)
       case x => makeBlock(x)
     })
   }

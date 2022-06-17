@@ -1,10 +1,10 @@
 package net.bdew.factorium.machines.upgradable
 
 import net.bdew.lib.Text
-import net.minecraft.network.chat.{Component, TranslatableComponent}
+import net.minecraft.network.chat.{Component, MutableComponent}
 
 case class InfoEntryKind(id: String) {
-  def name: TranslatableComponent = Text.translate(s"factorium.info.${id}")
+  def name: MutableComponent = Text.translate(s"factorium.info.${id}")
   def value(v: Component): Option[InfoEntry] = Some(InfoEntry(this, v))
 }
 

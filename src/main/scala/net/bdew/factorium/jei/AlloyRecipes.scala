@@ -15,7 +15,6 @@ import net.bdew.factorium.registries.{Blocks, Recipes}
 import net.bdew.factorium.{Config, Factorium}
 import net.bdew.lib.{Client, Text}
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 
@@ -25,9 +24,6 @@ object AlloyRecipes extends IRecipeCategory[AlloyRecipe] {
   val block: Block = Blocks.alloySmelter.block.get()
 
   override val getRecipeType: RecipeType[AlloyRecipe] = RecipeType.create(Factorium.ModId, Recipes.alloy.id.getPath, classOf[AlloyRecipe])
-
-  override def getUid: ResourceLocation = getRecipeType.getUid
-  override def getRecipeClass: Class[_ <: AlloyRecipe] = getRecipeType.getRecipeClass
 
   override def getTitle: Component = block.getName
 
@@ -46,7 +42,7 @@ object AlloyRecipes extends IRecipeCategory[AlloyRecipe] {
     ).build()
 
   override def getIcon: IDrawable =
-    JEIPlugin.guiHelper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(block))
+    JEIPlugin.guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(block))
 
 
   override def setRecipe(builder: IRecipeLayoutBuilder, recipe: AlloyRecipe, focuses: IFocusGroup): Unit = {
