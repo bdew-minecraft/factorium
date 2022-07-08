@@ -6,7 +6,7 @@ import net.bdew.lib.gui.widgets.Widget
 import net.bdew.lib.gui.{Color, Point, Rect, Texture}
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
-import net.minecraftforge.client.RenderProperties
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions
 import net.minecraftforge.fluids.FluidStack
 
 import scala.collection.mutable.ArrayBuffer
@@ -37,8 +37,8 @@ class WidgetPumpStatus(val rect: Rect, pump: PumpEntity) extends Widget {
       case PumpState.Scanning(_, _) =>
         parent.drawTexture(m, rect, PumpTextures.scanning)
       case PumpState.Pumping(_, _, fluid) =>
-        val props = RenderProperties.get(fluid)
-        val color = Color.fromInt(props.getColorTint)
+        val props = IClientFluidTypeExtensions.of(fluid)
+        val color = Color.fromInt(props.getTintColor)
         val icon = Texture.block(props.getStillTexture)
         parent.drawTexture(m, rect, icon, color)
       case PumpState.Invalid =>
