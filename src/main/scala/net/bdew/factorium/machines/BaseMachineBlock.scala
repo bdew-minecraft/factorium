@@ -45,7 +45,7 @@ trait BaseMachineBlock[E <: BaseMachineEntity] extends Block with BlockKeepData 
           else
             InteractionResult.FAIL
         } else {
-          NetworkHooks.openGui(serverPlayer, getTE(world, pos), pos)
+          NetworkHooks.openScreen(serverPlayer, getTE(world, pos), pos)
         }
         InteractionResult.CONSUME
       case _ => InteractionResult.FAIL
