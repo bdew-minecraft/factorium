@@ -1,6 +1,6 @@
 {
   "loader": "factorium:connected_model",
-  "parent": "minecraft:block/cube_all",
+  "parent": "factorium:block/glass_base",
   "textures": {
     "all": "factorium:block/glass/reinforced"
   },
