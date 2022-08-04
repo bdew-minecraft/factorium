@@ -10,9 +10,7 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 
 @Mod(Factorium.ModId)
-object Factorium {
-  final val ModId = "factorium"
-
+class Factorium {
   Config.init()
   Items.init()
   Blocks.init()
@@ -24,4 +22,8 @@ object Factorium {
   WorldGeneration.init()
 
   FMLJavaModLoadingContext.get().getModEventBus.addListener(DataGeneration.onGatherData)
+}
+
+object Factorium {
+  final val ModId = "factorium"
 }

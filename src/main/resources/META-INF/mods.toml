@@ -16,21 +16,21 @@ Ores, processing and various machines
 [[dependencies.factorium]]
 modId = "forge"
 mandatory = true
-versionRange = "[41.0.98,)"
+versionRange = "[42.0,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.factorium]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19,)"
+versionRange = "[1.19.1,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.factorium]]
 modId = "bdlib"
 mandatory = true
-versionRange = "[1.22.0,)"
+versionRange = "[1.23.0,)"
 ordering = "NONE"
 side = "BOTH"
 
