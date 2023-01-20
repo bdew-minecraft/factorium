@@ -1,13 +1,13 @@
 package net.bdew.factorium.datagen
 
 import net.bdew.factorium.metals.{MetalItemType, Metals}
-import net.minecraft.data.DataGenerator
+import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes._
 
 import java.util.function.Consumer
 
-class RecipeGen(gen: DataGenerator) extends RecipeProvider(gen) {
-  override def buildCraftingRecipes(consumer: Consumer[FinishedRecipe]): Unit = {
+class RecipeGen(out: PackOutput) extends RecipeProvider(out) {
+  override def buildRecipes(consumer: Consumer[FinishedRecipe]): Unit = {
     for (metal <- Metals.all) {
       RecipeGenCrafting.addCraftingRecipes(metal, consumer)
       RecipeGenProcessing.addProcessingRecipes(metal, consumer)

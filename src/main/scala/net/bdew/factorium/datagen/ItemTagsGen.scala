@@ -3,7 +3,8 @@ package net.bdew.factorium.datagen
 import net.bdew.factorium.Factorium
 import net.bdew.factorium.metals.{MetalEntry, MetalItemType, Metals}
 import net.bdew.factorium.registries.Items
-import net.minecraft.data.DataGenerator
+import net.minecraft.core.HolderLookup
+import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.ItemTagsProvider
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.{ItemTags, TagKey}
@@ -11,7 +12,9 @@ import net.minecraft.world.item.{Item, Items => MCItems}
 import net.minecraftforge.common.Tags
 import net.minecraftforge.common.data.ExistingFileHelper
 
-class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockTagsGen) extends ItemTagsProvider(gen, blockTags, Factorium.ModId, efh) {
+import java.util.concurrent.CompletableFuture
+
+class ItemTagsGen(out: PackOutput, efh: ExistingFileHelper, blockTags: BlockTagsGen, lookUp: CompletableFuture[HolderLookup.Provider]) extends ItemTagsProvider(out, lookUp, blockTags, Factorium.ModId, efh) {
   def addTypedForgeTag(metal: MetalEntry, kind: MetalItemType, groupTag: TagKey[Item]): Unit = {
     if (!metal.ownItem(kind)) return
     val item = metal.item(kind)
@@ -20,7 +23,7 @@ class ItemTagsGen(gen: DataGenerator, efh: ExistingFileHelper, blockTags: BlockT
     tag(subTag).add(item)
   }
 
-  override def addTags(): Unit = {
+  override def addTags(provider: HolderLookup.Provider): Unit = {
     copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS)
     copy(Tags.Blocks.ORE_RATES_SINGULAR, Tags.Items.ORE_RATES_SINGULAR)
     copy(Tags.Blocks.ORE_RATES_SPARSE, Tags.Items.ORE_RATES_SPARSE)

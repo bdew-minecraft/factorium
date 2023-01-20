@@ -1,12 +1,12 @@
 package net.bdew.factorium.client
 
 import com.mojang.blaze3d.vertex.{PoseStack, VertexConsumer}
-import com.mojang.math.{Matrix3f, Matrix4f}
 import net.bdew.factorium.Factorium
 import net.bdew.factorium.machines.pump.PumpEntity
 import net.minecraft.client.renderer.blockentity.{BlockEntityRenderer, BlockEntityRendererProvider}
 import net.minecraft.client.renderer.{MultiBufferSource, RenderType}
 import net.minecraft.resources.ResourceLocation
+import org.joml.{Matrix3f, Matrix4f}
 
 class PumpEntityRenderer(ctx: BlockEntityRendererProvider.Context) extends BlockEntityRenderer[PumpEntity] {
   val BEAM_LOCATION = new ResourceLocation(Factorium.ModId, "textures/entity/pump_hose.png")

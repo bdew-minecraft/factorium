@@ -7,7 +7,7 @@ import net.bdew.factorium.registries.Blocks
 import net.bdew.lib.datagen.BlockStateGenerator
 import net.bdew.lib.misc.Taggable
 import net.minecraft.core.Direction
-import net.minecraft.data.DataGenerator
+import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraftforge.client.model.generators.ConfiguredModel
@@ -15,7 +15,7 @@ import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile
 import net.minecraftforge.common.data.ExistingFileHelper
 import net.minecraftforge.registries.ForgeRegistries
 
-class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStateGenerator(gen, Factorium.ModId, efh) {
+class BlockStates(out: PackOutput, efh: ExistingFileHelper) extends BlockStateGenerator(out, Factorium.ModId, efh) {
   def matTex[T: Taggable](obj: T): String =
     "materials/" + Taggable[T].registry.getKey(obj).getPath.substring(4).split("_", 2).mkString("/")
 

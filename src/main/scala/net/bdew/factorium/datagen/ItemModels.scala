@@ -5,13 +5,13 @@ import net.bdew.factorium.items.ToolItem
 import net.bdew.factorium.registries.Items
 import net.bdew.lib.datagen.ItemModelGenerator
 import net.bdew.lib.misc.Taggable
-import net.minecraft.data.DataGenerator
+import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.{BlockItem, Item}
 import net.minecraftforge.common.data.ExistingFileHelper
 import net.minecraftforge.registries.ForgeRegistries
 
-class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) extends ItemModelGenerator(gen, Factorium.ModId, efh) {
+class ItemModels(out: PackOutput, efh: ExistingFileHelper) extends ItemModelGenerator(out, Factorium.ModId, efh) {
   def matTex[T: Taggable](obj: T): String =
     "materials/" + Taggable[T].registry.getKey(obj).getPath.substring(4).split("_", 3).mkString("/")
 

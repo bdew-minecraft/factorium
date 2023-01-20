@@ -2,7 +2,7 @@ package net.bdew.factorium.datagen
 
 import net.bdew.factorium.Factorium
 import net.bdew.factorium.registries.{Blocks, Items, Recipes}
-import net.minecraft.data.recipes.{FinishedRecipe, RecipeBuilder, ShapelessRecipeBuilder}
+import net.minecraft.data.recipes.{FinishedRecipe, RecipeBuilder, RecipeCategory, ShapelessRecipeBuilder}
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.FluidTags
 import net.minecraft.world.item.crafting.Ingredient
@@ -44,7 +44,7 @@ object RecipeGenColored {
   }
 
   def makeConcretePowderRecipe(color: String, powder: Item, consumer: Consumer[FinishedRecipe]): Unit = {
-    ShapelessRecipeBuilder.shapeless(powder, 16)
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, powder, 16)
       .requires(CustomTags.dyes(color))
       .requires(Ingredient.of(Tags.Items.GRAVEL), 3)
       .requires(Ingredient.of(Tags.Items.SAND), 3)
@@ -61,7 +61,7 @@ object RecipeGenColored {
 
 
   def makeConcreteGlowPowderRecipe(color: DyeColor, powder: Item, consumer: Consumer[FinishedRecipe]): Unit = {
-    ShapelessRecipeBuilder.shapeless(Blocks.glowingConcretePowder(color).get(), 4)
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.glowingConcretePowder(color).get(), 4)
       .requires(Ingredient.of(powder), 4)
       .requires(Ingredient.of(CustomTags.dusts("glowstone")))
       .asInstanceOf[RecipeBuilder]
@@ -73,7 +73,7 @@ object RecipeGenColored {
 
   def makeConcreteReinforcedPowderRecipe(color: DyeColor, powder: Item, consumer: Consumer[FinishedRecipe]): Unit = {
     val mesh = Items.craftItems("mesh_reinforced").get
-    ShapelessRecipeBuilder.shapeless(Blocks.reinforcedConcretePowder(color).get())
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.reinforcedConcretePowder(color).get())
       .requires(Ingredient.of(powder))
       .requires(Ingredient.of(mesh))
       .asInstanceOf[RecipeBuilder]

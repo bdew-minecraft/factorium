@@ -2,7 +2,7 @@ package net.bdew.factorium.datagen
 
 import net.bdew.factorium.Factorium
 import net.bdew.factorium.metals.{MetalEntry, MetalItemType}
-import net.minecraft.data.recipes.{FinishedRecipe, RecipeBuilder, ShapedRecipeBuilder, ShapelessRecipeBuilder}
+import net.minecraft.data.recipes._
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Ingredient
 
@@ -12,7 +12,7 @@ object RecipeGenCrafting {
   def addCraftingRecipes(metal: MetalEntry, consumer: Consumer[FinishedRecipe]): Unit = {
     if (metal.ownItem(MetalItemType.Plate)) {
       val ingotTag = CustomTags.ingots(metal.name)
-      ShapedRecipeBuilder.shaped(metal.item(MetalItemType.Plate), 3)
+      ShapedRecipeBuilder.shaped(RecipeCategory.MISC, metal.item(MetalItemType.Plate), 3)
         .define('x', Ingredient.of(ingotTag))
         .pattern("xxx")
         .asInstanceOf[RecipeBuilder]
@@ -23,7 +23,7 @@ object RecipeGenCrafting {
 
     if (metal.ownItem(MetalItemType.Gear)) {
       val ingotTag = CustomTags.ingots(metal.name)
-      ShapedRecipeBuilder.shaped(metal.item(MetalItemType.Gear))
+      ShapedRecipeBuilder.shaped(RecipeCategory.MISC, metal.item(MetalItemType.Gear))
         .define('x', Ingredient.of(ingotTag))
         .pattern(" x ")
         .pattern("xxx")
@@ -36,7 +36,7 @@ object RecipeGenCrafting {
 
     if (metal.ownItem(MetalItemType.Wire)) {
       val nuggetTag = CustomTags.nuggets(metal.name)
-      ShapedRecipeBuilder.shaped(metal.item(MetalItemType.Wire))
+      ShapedRecipeBuilder.shaped(RecipeCategory.MISC, metal.item(MetalItemType.Wire))
         .define('x', Ingredient.of(nuggetTag))
         .pattern("xxx")
         .pattern("x  ")
@@ -49,7 +49,7 @@ object RecipeGenCrafting {
 
     if (metal.ownItem(MetalItemType.Rod)) {
       val ingotTag = CustomTags.ingots(metal.name)
-      ShapedRecipeBuilder.shaped(metal.item(MetalItemType.Rod), 4)
+      ShapedRecipeBuilder.shaped(RecipeCategory.MISC, metal.item(MetalItemType.Rod), 4)
         .define('x', Ingredient.of(ingotTag))
         .pattern(" x ")
         .pattern(" x ")
@@ -66,13 +66,13 @@ object RecipeGenCrafting {
 
   def maybeAddStorageRecipes(metal: MetalEntry, big: MetalItemType, small: MetalItemType, consumer: Consumer[FinishedRecipe]): Unit = {
     if (metal.ownItem(big) || metal.ownItem(small)) {
-      ShapelessRecipeBuilder.shapeless(metal.item(small), 9)
+      ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, metal.item(small), 9)
         .requires(metal.item(big))
         .asInstanceOf[RecipeBuilder]
         .unlockedBy("has_item", RecipeHelper.has(metal.item(big)))
         .group(s"${Factorium.ModId}:misc")
         .save(consumer, new ResourceLocation(Factorium.ModId, s"metals/${metal.name}/${small.kind}_from_${big.kind}"))
-      ShapelessRecipeBuilder.shapeless(metal.item(big))
+      ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, metal.item(big))
         .requires(metal.item(small), 9)
         .asInstanceOf[RecipeBuilder]
         .unlockedBy("has_item", RecipeHelper.has(metal.item(small)))

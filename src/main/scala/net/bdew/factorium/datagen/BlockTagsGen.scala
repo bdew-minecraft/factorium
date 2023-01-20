@@ -4,15 +4,18 @@ import net.bdew.factorium.Factorium
 import net.bdew.factorium.metals.{MetalItemType, Metals}
 import net.bdew.factorium.registries.Blocks
 import net.bdew.factorium.worldgen.ores.OreGenMeteorite
-import net.minecraft.data.DataGenerator
-import net.minecraft.data.tags.BlockTagsProvider
+import net.minecraft.core.HolderLookup
+import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.{Blocks => MCBlocks}
 import net.minecraftforge.common.Tags
-import net.minecraftforge.common.data.ExistingFileHelper
+import net.minecraftforge.common.data.{BlockTagsProvider, ExistingFileHelper}
 
-class BlockTagsGen(gen: DataGenerator, efh: ExistingFileHelper) extends BlockTagsProvider(gen, Factorium.ModId, efh) {
-  override def addTags(): Unit = {
+import java.util.concurrent.CompletableFuture
+
+class BlockTagsGen(gen: PackOutput, efh: ExistingFileHelper, lookUp: CompletableFuture[HolderLookup.Provider]) extends BlockTagsProvider(gen, lookUp, Factorium.ModId, efh) {
+
+  override def addTags(provider: HolderLookup.Provider): Unit = {
     for (metal <- Metals.all) {
       for (kind <- MetalItemType.ores if metal.ownBlock(kind)) {
         val oreBlock = metal.block(kind)
@@ -71,15 +74,15 @@ class BlockTagsGen(gen: DataGenerator, efh: ExistingFileHelper) extends BlockTag
       tag(BlockTags.NEEDS_DIAMOND_TOOL).add(block)
     }
 
-    Blocks.glowingConcrete.map(_._2.get()) foreach {block =>
+    Blocks.glowingConcrete.map(_._2.get()) foreach { block =>
       tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block)
     }
 
-    Blocks.glowingConcretePowder.map(_._2.get()) foreach {block =>
+    Blocks.glowingConcretePowder.map(_._2.get()) foreach { block =>
       tag(BlockTags.MINEABLE_WITH_SHOVEL).add(block)
     }
 
-    Blocks.reinforcedConcretePowder.map(_._2.get()) foreach {block =>
+    Blocks.reinforcedConcretePowder.map(_._2.get()) foreach { block =>
       tag(BlockTags.MINEABLE_WITH_SHOVEL).add(block)
     }
   }
