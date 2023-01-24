@@ -1,16 +1,12 @@
 package net.bdew.factorium.client
 
 import com.mojang.blaze3d.vertex.{PoseStack, VertexConsumer}
-import net.bdew.factorium.Factorium
 import net.bdew.factorium.machines.pump.PumpEntity
 import net.minecraft.client.renderer.blockentity.{BlockEntityRenderer, BlockEntityRendererProvider}
 import net.minecraft.client.renderer.{MultiBufferSource, RenderType}
-import net.minecraft.resources.ResourceLocation
 import org.joml.{Matrix3f, Matrix4f}
 
 class PumpEntityRenderer(ctx: BlockEntityRendererProvider.Context) extends BlockEntityRenderer[PumpEntity] {
-  val BEAM_LOCATION = new ResourceLocation(Factorium.ModId, "textures/entity/pump_hose.png")
-
   override def render(entity: PumpEntity, partial: Float, stack: PoseStack, buffers: MultiBufferSource, light: Int, overlay: Int): Unit = {
     val hl = entity.hoseLength
     if (hl <= 0) return
@@ -79,7 +75,5 @@ class PumpEntityRenderer(ctx: BlockEntityRendererProvider.Context) extends Block
 
   }
 
-  override def shouldRenderOffScreen(ent: PumpEntity): Boolean = {
-    true
-  }
+  override def shouldRenderOffScreen(ent: PumpEntity): Boolean = true
 }

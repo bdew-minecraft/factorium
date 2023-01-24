@@ -4,6 +4,10 @@
       "type": "directory",
       "source": "materials",
       "prefix": "materials/"
+    },
+    {
+      "type": "single",
+      "resource": "factorium:entities/pump_hose"
     }
   ]
 }
