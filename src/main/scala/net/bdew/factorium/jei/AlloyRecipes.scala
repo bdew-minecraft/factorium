@@ -1,7 +1,6 @@
 package net.bdew.factorium.jei
 
 import com.google.common.cache.{CacheBuilder, CacheLoader, LoadingCache}
-import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.{IDrawable, IDrawableAnimated}
@@ -14,6 +13,7 @@ import net.bdew.factorium.machines.alloy.{AlloyRecipe, AlloyTextures}
 import net.bdew.factorium.registries.{Blocks, Recipes}
 import net.bdew.factorium.{Config, Factorium}
 import net.bdew.lib.{Client, Text}
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
@@ -64,8 +64,8 @@ object AlloyRecipes extends IRecipeCategory[AlloyRecipe] {
     reg.addRecipeCatalyst(new ItemStack(block), getRecipeType)
   }
 
-  override def draw(recipe: AlloyRecipe, recipeSlotsView: IRecipeSlotsView, stack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
-    Client.fontRenderer.draw(stack, Text.amount(workTime(recipe) / 20f, "seconds"), 20, 48, 0xFF808080)
-    arrowCache.getUnchecked(workTime(recipe).round).draw(stack, 68, 20)
+  override def draw(recipe: AlloyRecipe, recipeSlotsView: IRecipeSlotsView, guiGraphics: GuiGraphics, mouseX: Double, mouseY: Double): Unit = {
+    guiGraphics.drawString(Client.fontRenderer, Text.amount(workTime(recipe) / 20f, "seconds"), 20, 48, 0xFF808080)
+    arrowCache.getUnchecked(workTime(recipe).round).draw(guiGraphics, 68, 20)
   }
 }

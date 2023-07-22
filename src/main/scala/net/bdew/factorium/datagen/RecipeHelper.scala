@@ -3,7 +3,7 @@ package net.bdew.factorium.datagen
 import com.google.gson.JsonObject
 import net.bdew.factorium.misc.ItemStackWithChance
 import net.bdew.lib.recipes.{FluidStackIngredient, GenIngredientSimple, GenIngredientTag}
-import net.minecraft.advancements.critereon.{EntityPredicate, InventoryChangeTrigger, ItemPredicate, MinMaxBounds}
+import net.minecraft.advancements.critereon.{ContextAwarePredicate, InventoryChangeTrigger, ItemPredicate, MinMaxBounds}
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.{Item, ItemStack}
@@ -42,7 +42,7 @@ object RecipeHelper {
   }
 
   def inventoryTrigger(tests: ItemPredicate*): InventoryChangeTrigger.TriggerInstance = {
-    new InventoryChangeTrigger.TriggerInstance(EntityPredicate.Composite.ANY, MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, tests.toArray)
+    new InventoryChangeTrigger.TriggerInstance(ContextAwarePredicate.ANY, MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, tests.toArray)
   }
 
   def has(tag: TagKey[Item]): InventoryChangeTrigger.TriggerInstance = {

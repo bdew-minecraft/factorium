@@ -1,6 +1,5 @@
 package net.bdew.factorium.jei
 
-import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.{IDrawable, IDrawableAnimated}
@@ -20,6 +19,7 @@ import net.bdew.factorium.{Config, Factorium}
 import net.bdew.lib.recipes.MachineRecipeType
 import net.bdew.lib.{DecFormat, Text}
 import net.minecraft.ChatFormatting
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
@@ -93,8 +93,8 @@ abstract class ProcessingRecipes[T <: ProcessingRecipe](recipeType: MachineRecip
     reg.addRecipeCatalyst(new ItemStack(block), getRecipeType)
   }
 
-  override def draw(recipe: T, recipeSlotsView: IRecipeSlotsView, stack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
-    arrow.draw(stack, 68, 20)
+  override def draw(recipe: T, recipeSlotsView: IRecipeSlotsView, guiGraphics: GuiGraphics, mouseX: Double, mouseY: Double): Unit = {
+    arrow.draw(guiGraphics, 68, 20)
   }
 }
 

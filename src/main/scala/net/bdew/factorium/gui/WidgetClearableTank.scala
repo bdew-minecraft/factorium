@@ -1,11 +1,11 @@
 package net.bdew.factorium.gui
 
-import com.mojang.blaze3d.vertex.PoseStack
 import net.bdew.factorium.network.{MsgClearBuffers, NetworkHandler}
 import net.bdew.lib.data.DataSlotTankBase
 import net.bdew.lib.gui.widgets.{WidgetFluidGauge, WidgetSubContainer}
 import net.bdew.lib.gui.{Point, Rect, Texture}
 import net.bdew.lib.{Client, Text}
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.resources.sounds.SimpleSoundInstance
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
@@ -19,10 +19,10 @@ class WidgetClearableTank(rect: Rect, overlay: Texture, button: Texture, dSlot: 
 
   def buttonVisible: Boolean = !dSlot.isEmpty
 
-  override def draw(matrix: PoseStack, mouse: Point, partial: Float): Unit = {
-    super.draw(matrix, mouse, partial)
+  override def draw(graphics: GuiGraphics, mouse: Point, partial: Float): Unit = {
+    super.draw(graphics, mouse, partial)
     if (buttonVisible && rect.contains(mouse)) {
-      parent.drawTexture(matrix, buttonRect, button)
+      parent.drawTexture(graphics, buttonRect, button)
     }
   }
 

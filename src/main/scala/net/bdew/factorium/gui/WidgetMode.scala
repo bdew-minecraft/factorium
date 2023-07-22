@@ -1,12 +1,12 @@
 package net.bdew.factorium.gui
 
-import com.mojang.blaze3d.vertex.PoseStack
 import net.bdew.factorium.machines.processing.ProcessingTextures
 import net.bdew.factorium.network.NetworkHandler
 import net.bdew.lib.data.DataSlotEnum
 import net.bdew.lib.gui.widgets.Widget
 import net.bdew.lib.gui.{Point, Rect, Sprite}
 import net.bdew.lib.{Client, Misc, Text}
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.resources.sounds.SimpleSoundInstance
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
@@ -20,15 +20,15 @@ case class WidgetMode[T <: Enumeration](p: Point, ds: DataSlotEnum[T], textures:
 
   val values: Seq[T#Value] = ds.baseEnum.values.toList.sortBy(_.id)
 
-  override def drawBackground(m: PoseStack, mouse: Point): Unit = {
+  override def drawBackground(graphics: GuiGraphics, mouse: Point): Unit = {
     if (rect.contains(mouse))
-      parent.drawTexture(m, rect, ProcessingTextures.buttonHover)
+      parent.drawTexture(graphics, rect, ProcessingTextures.buttonHover)
     else
-      parent.drawTexture(m, rect, ProcessingTextures.buttonBase)
+      parent.drawTexture(graphics, rect, ProcessingTextures.buttonBase)
   }
 
-  override def draw(m: PoseStack, mouse: Point, partial: Float): Unit = {
-    parent.drawTexture(m, iconRect, textures(ds.value))
+  override def draw(graphics: GuiGraphics, mouse: Point, partial: Float): Unit = {
+    parent.drawTexture(graphics, iconRect, textures(ds.value))
   }
 
   override def handleTooltip(p: Point, tip: mutable.ArrayBuffer[Component]): Unit = {

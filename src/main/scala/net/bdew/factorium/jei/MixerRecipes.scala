@@ -1,6 +1,5 @@
 package net.bdew.factorium.jei
 
-import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.forge.ForgeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -14,6 +13,7 @@ import net.bdew.factorium.machines.mixer.{MixerConfig, MixerRecipe, MixerTexture
 import net.bdew.factorium.registries.{Blocks, Recipes}
 import net.bdew.factorium.{Config, Factorium}
 import net.bdew.lib.Text
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
@@ -76,8 +76,8 @@ object MixerRecipes extends IRecipeCategory[MixerRecipe] {
     reg.addRecipeCatalyst(new ItemStack(block), getRecipeType)
   }
 
-  override def draw(recipe: MixerRecipe, recipeSlotsView: IRecipeSlotsView, stack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
-    arrow.draw(stack, 68, 20)
+  override def draw(recipe: MixerRecipe, recipeSlotsView: IRecipeSlotsView, guiGraphics: GuiGraphics, mouseX: Double, mouseY: Double): Unit = {
+    arrow.draw(guiGraphics, 68, 20)
   }
 
   override def getTooltipStrings(recipe: MixerRecipe, recipeSlotsView: IRecipeSlotsView, mouseX: Double, mouseY: Double): util.List[Component] = {

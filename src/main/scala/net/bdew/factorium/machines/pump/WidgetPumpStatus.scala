@@ -1,10 +1,10 @@
 package net.bdew.factorium.machines.pump
 
-import com.mojang.blaze3d.vertex.PoseStack
 import net.bdew.lib.Text
 import net.bdew.lib.gui.widgets.Widget
 import net.bdew.lib.gui.{Color, Point, Rect, Texture}
 import net.minecraft.ChatFormatting
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions
 import net.minecraftforge.fluids.FluidStack
@@ -30,19 +30,19 @@ class WidgetPumpStatus(val rect: Rect, pump: PumpEntity) extends Widget {
     }
   }
 
-  override def draw(m: PoseStack, mouse: Point, partial: Float): Unit = {
+  override def draw(graphics: GuiGraphics, mouse: Point, partial: Float): Unit = {
     pump.pumpState.get match {
       case PumpState.Lowering(_) =>
-        parent.drawTexture(m, rect, PumpTextures.scanning)
+        parent.drawTexture(graphics, rect, PumpTextures.scanning)
       case PumpState.Scanning(_, _) =>
-        parent.drawTexture(m, rect, PumpTextures.scanning)
+        parent.drawTexture(graphics, rect, PumpTextures.scanning)
       case PumpState.Pumping(_, _, fluid) =>
         val props = IClientFluidTypeExtensions.of(fluid)
         val color = Color.fromInt(props.getTintColor)
         val icon = Texture.block(props.getStillTexture)
-        parent.drawTexture(m, rect, icon, color)
+        parent.drawTexture(graphics, rect, icon, color)
       case PumpState.Invalid =>
-        parent.drawTexture(m, rect, PumpTextures.clear)
+        parent.drawTexture(graphics, rect, PumpTextures.clear)
     }
   }
 }

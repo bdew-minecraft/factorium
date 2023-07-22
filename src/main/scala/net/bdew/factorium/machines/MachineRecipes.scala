@@ -10,6 +10,7 @@ import net.bdew.factorium.machines.processing.smelter.SmelterRecipe
 import net.bdew.factorium.misc.ItemStackWithChance
 import net.bdew.factorium.registries.Recipes
 import net.bdew.lib.recipes.RecipeReloadListener
+import net.minecraft.core.RegistryAccess
 import net.minecraft.world.Container
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.{RecipeManager, RecipeType, SmeltingRecipe}
@@ -26,17 +27,17 @@ object MachineRecipes {
   var extruder = Set.empty[ExtruderRecipe]
   var mixer = Set.empty[MixerRecipe]
 
-  private def makeVanillaAdaptedRecipes(mgr: RecipeManager): (List[CrusherRecipe], List[SmelterRecipe]) = {
+  private def makeVanillaAdaptedRecipes(mgr: RecipeManager, ra: RegistryAccess): (List[CrusherRecipe], List[SmelterRecipe]) = {
     val (crusher, smelter) =
       mgr.getAllRecipesFor[Container, SmeltingRecipe](RecipeType.SMELTING)
         .asScala.toList
         .partition(rec =>
           rec.getIngredients.get(0).getItems.forall(_.is(Tags.Items.ORES))
-            && !rec.getResultItem.is(Tags.Items.INGOTS)
+            && !rec.getResultItem(ra).is(Tags.Items.INGOTS)
         )
 
     val crusherAdapted = crusher.map(rec => {
-      val stack = rec.getResultItem.copy()
+      val stack = rec.getResultItem(ra).copy()
       stack.setCount(stack.getCount * 2)
       new CrusherRecipe(rec.getId,
         rec.getIngredients.get(0),
@@ -48,7 +49,7 @@ object MachineRecipes {
 
     val smelterAdapted = smelter.map(rec => new SmelterRecipe(rec.getId,
       rec.getIngredients.get(0),
-      ItemStackWithChance(rec.getResultItem),
+      ItemStackWithChance(rec.getResultItem(ra)),
       ItemStackWithChance.EMPTY,
       ItemStackWithChance.EMPTY
     ))
@@ -56,8 +57,8 @@ object MachineRecipes {
     (crusherAdapted, smelterAdapted)
   }
 
-  def refreshRecipes(manager: RecipeManager): Unit = {
-    val (crusherAdapted, smelterAdapted) = makeVanillaAdaptedRecipes(manager)
+  def refreshRecipes(manager: RecipeManager, ra: RegistryAccess): Unit = {
+    val (crusherAdapted, smelterAdapted) = makeVanillaAdaptedRecipes(manager, ra)
     crusher = (Recipes.crusher.from(manager) ++ crusherAdapted).toSet
     smelter = (Recipes.smelter.from(manager) ++ smelterAdapted).toSet
     grinder = Recipes.grinder.from(manager).toSet

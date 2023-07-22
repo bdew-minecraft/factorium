@@ -14,7 +14,7 @@ import net.minecraftforge.common.data.ExistingFileHelper
 
 import java.util.concurrent.CompletableFuture
 
-class ItemTagsGen(out: PackOutput, efh: ExistingFileHelper, blockTags: BlockTagsGen, lookUp: CompletableFuture[HolderLookup.Provider]) extends ItemTagsProvider(out, lookUp, blockTags, Factorium.ModId, efh) {
+class ItemTagsGen(out: PackOutput, efh: ExistingFileHelper, blockTags: BlockTagsGen, lookUp: CompletableFuture[HolderLookup.Provider]) extends ItemTagsProvider(out, lookUp, blockTags.contentsGetter(), Factorium.ModId, efh) {
   def addTypedForgeTag(metal: MetalEntry, kind: MetalItemType, groupTag: TagKey[Item]): Unit = {
     if (!metal.ownItem(kind)) return
     val item = metal.item(kind)
@@ -26,7 +26,7 @@ class ItemTagsGen(out: PackOutput, efh: ExistingFileHelper, blockTags: BlockTags
   override def addTags(provider: HolderLookup.Provider): Unit = {
     copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS)
     copy(Tags.Blocks.ORE_RATES_SINGULAR, Tags.Items.ORE_RATES_SINGULAR)
-    copy(Tags.Blocks.ORE_RATES_SPARSE, Tags.Items.ORE_RATES_SPARSE)
+    //    copy(Tags.Blocks.ORE_RATES_SPARSE, Tags.Items.ORE_RATES_SPARSE)
     copy(Tags.Blocks.ORE_RATES_DENSE, Tags.Items.ORE_RATES_DENSE)
     copy(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE, Tags.Items.ORES_IN_GROUND_DEEPSLATE)
     copy(Tags.Blocks.ORES_IN_GROUND_STONE, Tags.Items.ORES_IN_GROUND_STONE)

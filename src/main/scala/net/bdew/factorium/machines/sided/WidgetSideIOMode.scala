@@ -1,12 +1,12 @@
 package net.bdew.factorium.machines.sided
 
-import com.mojang.blaze3d.vertex.PoseStack
 import net.bdew.factorium.machines.processing.ProcessingTextures
 import net.bdew.factorium.misc.AutoIOMode
 import net.bdew.factorium.network.NetworkHandler
 import net.bdew.lib.gui.widgets.Widget
 import net.bdew.lib.gui.{Point, Rect}
 import net.bdew.lib.{Client, Misc, Text}
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.resources.sounds.SimpleSoundInstance
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
@@ -21,15 +21,15 @@ class WidgetSideIOMode(p: Point, ds: DataSlotSidedIOConfig, side: BlockSide.Valu
 
   private val values: List[AutoIOMode.Value] = AutoIOMode.values.toList.sortBy(_.id)
 
-  override def drawBackground(m: PoseStack, mouse: Point): Unit = {
+  override def drawBackground(graphics: GuiGraphics, mouse: Point): Unit = {
     if (rect.contains(mouse))
-      parent.drawTexture(m, rect, ProcessingTextures.buttonHover)
+      parent.drawTexture(graphics, rect, ProcessingTextures.buttonHover)
     else
-      parent.drawTexture(m, rect, ProcessingTextures.buttonBase)
+      parent.drawTexture(graphics, rect, ProcessingTextures.buttonBase)
   }
 
-  override def draw(m: PoseStack, mouse: Point, partial: Float): Unit = {
-    parent.drawTexture(m, iconRect, SidesTextures.ioMode(ds.get(side)))
+  override def draw(graphics: GuiGraphics, mouse: Point, partial: Float): Unit = {
+    parent.drawTexture(graphics, iconRect, SidesTextures.ioMode(ds.get(side)))
   }
 
   override def handleTooltip(p: Point, tip: mutable.ArrayBuffer[Component]): Unit = {
