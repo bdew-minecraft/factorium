@@ -16,6 +16,12 @@ class RecipeGen(out: PackOutput) extends RecipeProvider(out) {
         RecipeGenSmelting.addSmeltingRecipes(metal, consumer)
     }
 
+    RecipeGenExtruder.makeDieRecipe("plate", MetalItemType.Plate, CustomTags.plates, consumer)
+    RecipeGenExtruder.makeDieRecipe("gear", MetalItemType.Gear, CustomTags.gears, consumer)
+    RecipeGenExtruder.makeDieRecipe("rod", MetalItemType.Rod, CustomTags.metalRods, consumer)
+    RecipeGenExtruder.makeDieRecipe("wire", MetalItemType.Wire, CustomTags.wires, consumer)
+    RecipeGenExtruder.makeDieRecipe("nugget", MetalItemType.Nugget, CustomTags.nuggets, consumer)
+
     RecipeGenColored.makeColoredRecipes(consumer)
   }
 }

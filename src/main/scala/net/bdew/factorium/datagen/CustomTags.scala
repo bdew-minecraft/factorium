@@ -28,6 +28,8 @@ object CustomTags {
   def powders(name: String): TagKey[Item] = tagItem(Factorium.ModId, "powders", name)
 
   lazy val plates: TagKey[Item] = tagItem("forge", "plates")
+  def plates(name: String): TagKey[Item] = tagItem("forge", "plates", name)
+
   lazy val gears: TagKey[Item] = tagItem("forge", "gears")
   lazy val wires: TagKey[Item] = tagItem("forge", "wires")
 
@@ -48,6 +50,7 @@ object CustomTags {
 
   def ingots(name: String): TagKey[Item] = tagItem("forge", "ingots", name)
 
+  lazy val nuggets: TagKey[Item] = tagItem("forge", "nuggets")
   def nuggets(name: String): TagKey[Item] = tagItem("forge", "nuggets", name)
 
   def smeltable(name: String): TagKey[Item] = tagItem(Factorium.ModId, "smeltable", name)

@@ -1,8 +1,12 @@
 package net.bdew.factorium.datagen
 
+import net.bdew.factorium.Factorium
 import net.bdew.factorium.metals.{MetalEntry, MetalItemType}
 import net.bdew.factorium.registries.Items
-import net.minecraft.data.recipes.FinishedRecipe
+import net.minecraft.data.recipes.{FinishedRecipe, RecipeBuilder, RecipeCategory, ShapelessRecipeBuilder}
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 
 import java.util.function.Consumer
@@ -25,5 +29,16 @@ object RecipeGenExtruder {
       .withOutput(metal.item(output), outputCount)
       .build(s"metals/${metal.name}/${output.kind}_from_extruder")
       .save(consumer)
+  }
+
+  def makeDieRecipe(dieItem: String, itemType: MetalItemType, inputTag: TagKey[Item], consumer: Consumer[FinishedRecipe]): Unit = {
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.dies(dieItem).get(), 1)
+      .requires(Ingredient.of(inputTag))
+      .requires(Ingredient.of(CustomTags.plates("steel")))
+      .asInstanceOf[RecipeBuilder]
+      .unlockedBy("has_item", RecipeHelper.has(inputTag))
+      .unlockedBy("has_plate", RecipeHelper.has(CustomTags.plates("steel")))
+      .group(s"${Factorium.ModId}:dies")
+      .save(consumer, new ResourceLocation(Factorium.ModId, s"dies/${itemType.kind}"))
   }
 }

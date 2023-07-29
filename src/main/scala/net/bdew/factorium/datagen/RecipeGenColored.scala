@@ -59,7 +59,6 @@ object RecipeGenColored {
       .save(consumer, new ResourceLocation(Factorium.ModId, s"concrete/powder/normal/${color}"))
   }
 
-
   def makeConcreteGlowPowderRecipe(color: DyeColor, powder: Item, consumer: Consumer[FinishedRecipe]): Unit = {
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.glowingConcretePowder(color).get(), 4)
       .requires(Ingredient.of(powder), 4)
